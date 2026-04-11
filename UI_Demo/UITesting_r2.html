@@ -1,0 +1,4178 @@
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>UncleFix</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link rel="icon" type="image/jpeg" href="./icon.jpeg">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg-primary: #EEF2F8;
+    --bg-secondary: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-input: #E4EAF4;
+    --text-primary: #1C274C;
+    --text-secondary: #3D4A6B;
+    --text-muted: #7A849E;
+    --accent: #1C274C;
+    --accent-hover: #141D3A;
+    --accent-light: rgba(28,39,76,0.08);
+    --accent-glow: rgba(28,39,76,0.2);
+    --accent-end: #71A6EE;
+    --lime: #E1F18C;
+    --lime-dark: #C5D66A;
+    --lime-light: rgba(225,241,140,0.25);
+    --lilac: #D5B8DC;
+    --lilac-light: rgba(213,184,220,0.2);
+    --border: #D0D8E8;
+    --danger: #E05A5A;
+    --danger-light: rgba(224,90,90,0.1);
+    --success: #5EAA6F;
+    --success-light: rgba(94,170,111,0.12);
+    --warning: #E0A830;
+    --warning-light: rgba(224,168,48,0.12);
+    --info: #71A6EE;
+    --info-light: rgba(113,166,238,0.12);
+    --coral: #D5B8DC;
+    --coral-light: rgba(213,184,220,0.12);
+    --shadow-sm: 0 1px 3px rgba(28,39,76,0.06);
+    --shadow-md: 0 4px 14px rgba(28,39,76,0.09);
+    --shadow-lg: 0 8px 30px rgba(28,39,76,0.13);
+    --radius: 16px;
+    --radius-sm: 12px;
+    --nav-height: 72px;
+  }
+
+  html.dark {
+    --bg-primary: #111827;
+    --bg-secondary: #1A2238;
+    --bg-card: #1F2A42;
+    --bg-input: #263050;
+    --text-primary: #E8ECF4;
+    --text-secondary: #A0ABBE;
+    --text-muted: #6B7A94;
+    --accent: #71A6EE;
+    --accent-hover: #8DB8F2;
+    --accent-light: rgba(113,166,238,0.14);
+    --accent-glow: rgba(113,166,238,0.25);
+    --accent-end: #E1F18C;
+    --lime: #E1F18C;
+    --lime-dark: #C5D66A;
+    --lime-light: rgba(225,241,140,0.18);
+    --lilac: #D5B8DC;
+    --lilac-light: rgba(213,184,220,0.14);
+    --border: #2C3A56;
+    --danger: #F07070;
+    --danger-light: rgba(240,112,112,0.14);
+    --success: #6FCF82;
+    --success-light: rgba(111,207,130,0.14);
+    --warning: #F0C040;
+    --warning-light: rgba(240,192,64,0.14);
+    --info: #8DB8F2;
+    --info-light: rgba(141,184,242,0.14);
+    --coral: #E0C8E6;
+    --coral-light: rgba(224,200,230,0.14);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 14px rgba(0,0,0,0.35);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.45);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Source Sans 3', sans-serif; }
+
+  .mockup-stage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .device-frame {
+    width: min(430px, 100%);
+    padding: 14px;
+    border-radius: 54px;
+    background: #111827;
+    box-shadow: 0 26px 70px rgba(0,0,0,0.35);
+  }
+
+  .device-screen {
+    position: relative;
+    width: 100%;
+    height: min(860px, calc(100dvh - 64px));
+    height: min(860px, calc(100vh - 64px));
+    border-radius: 40px;
+    overflow: hidden;
+    background: var(--bg-primary);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .device-notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 168px;
+    height: 26px;
+    border-radius: 0 0 18px 18px;
+    background: rgba(0,0,0,0.22);
+    z-index: 120;
+    pointer-events: none;
+  }
+
+  .device-screen .app-header {
+    padding-top: 28px;
+  }
+
+  /* ─── App Shell ─── */
+  #app {
+    max-width: none;
+    margin: 0;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Header ─── */
+  .app-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 50;
+    background: var(--bg-primary);
+    backdrop-filter: blur(12px);
+    flex: 0 0 auto;
+  }
+  .app-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .app-header .logo-icon {
+    width: 42px;
+    height: 42px;
+    background: #111827;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 3px 10px var(--accent-glow);
+    padding: 3px;
+  }
+  .app-header .logo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: block; }
+  .app-header .logo-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text-primary);
+  }
+  .app-header .logo-text span { color: var(--info); }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
+  /* Language Toggle */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    background: var(--bg-input);
+    border-radius: 20px;
+    padding: 3px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+  .lang-toggle-option {
+    position: relative;
+    z-index: 2;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--text-muted);
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    white-space: nowrap;
+    border-radius: 16px;
+  }
+  .lang-toggle-option.active {
+    color: var(--accent);
+  }
+  .lang-toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    border-radius: 16px;
+    background: var(--bg-card);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+  }
+  .header-btn {
+    width: 38px; height: 38px;
+    border: none;
+    background: var(--bg-card);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+  }
+  .header-btn:hover { color: var(--accent); transform: translateY(-1px); }
+
+  /* ─── Bottom Navigation ─── */
+  .bottom-nav {
+    position: relative;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    height: var(--nav-height);
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: stretch;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    flex: 0 0 auto;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .nav-item i { font-size: 20px; transition: all 0.25s; }
+  .nav-item.active { color: var(--accent); }
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 32px;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--accent);
+  }
+  .nav-item:active { transform: scale(0.92); }
+  .nav-item[data-screen="diagnose"] { color: var(--info); }
+  .nav-item[data-screen="diagnose"]::before { background: var(--info); }
+  .nav-item.active[data-screen="diagnose"] { color: var(--info); }
+  .nav-item.active[data-screen="diagnose"]::before { background: var(--info); }
+
+  /* ─── Screen Container ─── */
+  .screen { display: none; padding: 0 20px 24px; animation: fadeIn 0.3s ease; }
+  .screen.active { display: block; }
+  .screen {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #1C274C, #2A3D68);
+    color: #E1F18C;
+    box-shadow: 0 3px 12px rgba(28,39,76,0.2);
+    font-weight: 700;
+  }
+  html.dark .btn-primary {
+    background: linear-gradient(135deg, #71A6EE, #5A90D8);
+    color: #1C274C;
+  }
+  .btn-primary:hover { box-shadow: 0 5px 18px rgba(28,39,76,0.25); transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--bg-input);
+    color: var(--text-primary);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .btn-danger { background: var(--danger-light); color: var(--danger); }
+  .btn-sm { padding: 8px 16px; font-size: 13px; }
+  .btn-block { width: 100%; }
+
+  /* ─── Inputs ─── */
+  .input-group { margin-bottom: 16px; }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .input-field {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .input-field:focus { border-color: var(--accent); }
+  .input-field::placeholder { color: var(--text-muted); }
+  select.input-field { appearance: none; cursor: pointer; }
+  textarea.input-field { resize: vertical; min-height: 100px; }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .badge-danger { background: var(--danger-light); color: var(--danger); }
+  .badge-warning { background: var(--warning-light); color: var(--warning); }
+  .badge-success { background: var(--success-light); color: var(--success); }
+  .badge-info { background: var(--info-light); color: var(--info); }
+
+  /* ─── Section Titles ─── */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ─── HOME SCREEN ─── */
+  /* ─── Hero Banner ─── */
+  .hero-card {
+    border-radius: var(--radius);
+    color: #F0E8DC;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 28px 22px 24px;
+    background: linear-gradient(135deg, #1C274C 0%, #263560 40%, #1C274C 70%, #2A3D68 100%);
+  }
+  html.dark .hero-card {
+    background: linear-gradient(135deg, #111827 0%, #1A2844 40%, #111D32 70%, #1A2844 100%);
+  }
+  .hero-card h2 {
+    font-size: 21px;
+    margin-bottom: 6px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .hero-card p {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-bottom: 0;
+    line-height: 1.5;
+    max-width: 340px;
+  }
+  .hero-badges {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hero-badges .badge {
+    background: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.92);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+  .hero-card .hero-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    opacity: 0.12;
+    color: #fff;
+  }
+  .ai-badges {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ai-badges .badge {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+
+  /* Manual upload styles */
+  .manual-upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-input);
+  }
+  .manual-upload-zone:hover { border-color: var(--accent); background: var(--accent-light); }
+  .manual-upload-zone i { font-size: 22px; color: var(--accent); margin-bottom: 6px; }
+  .manual-upload-zone p { font-size: 12px; color: var(--text-muted); margin: 0; }
+  .manual-upload-zone h4 { font-size: 13px; color: var(--text-primary); margin: 4px 0 2px; font-weight: 600; }
+  .manual-file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .manual-file-info .mfi-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .manual-file-info .mfi-details { flex: 1; min-width: 0; }
+  .manual-file-info .mfi-name {
+    font-size: 13px; font-weight: 600; color: var(--text-primary);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .manual-file-info .mfi-size { font-size: 11px; color: var(--text-muted); }
+  .manual-file-info .mfi-status {
+    font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px;
+  }
+  .manual-file-info .mfi-status.extracting { background: var(--warning-light); color: var(--warning); }
+  .manual-file-info .mfi-status.ready { background: var(--success-light); color: var(--success); }
+  .manual-file-info .mfi-remove {
+    width: 28px; height: 28px; border-radius: 50%; border: none;
+    background: var(--danger-light); color: var(--danger);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0;
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .quick-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+  .quick-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .quick-card:active { transform: scale(0.97); }
+  .quick-card .qc-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 10px;
+  }
+  .quick-card h4 { font-size: 14px; font-family: 'Source Sans 3', sans-serif; font-weight: 600; margin-bottom: 3px; }
+  .quick-card p { font-size: 12px; color: var(--text-muted); line-height: 1.3; }
+  .qc-diagnose .qc-icon { background: rgba(113,166,238,0.14); color: #71A6EE; }
+  .qc-chat .qc-icon { background: var(--lilac-light); color: #B890C0; }
+  .qc-appliance .qc-icon { background: var(--lime-light); color: #8B9A40; }
+  html.dark .qc-appliance .qc-icon { color: #E1F18C; }
+  .qc-schedule .qc-icon { background: rgba(28,39,76,0.08); color: #1C274C; }
+  html.dark .qc-schedule .qc-icon { background: rgba(113,166,238,0.14); color: #71A6EE; }
+
+  .tip-card {
+    background: var(--accent-light);
+    border: 1px solid rgba(113,166,238,0.15);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-card .tip-icon {
+    width: 36px; height: 36px; min-width: 36px;
+    background: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+  }
+  .tip-card h4 { font-size: 14px; font-family: 'Source Sans 3', sans-serif; font-weight: 600; margin-bottom: 3px; }
+  .tip-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* ─── DIAGNOSE SCREEN ─── */
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--bg-input);
+    position: relative;
+    overflow: hidden;
+  }
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .upload-zone .upload-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: var(--accent-light);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px;
+  }
+  .upload-zone h3 { font-size: 16px; font-family: 'Source Sans 3', sans-serif; font-weight: 600; margin-bottom: 4px; }
+  .upload-zone p { font-size: 13px; color: var(--text-muted); }
+  .upload-zone input[type="file"] { display: none; }
+
+  .preview-container {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .preview-container img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+  .preview-remove {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 32px; height: 32px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .diagnosis-result {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .diagnosis-result .result-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .diagnosis-result .result-icon {
+    width: 44px; height: 44px; min-width: 44px;
+    background: var(--accent-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  .result-content {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .result-content h1, .result-content h2, .result-content h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--text-primary);
+    margin: 16px 0 8px;
+  }
+  .result-content h1 { font-size: 18px; }
+  .result-content h2 { font-size: 16px; }
+  .result-content h3 { font-size: 15px; }
+  .result-content ul, .result-content ol { padding-left: 20px; margin: 8px 0; }
+  .result-content li { margin-bottom: 4px; }
+  .result-content strong { color: var(--text-primary); }
+  .result-content code {
+    background: var(--bg-input);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .result-content p { margin-bottom: 10px; }
+
+  /* ─── APPLIANCE SCREEN ─── */
+  .appliance-list { display: flex; flex-direction: column; gap: 12px; }
+  .appliance-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .appliance-item:hover { box-shadow: var(--shadow-md); }
+  .appliance-item:active { transform: scale(0.98); }
+  .appliance-icon {
+    width: 48px; height: 48px; min-width: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .appliance-info { flex: 1; min-width: 0; }
+  .appliance-info h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .appliance-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .appliance-arrow { color: var(--text-muted); font-size: 14px; }
+
+  /* Eco / Power Saving Section */
+  .eco-section {
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  .eco-card {
+    background: linear-gradient(135deg, #1C274C 0%, #1E3A2F 50%, #1C274C 100%);
+    border-radius: var(--radius);
+    padding: 22px 20px 20px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(94,170,111,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .eco-card::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(225,241,140,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .eco-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, rgba(94,170,111,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .eco-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .eco-icon-wrap {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #5EAA6F, #E1F18C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #1C274C;
+    box-shadow: 0 3px 12px rgba(94,170,111,0.35);
+  }
+  .eco-header h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #E8ECF4;
+    margin-bottom: 2px;
+  }
+  .eco-header p {
+    font-size: 12px;
+    color: rgba(232,236,244,0.55);
+  }
+  .eco-content {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+  }
+  .eco-placeholder {
+    font-size: 13px;
+    color: rgba(232,236,244,0.65);
+    line-height: 1.5;
+  }
+  .eco-tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .eco-tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .eco-tip-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+  .eco-tip-icon.saving { background: rgba(225,241,140,0.18); color: #E1F18C; }
+  .eco-tip-icon.green { background: rgba(94,170,111,0.2); color: #6FCF82; }
+  .eco-tip-icon.smart { background: rgba(113,166,238,0.18); color: #8DB8F2; }
+  .eco-tip-icon.warn { background: rgba(240,168,48,0.18); color: #F0C040; }
+  .eco-tip-text {
+    flex: 1;
+    font-size: 13px;
+    color: rgba(232,236,244,0.85);
+    line-height: 1.45;
+  }
+  .eco-tip-text strong {
+    color: #E1F18C;
+    font-weight: 600;
+  }
+  .btn-eco {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, #5EAA6F, #4A9060);
+    color: #fff;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s;
+    box-shadow: 0 3px 12px rgba(94,170,111,0.3);
+  }
+  .btn-eco:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-eco:active { transform: translateY(0); }
+  .btn-eco:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+  }
+  .eco-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    color: rgba(232,236,244,0.65);
+    font-size: 13px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .empty-icon {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    background: var(--bg-input);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 14px;
+  }
+  .empty-state h3 { font-size: 16px; font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+  .empty-state p { font-size: 13px; }
+
+  /* ─── CALENDAR SCREEN ─── */
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .cal-header h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 18px;
+  }
+  .cal-nav { display: flex; gap: 6px; }
+  .cal-nav button {
+    width: 34px; height: 34px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .cal-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 20px;
+  }
+  .cal-day-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 6px 0;
+    text-transform: uppercase;
+  }
+  .cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    color: var(--text-secondary);
+  }
+  .cal-day:hover { background: var(--bg-input); }
+  .cal-day.today { background: var(--accent-light); color: var(--accent); font-weight: 700; }
+  .cal-day.selected { background: var(--accent); color: #fff; font-weight: 700; }
+  .cal-day.other-month { opacity: 0.3; }
+  .cal-day.has-task::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .cal-day.selected.has-task::after { background: #fff; }
+
+  .task-list { display: flex; flex-direction: column; gap: 10px; }
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+  }
+  .task-item:hover { box-shadow: var(--shadow-sm); }
+  .task-check {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: transparent;
+    transition: all 0.2s;
+    background: transparent;
+  }
+  .task-check.done {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+  }
+  .task-info { flex: 1; min-width: 0; }
+  .task-info h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .task-info.done-text h4 { text-decoration: line-through; opacity: 0.5; }
+  .task-info p { font-size: 12px; color: var(--text-muted); }
+  .task-delete {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .task-delete:hover { color: var(--danger); }
+
+  /* ─── CHAT SCREEN ─── */
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chat-msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: fadeIn 0.3s ease;
+  }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-avatar {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .chat-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block; }
+  .chat-msg.bot .chat-avatar {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .chat-msg.user .chat-avatar {
+    background: var(--info-light);
+    color: var(--info);
+  }
+  .chat-bubble {
+    max-width: 82%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .chat-msg.bot .chat-bubble {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-top-left-radius: 4px;
+    color: var(--text-secondary);
+  }
+  .chat-msg.user .chat-bubble {
+    background: var(--accent);
+    color: #fff;
+    border-top-right-radius: 4px;
+  }
+  .chat-bubble .result-content { color: inherit; }
+  .chat-bubble .result-content h1,
+  .chat-bubble .result-content h2,
+  .chat-bubble .result-content h3 { color: var(--text-primary); }
+  .chat-msg.user .chat-bubble .result-content h1,
+  .chat-msg.user .chat-bubble .result-content h2,
+  .chat-msg.user .chat-bubble .result-content h3 { color: #fff; }
+
+  .chat-input-bar {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .chat-input-bar textarea {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+    min-height: 44px;
+    max-height: 120px;
+    line-height: 1.4;
+    transition: border-color 0.2s;
+  }
+  .chat-input-bar textarea:focus { border-color: var(--accent); }
+  .chat-send {
+    width: 44px; height: 44px; min-width: 44px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-end));
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px var(--accent-glow);
+    transition: all 0.2s;
+  }
+  .chat-send:hover { transform: translateY(-1px); }
+  .chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 0;
+  }
+  .typing-indicator span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: typing 1.2s ease infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typing {
+    0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+    30% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-content {
+    background: var(--bg-secondary);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85%;
+    overflow-y: auto;
+    padding: 8px 20px 32px;
+    animation: slideUp 0.3s ease;
+    -webkit-overflow-scrolling: touch;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 8px auto 18px;
+  }
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-close {
+    width: 32px; height: 32px;
+    border: none;
+    background: var(--bg-input);
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  #about-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; display: block; }
+
+  /* ─── Detail View ─── */
+  .detail-view { display: none; animation: fadeIn 0.3s ease; }
+  .detail-view.active { display: block; }
+  .detail-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 16px;
+    padding: 4px 0;
+  }
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .detail-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+  .detail-meta { flex: 1; }
+  .detail-meta h2 { font-size: 20px; margin-bottom: 2px; }
+  .detail-meta p { font-size: 13px; color: var(--text-muted); }
+  .detail-section { margin-bottom: 18px; }
+  .detail-section h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .detail-row .dr-label { color: var(--text-secondary); }
+  .detail-row .dr-value { font-weight: 600; color: var(--text-primary); }
+  .detail-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* ─── Loading/Spinner ─── */
+  .spinner {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border: 2.5px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-bar {
+    height: 3px;
+    background: var(--bg-input);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 12px 0;
+  }
+  .loading-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-end));
+    border-radius: 2px;
+    animation: loadSlide 1.2s ease infinite;
+  }
+  @keyframes loadSlide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(350%); }
+  }
+
+  /* ─── Confirm Dialog ─── */
+  .confirm-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .confirm-overlay.open { display: flex; }
+  .confirm-box {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 24px;
+    max-width: 340px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.2s ease;
+  }
+  .confirm-box p { font-size: 15px; margin-bottom: 18px; line-height: 1.5; color: var(--text-secondary); }
+  .confirm-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ─── Suggested prompts ─── */
+  .suggested-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .suggested-prompt {
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.2s;
+  }
+  .suggested-prompt:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  .suggested-prompt i { margin-right: 6px; color: var(--accent); }
+
+  /* Stagger animations */
+  .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.25s; }
+
+  /* ─── Step Tracker ─── */
+  /* ─── Vertical Timeline Step Tracker ─── */
+  .step-tracker {
+    margin-top: 16px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .step-tracker-header {
+    padding: 16px 18px 14px;
+    background: linear-gradient(135deg, #1C274C, #2A3D68, #3A5080);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  html.dark .step-tracker-header {
+    background: linear-gradient(135deg, #1A2844, #263560, #304878);
+  }
+  .step-tracker-header::after {
+    content: '';
+    position: absolute;
+    top: -30%; right: -10%;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .step-tracker-header h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+  }
+  .step-tracker-header h4 i { color: rgba(255,255,255,0.85); }
+  .step-tracker-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .step-meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .step-meta-badge.difficulty-easy { background: rgba(225,241,140,0.25); color: #E1F18C; }
+  .step-meta-badge.difficulty-medium { background: rgba(113,166,238,0.25); color: #A8CDF5; }
+  .step-meta-badge.difficulty-hard { background: rgba(224,90,90,0.25); color: #F0A0A0; }
+  .step-meta-badge.difficulty-serious { background: rgba(224,90,90,0.35); color: #F0A0A0; }
+  .step-meta-badge.time-badge { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+  .step-progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .step-progress-fill {
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .step-progress-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 5px;
+    font-weight: 600;
+  }
+
+  /* Timeline list */
+  .step-list {
+    padding: 12px 16px 4px 16px;
+    position: relative;
+  }
+  .step-item {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .step-item:last-child .step-timeline-line { display: none; }
+
+  /* Timeline column */
+  .step-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 36px;
+    min-width: 36px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-timeline-line {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .step-item.checked .step-timeline-line { background: var(--success); }
+  .step-check-circle {
+    width: 32px; height: 32px; min-width: 32px; min-height: 32px;
+    border-radius: 50%;
+    border: 2.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-muted);
+    transition: all 0.3s;
+    background: var(--bg-card);
+    z-index: 2;
+    position: relative;
+  }
+  .step-item.checked .step-check-circle {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(16,185,129,0.4);
+    transform: scale(1.05);
+  }
+  .step-item.active-step .step-check-circle {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+    box-shadow: 0 0 0 4px rgba(113,166,238,0.12);
+  }
+
+  /* Step card */
+  .step-card {
+    flex: 1;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-left: 10px;
+    margin-bottom: 8px;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .step-card:active { transform: scale(0.98); }
+  .step-item:nth-child(4n+1) .step-card { background: rgba(28,39,76,0.06); }
+  .step-item:nth-child(4n+2) .step-card { background: rgba(225,241,140,0.18); }
+  .step-item:nth-child(4n+3) .step-card { background: rgba(113,166,238,0.1); }
+  .step-item:nth-child(4n+4) .step-card { background: rgba(213,184,220,0.15); }
+  html.dark .step-item:nth-child(4n+1) .step-card { background: rgba(113,166,238,0.1); }
+  html.dark .step-item:nth-child(4n+2) .step-card { background: rgba(225,241,140,0.1); }
+  html.dark .step-item:nth-child(4n+3) .step-card { background: rgba(28,39,76,0.2); }
+  html.dark .step-item:nth-child(4n+4) .step-card { background: rgba(213,184,220,0.1); }
+  .step-item.checked .step-card {
+    opacity: 0.55;
+    border-color: rgba(94,170,111,0.2);
+  }
+
+  .step-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .step-card-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .step-item.checked .step-card-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .step-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .step-time-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(113,166,238,0.12);
+    color: var(--accent);
+  }
+  .step-time-chip i { font-size: 9px; }
+
+  /* Actions */
+  .step-tracker-actions {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .step-tracker-actions .btn { font-size: 13px; padding: 9px 14px; }
+  .step-complete-banner {
+    padding: 18px 16px;
+    background: linear-gradient(135deg, rgba(225,241,140,0.15), rgba(113,166,238,0.08));
+    border-top: 1px solid rgba(225,241,140,0.25);
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+  }
+  .step-complete-banner i { color: var(--success); font-size: 24px; margin-bottom: 6px; }
+  .step-complete-banner p {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--success);
+  }
+  .step-complete-banner .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .step-complete-banner .sub {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ─── History Screen ─── */
+  .history-item {
+    padding: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .history-item:hover { box-shadow: var(--shadow-md); }
+  .history-item:active { transform: scale(0.98); }
+  .history-item-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .history-item-head h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 8px;
+  }
+  .history-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .history-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .history-progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .history-progress-bar > div {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-end), var(--success));
+  }
+  .history-progress span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* History detail view */
+  .history-detail-steps { margin-top: 14px; }
+  .history-step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .history-step-row:last-child { border-bottom: none; }
+  .history-step-icon {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    margin-top: 1px;
+  }
+  .history-step-icon.done { background: var(--success); color: #fff; }
+  .history-step-icon.pending { background: var(--border); color: var(--text-muted); }
+  .history-step-text { flex: 1; line-height: 1.5; color: var(--text-secondary); }
+  .history-step-text.is-done { text-decoration: line-through; opacity: 0.5; }
+
+  /* ─── Diagnose Tab Switcher ─── */
+  .diagnose-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-input);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .diagnose-tab {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .diagnose-tab:active { transform: scale(0.97); }
+  .diagnose-tab.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+  .diagnose-tab i { font-size: 14px; }
+  .diagnose-panel { display: none; animation: fadeIn 0.25s ease; }
+  .diagnose-panel.active { display: block; }
+
+  /* Chat inside diagnose */
+  .diagnose-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--nav-height) - 180px);
+    height: calc(100dvh - var(--nav-height) - 180px);
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-stage">
+  <div class="device-frame">
+    <div class="device-screen">
+      <div class="device-notch"></div>
+
+<div id="app">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="logo">
+      <div class="logo-icon" id="header-icon"></div>
+      <div class="logo-text" data-i18n="logoName" data-i18n-html="">Uncle<span>Fix</span></div>
+    </div>
+    <div class="header-actions">
+      <div class="lang-toggle" id="lang-toggle">
+        <div class="lang-toggle-slider" id="lang-slider"></div>
+        <button class="lang-toggle-option active" id="lang-en" onclick="setLang('en')">EN</button>
+        <button class="lang-toggle-option" id="lang-tc" onclick="setLang('tc')">繁中</button>
+      </div>
+      <button class="header-btn" onclick="showAbout()" aria-label="Info"><i class="fas fa-info-circle"></i></button>
+    </div>
+  </header>
+
+  <!-- ====== HOME SCREEN ====== -->
+  <div id="screen-home" class="screen active">
+    <div class="hero-card">
+      <div class="hero-icon"><i class="fas fa-wrench"></i></div>
+      <h2 data-i18n="heroTitle">Need something fixed?</h2>
+      <p data-i18n="heroDesc">Take a photo, tell us what’s wrong, and get safe step-by-step help.</p>
+      <div class="hero-badges">
+        <span class="badge badge-info"><i class="fas fa-robot"></i><span data-i18n="aiBadgePhoto">AI checks your photo</span></span>
+        <span class="badge badge-success"><i class="fas fa-shield-alt"></i><span data-i18n="aiBadgeSafety">Safety reminders</span></span>
+        <span class="badge badge-warning"><i class="fas fa-list-ol"></i><span data-i18n="aiBadgeSteps">Step-by-step plan</span></span>
+      </div>
+    </div>
+
+    <div class="quick-grid stagger">
+      <div class="quick-card qc-diagnose" onclick="navigateTo('diagnose')">
+        <div class="qc-icon"><i class="fas fa-search-plus"></i></div>
+        <h4 data-i18n="qcDiagnoseTitle">Fix with a Photo</h4>
+        <p data-i18n="qcDiagnoseDesc">Photo + a few words</p>
+      </div>
+      <div class="quick-card qc-appliance" onclick="navigateTo('appliances')">
+        <div class="qc-icon" style="background:var(--success-light);color:var(--success);"><i class="fas fa-blender"></i></div>
+        <h4 data-i18n="qcApplianceTitle">My Appliances</h4>
+        <p data-i18n="qcApplianceDesc">Manuals & warranty</p>
+      </div>
+      <div class="quick-card qc-chat" onclick="navigateTo('history')">
+        <div class="qc-icon"><i class="fas fa-clipboard-list"></i></div>
+        <h4 data-i18n="qcHistoryTitle">Past Fixes</h4>
+        <p data-i18n="qcHistoryDesc">Saved reports</p>
+      </div>
+      <div class="quick-card qc-schedule" onclick="navigateTo('schedule')">
+        <div class="qc-icon"><i class="fas fa-calendar-alt"></i></div>
+        <h4 data-i18n="qcScheduleTitle">Reminders</h4>
+        <p data-i18n="qcScheduleDesc">Upcoming tasks</p>
+      </div>
+    </div>
+
+    <div id="home-upcoming" style="margin-bottom:20px;"></div>
+
+    <div class="tip-card">
+      <div class="tip-icon"><i class="fas fa-lightbulb"></i></div>
+      <div>
+        <h4 data-i18n="proTip">Tip</h4>
+        <p data-i18n="proTipText">Clear photos in good light help a lot. If something feels unsafe, call a professional.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DIAGNOSE SCREEN ====== -->
+  <div id="screen-diagnose" class="screen">
+    <h2 class="section-title" style="margin-bottom:10px;" data-i18n="aiDiagnostics">Fix a Problem</h2>
+
+    <div class="diagnose-tabs">
+      <button class="diagnose-tab active" id="dtab-photo" onclick="switchDiagnoseTab('photo')">
+        <i class="fas fa-camera"></i> <span data-i18n="photoDiagnose">Photo</span>
+      </button>
+      <button class="diagnose-tab" id="dtab-chat" onclick="switchDiagnoseTab('chat')">
+        <i class="fas fa-comments"></i> <span data-i18n="askAI">AI Chat</span>
+      </button>
+    </div>
+
+    <!-- Photo Diagnose Panel -->
+    <div id="dpanel-photo" class="diagnose-panel active">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;" data-i18n="photoUploadHint">Add a photo and a short description. UncleFix will suggest what to do next.</p>
+
+      <div id="diagnose-preview" class="preview-container">
+        <img id="diagnose-img" src="" alt="Preview">
+        <button class="preview-remove" onclick="removeDiagnoseImage()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div id="diagnose-upload" class="upload-zone" onclick="document.getElementById('diagnose-file').click()">
+        <input type="file" id="diagnose-file" accept="image/*">
+        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <h3 data-i18n="uploadPhoto">Add a Photo</h3>
+        <p data-i18n="uploadHint">Tap to select or drag and drop</p>
+      </div>
+
+      <div class="input-group" style="margin-top:16px;">
+        <label data-i18n="describeIssue">Describe the Issue</label>
+        <textarea id="diagnose-desc" class="input-field" data-i18n="descPlaceholder" placeholder="e.g., Water is leaking from under the kitchen sink near the pipe joint..."></textarea>
+      </div>
+
+      <button id="diagnose-btn" class="btn btn-primary btn-block" onclick="runDiagnosis()">
+        <i class="fas fa-microscope"></i> <span data-i18n="analyzeIssue">Get Help</span>
+      </button>
+
+      <div id="diagnose-loading" style="display:none;margin-top:18px;">
+        <div class="card" style="text-align:center;padding:28px;">
+          <div class="spinner" style="margin:0 auto 12px;width:28px;height:28px;"></div>
+          <p style="font-size:14px;color:var(--text-secondary);font-weight:500;" data-i18n="analyzingImage">Checking your photo...</p>
+          <div class="loading-bar"></div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:4px;" data-i18n="aiExamining">Working on it…</p>
+        </div>
+      </div>
+
+      <div id="diagnose-result" class="diagnosis-result" style="margin-top:18px;">
+        <div class="card">
+          <div class="result-header">
+            <div class="result-icon"><i class="fas fa-clipboard-check"></i></div>
+            <div>
+              <h3 style="font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:16px;" data-i18n="diagnosisReport">What we found</h3>
+              <p style="font-size:12px;color:var(--text-muted);" data-i18n="aiAnalysis">Suggested next steps</p>
+            </div>
+          </div>
+          <div class="ai-badges">
+            <span class="badge badge-info"><i class="fas fa-robot"></i><span data-i18n="aiDiagBadge1">AI suggestion</span></span>
+            <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i><span data-i18n="aiDiagBadge2">Tells you what’s risky</span></span>
+            <span class="badge badge-success"><i class="fas fa-user-shield"></i><span data-i18n="aiDiagBadge3">Says when to call a pro</span></span>
+          </div>
+          <div id="diagnose-result-content" class="result-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ask AI / Guided Repair Panel -->
+    <div id="dpanel-chat" class="diagnose-panel">
+      <div class="diagnose-chat-container">
+        <div id="chat-messages" class="chat-messages">
+          <div class="chat-msg bot">
+            <div class="chat-avatar" id="welcome-avatar"></div>
+            <div class="chat-bubble">
+              <div class="result-content">
+                <strong data-i18n="chatWelcome">Hi! I’m UncleFix.</strong><br>
+                <span data-i18n="chatWelcomeHint">Ask in plain language — I’ll keep it simple and tell you if you should call a professional:</span>
+              </div>
+              <div class="suggested-prompts" style="margin-top:10px;">
+                <button class="suggested-prompt" onclick="sendSuggested(this)">
+                  <i class="fas fa-tint"></i> <span data-i18n="suggestFaucet">How do I fix a dripping faucet?</span>
+                </button>
+                <button class="suggested-prompt" onclick="sendSuggested(this)">
+                  <i class="fas fa-bolt"></i> <span data-i18n="suggestCircuit">My circuit breaker keeps tripping</span>
+                </button>
+                <button class="suggested-prompt" onclick="sendSuggested(this)">
+                  <i class="fas fa-temperature-high"></i> <span data-i18n="suggestHVAC">HVAC not cooling properly</span>
+                </button>
+                <button class="suggested-prompt" onclick="sendSuggested(this)">
+                  <i class="fas fa-paint-roller"></i> <span data-i18n="suggestDrywall">Best way to patch drywall holes</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <textarea id="chat-input" data-i18n="chatPlaceholder" placeholder="Describe your issue..." rows="1" onkeydown="handleChatKey(event)" oninput="autoGrow(this)"></textarea>
+          <button class="chat-send" id="chat-send-btn" onclick="sendChatMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== APPLIANCES SCREEN ====== -->
+  <div id="screen-appliances" class="screen">
+    <h2 class="section-title">
+      <span data-i18n="myAppliances">My Appliances</span>
+      <button class="btn btn-primary btn-sm" onclick="openApplianceModal()">
+        <i class="fas fa-plus"></i> <span data-i18n="addBtn">Add</span>
+      </button>
+    </h2>
+
+    <div id="appliance-list" class="appliance-list"></div>
+
+    <div id="appliance-empty" class="empty-state" style="display:none;">
+      <div class="empty-icon"><i class="fas fa-blender"></i></div>
+      <h3 data-i18n="noAppliancesTitle">No Appliances Yet</h3>
+      <p data-i18n="noAppliancesDesc">Add your home appliances to track warranties and maintenance.</p>
+      <button class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="openApplianceModal()">
+        <i class="fas fa-plus"></i> <span data-i18n="addAppliance">Add Appliance</span>
+      </button>
+    </div>
+
+    <!-- Appliance Detail View -->
+    <div id="appliance-detail" class="detail-view"></div>
+  </div>
+
+  <!-- ====== SCHEDULE SCREEN ====== -->
+  <div id="screen-schedule" class="screen">
+    <h2 class="section-title">
+      <span data-i18n="maintenance">Reminders</span>
+      <button class="btn btn-primary btn-sm" onclick="openTaskModal()">
+        <i class="fas fa-plus"></i> <span data-i18n="addTask">Add</span>
+      </button>
+    </h2>
+
+    <div class="card" style="margin-bottom:18px;">
+      <div class="cal-header">
+        <h3 id="cal-month-label"></h3>
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+          <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <h3 id="tasks-date-label" style="font-size:15px;font-family:'Source Sans 3',sans-serif;font-weight:600;"></h3>
+    </div>
+    <div id="task-list" class="task-list"></div>
+    <div id="task-empty" class="empty-state" style="display:none;padding:24px;">
+      <p style="font-size:13px;" data-i18n="noTasksForDate">No tasks for this date</p>
+    </div>
+  </div>
+
+  <!-- ====== HISTORY SCREEN ====== -->
+  <div id="screen-history" class="screen">
+    <h2 class="section-title" data-i18n="repairHistory">Past Fixes</h2>
+    <div id="history-list"></div>
+    <div id="history-empty" class="empty-state" style="display:none;">
+      <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+      <h3 data-i18n="noHistoryTitle">No Saved Records Yet</h3>
+      <p data-i18n="noHistoryDesc">Complete a diagnosis or chat repair and save it to build your history.</p>
+    </div>
+    <div id="history-detail" class="detail-view"></div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="home" onclick="navigateTo('home')">
+      <i class="fas fa-home"></i><span data-i18n="navHome">Home</span>
+    </button>
+    <button class="nav-item" data-screen="diagnose" onclick="navigateTo('diagnose')">
+      <i class="fas fa-search-plus"></i><span data-i18n="navDiagnose">Fix</span>
+    </button>
+    <button class="nav-item" data-screen="appliances" onclick="navigateTo('appliances')">
+      <i class="fas fa-box"></i><span data-i18n="navAppliances">Appliances</span>
+    </button>
+    <button class="nav-item" data-screen="history" onclick="navigateTo('history')">
+      <i class="fas fa-clipboard-list"></i><span data-i18n="navHistory">History</span>
+    </button>
+    <button class="nav-item" data-screen="schedule" onclick="navigateTo('schedule')">
+      <i class="fas fa-calendar"></i><span data-i18n="navSchedule">Reminders</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ====== MODALS ====== -->
+
+<!-- Add Appliance Modal -->
+<div id="modal-appliance" class="modal-overlay" onclick="closeModalOnBackdrop(event, 'modal-appliance')">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span id="appliance-modal-title" data-i18n="addAppliance">Add Appliance</span>
+      <button class="modal-close" onclick="closeModal('modal-appliance')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="input-group">
+      <label data-i18n="appName">Appliance Name</label>
+      <input type="text" id="app-name" class="input-field" data-i18n="appNamePlaceholder" placeholder="e.g., Samsung Refrigerator">
+    </div>
+    <div class="input-group">
+      <label data-i18n="category">Category</label>
+      <select id="app-category" class="input-field">
+        <option value="kitchen" data-i18n="catKitchen">🍳 Kitchen</option>
+        <option value="laundry" data-i18n="catLaundry">👕 Laundry</option>
+        <option value="hvac" data-i18n="catHVAC">❄️ HVAC</option>
+        <option value="plumbing" data-i18n="catPlumbing">🚿 Plumbing</option>
+        <option value="electrical" data-i18n="catElectrical">💡 Electrical</option>
+        <option value="outdoor" data-i18n="catOutdoor">🌿 Outdoor</option>
+        <option value="other" data-i18n="catOther">📦 Other</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label data-i18n="brand">Brand / Manufacturer</label>
+      <input type="text" id="app-brand" class="input-field" data-i18n="brandPlaceholder" placeholder="e.g., Samsung">
+    </div>
+    <div class="input-group">
+      <label data-i18n="modelNumber">Model Number</label>
+      <input type="text" id="app-model" class="input-field" data-i18n="modelPlaceholder" placeholder="e.g., RF28R7351SR">
+    </div>
+    <div class="input-group">
+      <label data-i18n="purchaseDate">Purchase Date</label>
+      <input type="date" id="app-purchase" class="input-field">
+    </div>
+    <div class="input-group">
+      <label data-i18n="warrantyExpiry">Warranty Expiry</label>
+      <input type="date" id="app-warranty" class="input-field">
+    </div>
+    <div class="input-group">
+      <label data-i18n="notes">Notes</label>
+      <textarea id="app-notes" class="input-field" data-i18n="notesPlaceholder" placeholder="Any additional notes..." style="min-height:70px;"></textarea>
+    </div>
+    <div class="input-group">
+      <label><span data-i18n="userManual">User Manual</span> <span style="font-weight:400;color:var(--text-muted);font-size:12px;" data-i18n="manualHint">(PDF or text file)</span></label>
+      <input type="file" id="app-manual-file" accept=".pdf,.txt,.doc,.docx" style="display:none;">
+      <div id="app-manual-upload" class="manual-upload-zone" onclick="document.getElementById('app-manual-file').click()">
+        <i class="fas fa-file-upload"></i>
+        <h4 data-i18n="uploadManual">Upload Manual</h4>
+        <p data-i18n="manualFormats">PDF, TXT, DOC supported · Max 10MB</p>
+      </div>
+      <div id="app-manual-info" style="display:none;"></div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="saveAppliance()">
+      <i class="fas fa-check"></i> <span id="appliance-save-text" data-i18n="saveAppliance">Save Appliance</span>
+    </button>
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<div id="modal-task" class="modal-overlay" onclick="closeModalOnBackdrop(event, 'modal-task')">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span data-i18n="addMaintenanceTask">Add Maintenance Task</span>
+      <button class="modal-close" onclick="closeModal('modal-task')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="input-group">
+      <label data-i18n="taskName">Task Name</label>
+      <input type="text" id="task-name" class="input-field" data-i18n="taskNamePlaceholder" placeholder="e.g., Replace HVAC filter">
+    </div>
+    <div class="input-group">
+      <label data-i18n="date">Date</label>
+      <input type="date" id="task-date" class="input-field">
+    </div>
+    <div class="input-group">
+      <label data-i18n="priority">Priority</label>
+      <select id="task-priority" class="input-field">
+        <option value="low" data-i18n="priorityLow">Low</option>
+        <option value="medium" selected="" data-i18n="priorityMedium">Medium</option>
+        <option value="high" data-i18n="priorityHigh">High</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label data-i18n="linkedAppliance">Linked Appliance (Optional)</label>
+      <select id="task-appliance" class="input-field">
+        <option value="" data-i18n="linkedNone">None</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label data-i18n="notes">Notes</label>
+      <textarea id="task-notes" class="input-field" data-i18n="notesPlaceholder" placeholder="Additional details..." style="min-height:70px;"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="saveTask()">
+      <i class="fas fa-check"></i> <span data-i18n="saveTask">Save Task</span>
+    </button>
+  </div>
+</div>
+
+<!-- About Modal -->
+<div id="modal-about" class="modal-overlay" onclick="closeModalOnBackdrop(event, 'modal-about')">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span data-i18n="about">About</span>
+      <button class="modal-close" onclick="closeModal('modal-about')"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="text-align:center;padding:10px 0 20px;">
+      <div id="about-icon" style="width:64px;height:64px;margin:0 auto 12px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-end));display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 16px var(--accent-glow);"></div>
+      <h2 style="font-size:22px;margin-bottom:4px;" data-i18n="aboutTitle">UncleFix</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;" data-i18n="aboutSubtitle">AI-friendly home repair helper</p>
+      <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;text-align:left;">
+        <p style="margin-bottom:10px;" data-i18n="aboutP1">A multimodal AI application for intelligent household maintenance diagnostics and management.</p>
+        <p style="margin-bottom:10px;" data-i18n="aboutP2">Features include visual diagnostics via image analysis, guided repair Q&amp;A, personal appliance library management, and maintenance scheduling with warranty tracking.</p>
+        <p data-i18n="aboutP3">Powered by Vision-Language Models for accurate, context-aware assistance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div id="confirm-dialog" class="confirm-overlay">
+  <div class="confirm-box">
+    <p id="confirm-msg"></p>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary btn-sm" id="confirm-cancel" data-i18n="cancel">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="confirm-ok" data-i18n="confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Handyman SVG Icon ───
+function handymanSVG(size) {
+  var s = size || 22;
+  return '<svg viewBox="0 0 120 120" width="' + s + '" height="' + s + '" xmlns="http://www.w3.org/2000/svg">' +
+    // Spanner behind shoulder
+    '<g transform="translate(82,12) rotate(25)">' +
+      '<rect x="-4" y="0" width="8" height="42" rx="3" fill="#8C939C"/>' +
+      '<rect x="-4" y="0" width="4" height="42" rx="2" fill="#9DA4AD" opacity="0.5"/>' +
+      // Open-end jaw top
+      '<path d="M-10,-6 Q-10,-16 -4,-16 L4,-16 Q10,-16 10,-6 L7,0 L-7,0 Z" fill="#7B838C"/>' +
+      '<rect x="-2" y="-14" width="4" height="8" rx="1.5" fill="#6B737B"/>' +
+      // Open-end jaw bottom
+      '<path d="M-9,42 Q-9,52 -3,52 L3,52 Q9,52 9,42 L7,38 L-7,38 Z" fill="#7B838C"/>' +
+      '<rect x="-2" y="40" width="4" height="7" rx="1.5" fill="#6B737B"/>' +
+    '</g>' +
+    // Body / shirt
+    '<path d="M36,68 Q34,62 42,60 L78,60 Q86,62 84,68 L88,100 Q88,106 82,106 L38,106 Q32,106 32,100 Z" fill="#1C274C"/>' +
+    // Shirt collar V
+    '<path d="M52,60 L60,72 L68,60" fill="#141D3A"/>' +
+    // Left arm
+    '<path d="M36,66 Q28,68 24,78 Q22,84 26,88" stroke="#FDDCB5" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+    // Left hand (thumb up)
+    '<circle cx="26" cy="90" r="6" fill="#F5D0A8"/>' +
+    // Right arm raised holding spanner
+    '<path d="M84,66 Q92,62 90,50 Q89,44 86,40" stroke="#FDDCB5" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+    // Right hand gripping
+    '<ellipse cx="85" cy="38" rx="6" ry="5" fill="#F5D0A8"/>' +
+    // Tool belt
+    '<rect x="34" y="84" width="52" height="7" rx="3" fill="#4A7EC0"/>' +
+    '<rect x="34" y="85" width="52" height="2" rx="1" fill="#71A6EE" opacity="0.6"/>' +
+    // Belt buckle
+    '<rect x="55" y="83" width="10" height="9" rx="2" fill="#E1F18C"/>' +
+    '<rect x="57" y="85" width="6" height="5" rx="1" fill="#C5D66A"/>' +
+    // Belt pouch left
+    '<rect x="38" y="88" width="10" height="12" rx="2" fill="#3A6AAE"/>' +
+    '<line x1="43" y1="88" x2="43" y2="92" stroke="#3A6AAE" stroke-width="1"/>' +
+    // Belt pouch right (screwdriver sticking out)
+    '<rect x="72" y="88" width="10" height="12" rx="2" fill="#3A6AAE"/>' +
+    '<line x1="75" y1="82" x2="75" y2="90" stroke="#E1F18C" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<line x1="75" y1="80" x2="75" y2="83" stroke="#A0A8B0" stroke-width="1.5" stroke-linecap="round"/>' +
+    // Head
+    '<circle cx="60" cy="42" r="20" fill="#FDDCB5"/>' +
+    // Ears
+    '<ellipse cx="39" cy="44" rx="4" ry="5" fill="#F0C9A0"/>' +
+    '<ellipse cx="81" cy="44" rx="4" ry="5" fill="#F0C9A0"/>' +
+    // Hair peeking under hat
+    '<path d="M42,34 Q42,30 46,32" stroke="#6B4423" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+    '<path d="M78,34 Q78,30 74,32" stroke="#6B4423" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+    // Hard hat dome
+    '<ellipse cx="60" cy="26" rx="22" ry="14" fill="#D5B8DC"/>' +
+    // Hat brim
+    '<ellipse cx="60" cy="32" rx="28" ry="5" fill="#C4A0CC"/>' +
+    // Hat band
+    '<rect x="42" y="29" width="36" height="4" rx="2" fill="#B090B8"/>' +
+    // Hat shine
+    '<ellipse cx="52" cy="22" rx="8" ry="3" fill="white" opacity="0.25"/>' +
+    // Eyebrows
+    '<path d="M48,36 Q51,33 54,36" stroke="#5A3A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+    '<path d="M66,36 Q69,33 72,36" stroke="#5A3A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+    // Eyes
+    '<ellipse cx="52" cy="41" rx="3.5" ry="4" fill="white"/>' +
+    '<ellipse cx="68" cy="41" rx="3.5" ry="4" fill="white"/>' +
+    '<circle cx="53" cy="41" r="2.2" fill="#3D2E1A"/>' +
+    '<circle cx="69" cy="41" r="2.2" fill="#3D2E1A"/>' +
+    // Eye sparkle
+    '<circle cx="54" cy="40" r="0.8" fill="white"/>' +
+    '<circle cx="70" cy="40" r="0.8" fill="white"/>' +
+    // Nose
+    '<ellipse cx="60" cy="47" rx="2.5" ry="2" fill="#F0C09A"/>' +
+    // Mustache
+    '<path d="M52,51 Q56,54 60,50 Q64,54 68,51" stroke="#6B4423" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    // Big smile
+    '<path d="M52,55 Q60,62 68,55" stroke="#3D2E1A" stroke-width="1.8" fill="#E8836A" stroke-linecap="round"/>' +
+    // Teeth hint
+    '<path d="M55,56 L65,56" stroke="white" stroke-width="1.5" stroke-linecap="round"/>' +
+  '</svg>';
+}
+
+function handymanSVGFull() {
+  return '<svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' +
+    '<g transform="translate(82,12) rotate(25)">' +
+      '<rect x="-4" y="0" width="8" height="42" rx="3" fill="#8C939C"/>' +
+      '<rect x="-4" y="0" width="4" height="42" rx="2" fill="#9DA4AD" opacity="0.5"/>' +
+      '<path d="M-10,-6 Q-10,-16 -4,-16 L4,-16 Q10,-16 10,-6 L7,0 L-7,0 Z" fill="#7B838C"/>' +
+      '<rect x="-2" y="-14" width="4" height="8" rx="1.5" fill="#6B737B"/>' +
+      '<path d="M-9,42 Q-9,52 -3,52 L3,52 Q9,52 9,42 L7,38 L-7,38 Z" fill="#7B838C"/>' +
+      '<rect x="-2" y="40" width="4" height="7" rx="1.5" fill="#6B737B"/>' +
+    '</g>' +
+    '<path d="M36,68 Q34,62 42,60 L78,60 Q86,62 84,68 L88,100 Q88,106 82,106 L38,106 Q32,106 32,100 Z" fill="#1C274C"/>' +
+    '<path d="M52,60 L60,72 L68,60" fill="#141D3A"/>' +
+    '<path d="M36,66 Q28,68 24,78 Q22,84 26,88" stroke="#FDDCB5" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+    '<circle cx="26" cy="90" r="6" fill="#F5D0A8"/>' +
+    '<path d="M84,66 Q92,62 90,50 Q89,44 86,40" stroke="#FDDCB5" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+    '<ellipse cx="85" cy="38" rx="6" ry="5" fill="#F5D0A8"/>' +
+    '<rect x="34" y="84" width="52" height="7" rx="3" fill="#4A7EC0"/>' +
+    '<rect x="34" y="85" width="52" height="2" rx="1" fill="#71A6EE" opacity="0.6"/>' +
+    '<rect x="55" y="83" width="10" height="9" rx="2" fill="#E1F18C"/>' +
+    '<rect x="57" y="85" width="6" height="5" rx="1" fill="#C5D66A"/>' +
+    '<rect x="38" y="88" width="10" height="12" rx="2" fill="#3A6AAE"/>' +
+    '<line x1="43" y1="88" x2="43" y2="92" stroke="#3A6AAE" stroke-width="1"/>' +
+    '<rect x="72" y="88" width="10" height="12" rx="2" fill="#3A6AAE"/>' +
+    '<line x1="75" y1="82" x2="75" y2="90" stroke="#E1F18C" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<line x1="75" y1="80" x2="75" y2="83" stroke="#A0A8B0" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<circle cx="60" cy="42" r="20" fill="#FDDCB5"/>' +
+    '<ellipse cx="39" cy="44" rx="4" ry="5" fill="#F0C9A0"/>' +
+    '<ellipse cx="81" cy="44" rx="4" ry="5" fill="#F0C9A0"/>' +
+    '<path d="M42,34 Q42,30 46,32" stroke="#6B4423" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+    '<path d="M78,34 Q78,30 74,32" stroke="#6B4423" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="60" cy="26" rx="22" ry="14" fill="#D5B8DC"/>' +
+    '<ellipse cx="60" cy="32" rx="28" ry="5" fill="#C4A0CC"/>' +
+    '<rect x="42" y="29" width="36" height="4" rx="2" fill="#B090B8"/>' +
+    '<ellipse cx="52" cy="22" rx="8" ry="3" fill="white" opacity="0.25"/>' +
+    '<path d="M48,36 Q51,33 54,36" stroke="#5A3A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+    '<path d="M66,36 Q69,33 72,36" stroke="#5A3A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="52" cy="41" rx="3.5" ry="4" fill="white"/>' +
+    '<ellipse cx="68" cy="41" rx="3.5" ry="4" fill="white"/>' +
+    '<circle cx="53" cy="41" r="2.2" fill="#3D2E1A"/>' +
+    '<circle cx="69" cy="41" r="2.2" fill="#3D2E1A"/>' +
+    '<circle cx="54" cy="40" r="0.8" fill="white"/>' +
+    '<circle cx="70" cy="40" r="0.8" fill="white"/>' +
+    '<ellipse cx="60" cy="47" rx="2.5" ry="2" fill="#F0C09A"/>' +
+    '<path d="M52,51 Q56,54 60,50 Q64,54 68,51" stroke="#6B4423" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<path d="M52,55 Q60,62 68,55" stroke="#3D2E1A" stroke-width="1.8" fill="#E8836A" stroke-linecap="round"/>' +
+    '<path d="M55,56 L65,56" stroke="white" stroke-width="1.5" stroke-linecap="round"/>' +
+  '</svg>';
+}
+
+document.documentElement.classList.remove('dark');
+
+// ─── Language / i18n ───
+let currentLang = 'en';
+
+const T = {
+  en: {
+    // Header
+    logoName: 'Uncle<span>Fix</span>',
+    // Hero
+    heroTitle: 'Need something fixed?',
+    heroDesc: 'Take a photo, tell us what’s wrong, and get safe step-by-step help.',
+    aiBadgePhoto: 'AI checks your photo',
+    aiBadgeSafety: 'Safety reminders',
+    aiBadgeSteps: 'Step-by-step plan',
+    // Quick grid
+    qcDiagnoseTitle: 'Fix with a Photo',
+    qcDiagnoseDesc: 'Photo + a few words',
+    qcApplianceTitle: 'My Appliances',
+    qcApplianceDesc: 'Manuals & warranty',
+    qcHistoryTitle: 'Past Fixes',
+    qcHistoryDesc: 'Saved reports',
+    qcScheduleTitle: 'Reminders',
+    qcScheduleDesc: 'Upcoming tasks',
+    // Tip
+    proTip: 'Tip',
+    proTipText: 'Clear photos in good light help a lot. If something feels unsafe, call a professional.',
+    // Diagnose screen
+    aiDiagnostics: 'Fix a Problem',
+    photoDiagnose: 'Photo',
+    askAI: 'AI Chat',
+    photoUploadHint: 'Add a photo and a short description. UncleFix will suggest what to do next.',
+    uploadPhoto: 'Add a Photo',
+    uploadHint: 'Tap to select or drag and drop',
+    describeIssue: 'Describe the Issue',
+    descPlaceholder: 'e.g., Water is leaking from under the kitchen sink near the pipe joint...',
+    analyzeIssue: 'Get Help',
+    analyzingImage: 'Checking your photo...',
+    aiExamining: 'Working on it…',
+    diagnosisReport: 'What we found',
+    aiAnalysis: 'Suggested next steps',
+    aiDiagBadge1: 'AI suggestion',
+    aiDiagBadge2: 'Tells you what’s risky',
+    aiDiagBadge3: 'Says when to call a pro',
+    // Chat
+    chatWelcome: "Hi! I’m UncleFix.",
+    chatWelcomeHint: 'Ask in plain language — I’ll keep it simple and tell you if you should call a professional:',
+    chatPlaceholder: 'Describe your issue...',
+    suggestFaucet: 'How do I fix a dripping faucet?',
+    suggestCircuit: 'My circuit breaker keeps tripping',
+    suggestHVAC: 'HVAC not cooling properly',
+    suggestDrywall: 'Best way to patch drywall holes',
+    // Appliances
+    myAppliances: 'My Appliances',
+    addBtn: 'Add',
+    noAppliancesTitle: 'No Appliances Yet',
+    noAppliancesDesc: 'Add your home appliances to track warranties and maintenance.',
+    addAppliance: 'Add Appliance',
+    editAppliance: 'Edit Appliance',
+    appName: 'Appliance Name',
+    appNamePlaceholder: 'e.g., Samsung Refrigerator',
+    category: 'Category',
+    catKitchen: '🍳 Kitchen',
+    catLaundry: '👕 Laundry',
+    catHVAC: '❄️ HVAC',
+    catPlumbing: '🚿 Plumbing',
+    catElectrical: '💡 Electrical',
+    catOutdoor: '🌿 Outdoor',
+    catOther: '📦 Other',
+    brand: 'Brand / Manufacturer',
+    brandPlaceholder: 'e.g., Samsung',
+    modelNumber: 'Model Number',
+    modelPlaceholder: 'e.g., RF28R7351SR',
+    purchaseDate: 'Purchase Date',
+    warrantyExpiry: 'Warranty Expiry',
+    notes: 'Notes',
+    notesPlaceholder: 'Any additional notes...',
+    userManual: 'User Manual',
+    manualHint: '(PDF or text file)',
+    uploadManual: 'Upload Manual',
+    manualFormats: 'PDF, TXT, DOC supported · Max 10MB',
+    saveAppliance: 'Save Appliance',
+    // Schedule
+    maintenance: 'Reminders',
+    addTask: 'Add',
+    addMaintenanceTask: 'Add a Reminder',
+    taskName: 'Reminder',
+    taskNamePlaceholder: 'e.g., Change air filter',
+    date: 'Date',
+    priority: 'Priority',
+    priorityLow: 'Low',
+    priorityMedium: 'Medium',
+    priorityHigh: 'High',
+    linkedAppliance: 'Linked Appliance (Optional)',
+    linkedNone: 'None',
+    saveTask: 'Save Task',
+    noTasksForDate: 'No tasks for this date',
+    // History
+    repairHistory: 'Past Fixes',
+    noHistoryTitle: 'No Saved Records Yet',
+    noHistoryDesc: 'Complete a diagnosis or chat repair and save it to build your history.',
+    // About
+    about: 'About',
+    aboutTitle: 'UncleFix',
+    aboutSubtitle: 'AI-friendly home repair helper',
+    aboutP1: 'UncleFix helps you troubleshoot common home problems and plan simple maintenance.',
+    aboutP2: 'Use a photo + a short description to get step-by-step tips, track your appliances, and set reminders.',
+    aboutP3: 'If something is risky (gas, electricity, major leaks), UncleFix will tell you to call a professional.',
+    // Confirm
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    // Nav
+    navHome: 'Home',
+    navDiagnose: 'Fix',
+    navAppliances: 'Appliances',
+    navHistory: 'History',
+    navSchedule: 'Reminders',
+    // Step tracker
+    repairSteps: 'Repair Steps',
+    stepsLabel: 'steps',
+    completed: 'completed',
+    allStepsCompleted: 'All steps completed!',
+    greatJob: 'Great job on this repair',
+    helpRemaining: 'Help with remaining',
+    saveToHistory: 'Save to History',
+    // Dynamic
+    savedToHistory: 'Saved to repair history!',
+    alreadySaved: 'Already saved to history',
+    pleaseUploadOrDescribe: 'Please upload a photo or describe the issue.',
+    warrantyActive: 'Warranty Active',
+    warrantyExpired: 'Warranty Expired',
+    askAIAbout: 'Ask about this appliance',
+    manualUploaded: 'Manual uploaded',
+    deleteAppliance: 'Delete this appliance?',
+    deleteTask: 'Delete this task?',
+    removeManual: 'Remove manual?',
+    // Eco
+    ecoTitle: 'Energy Saving Tips',
+    ecoSubtitleAppliance: 'AI-powered tips for this appliance',
+    ecoPlaceholderAppliance: 'Get personalised energy-saving and eco-friendly tips for this appliance.',
+    ecoGenerate: 'Generate Tips',
+    ecoRefresh: 'Refresh Tips',
+    ecoGenerating: 'Generating tips...',
+    // Detail view
+    backToAppliances: 'Back to Appliances',
+    details: 'Details',
+    relatedTasks: 'Related Tasks',
+    edit: 'Edit',
+    delete: 'Delete',
+    askAIShort: 'Ask',
+    uploaded: 'Uploaded',
+    notUploaded: 'Not uploaded',
+    addManualLink: 'Add manual',
+  },
+  tc: {
+    logoName: 'Uncle<span>Fix</span>',
+    heroTitle: '需要幫手維修？',
+    heroDesc: '拍張照片，簡單描述問題，獲得安全的逐步建議。',
+    aiBadgePhoto: 'AI 幫你看照片',
+    aiBadgeSafety: '安全提示',
+    aiBadgeSteps: '逐步教你做',
+    qcDiagnoseTitle: '用照片求助',
+    qcDiagnoseDesc: '照片＋幾句描述',
+    qcApplianceTitle: '我的電器',
+    qcApplianceDesc: '說明書與保固',
+    qcHistoryTitle: '過往紀錄',
+    qcHistoryDesc: '已保存的報告',
+    qcScheduleTitle: '提醒',
+    qcScheduleDesc: '待辦事項',
+    proTip: '小提示',
+    proTipText: '照片清晰、光線充足會更準確；如有危險請找專業人士。',
+    aiDiagnostics: '維修求助',
+    photoDiagnose: '照片',
+    askAI: 'AI 對話',
+    photoUploadHint: '加入照片並簡單描述問題，UncleFix 會建議下一步。',
+    uploadPhoto: '加入照片',
+    uploadHint: '點擊選擇或拖放',
+    describeIssue: '描述問題',
+    descPlaceholder: '例如：廚房水槽下方管道接頭處正在漏水⋯',
+    analyzeIssue: '分析問題',
+    analyzingImage: '正在分析您的圖片⋯',
+    aiExamining: '我們的AI正在檢查問題',
+    diagnosisReport: '診斷報告',
+    aiAnalysis: 'AI生成的分析',
+    chatWelcome: '您好！我是您的家居維護AI助理。',
+    chatWelcomeHint: '用日常用語問就可以；我會講得簡單，並提醒你何時需要找專業人士：',
+    chatPlaceholder: '描述您的問題⋯',
+    suggestFaucet: '如何修理滴水的水龍頭？',
+    suggestCircuit: '我的斷路器一直跳閘',
+    suggestHVAC: '冷氣不製冷',
+    suggestDrywall: '修補石膏牆洞的最佳方法',
+    myAppliances: '我的電器',
+    addBtn: '新增',
+    noAppliancesTitle: '尚無電器',
+    noAppliancesDesc: '新增您的家電以追蹤保固和維護。',
+    addAppliance: '新增電器',
+    editAppliance: '編輯電器',
+    appName: '電器名稱',
+    appNamePlaceholder: '例如：Samsung 冰箱',
+    category: '類別',
+    catKitchen: '🍳 廚房',
+    catLaundry: '👕 洗衣',
+    catHVAC: '❄️ 暖通空調',
+    catPlumbing: '🚿 管道',
+    catElectrical: '💡 電氣',
+    catOutdoor: '🌿 戶外',
+    catOther: '📦 其他',
+    brand: '品牌 / 製造商',
+    brandPlaceholder: '例如：Samsung',
+    modelNumber: '型號',
+    modelPlaceholder: '例如：RF28R7351SR',
+    purchaseDate: '購買日期',
+    warrantyExpiry: '保固到期',
+    notes: '備註',
+    notesPlaceholder: '任何額外備註⋯',
+    userManual: '用戶手冊',
+    manualHint: '（PDF或文字檔案）',
+    uploadManual: '上傳手冊',
+    manualFormats: '支援 PDF、TXT、DOC · 最大 10MB',
+    saveAppliance: '儲存電器',
+    maintenance: '維護排程',
+    addTask: '新增任務',
+    addMaintenanceTask: '新增維護任務',
+    taskName: '任務名稱',
+    taskNamePlaceholder: '例如：更換暖通空調過濾器',
+    date: '日期',
+    priority: '優先級',
+    priorityLow: '低',
+    priorityMedium: '中',
+    priorityHigh: '高',
+    linkedAppliance: '關聯電器（選填）',
+    linkedNone: '無',
+    saveTask: '儲存任務',
+    noTasksForDate: '此日期無任務',
+    repairHistory: '維修紀錄',
+    noHistoryTitle: '尚無維修記錄',
+    noHistoryDesc: '完成診斷或AI對話維修後儲存，即可建立紀錄。',
+    about: '關於',
+    aboutTitle: '多模態家居維護 AI',
+    aboutSubtitle: 'AI驅動的家居維護助手',
+    aboutP1: '一款用於智能家居維護診斷和管理的多模態AI應用程式。',
+    aboutP2: '功能包括通過圖像分析進行視覺診斷、引導式維修問答、個人電器庫管理，以及帶有保固追蹤的維護排程。',
+    aboutP3: '由視覺語言模型驅動，提供準確的、情境感知的協助。',
+    cancel: '取消',
+    confirm: '確認',
+    navHome: '首頁',
+    navDiagnose: '求助',
+    navAppliances: '電器',
+    navHistory: '紀錄',
+    navSchedule: '提醒',
+    repairSteps: '維修步驟',
+    stepsLabel: '步驟',
+    completed: '已完成',
+    allStepsCompleted: '所有步驟已完成！',
+    greatJob: '維修做得好',
+    helpRemaining: '協助剩餘步驟',
+    saveToHistory: '儲存至紀錄',
+    savedToHistory: '已儲存至維修紀錄！',
+    alreadySaved: '已儲存至紀錄',
+    pleaseUploadOrDescribe: '請上傳照片或描述問題。',
+    warrantyActive: '保固有效',
+    warrantyExpired: '保固已過期',
+    askAIAbout: '詢問AI關於此電器',
+    manualUploaded: '已上傳手冊',
+    deleteAppliance: '刪除此電器？',
+    deleteTask: '刪除此任務？',
+    removeManual: '移除手冊？',
+    ecoTitle: '節能環保建議',
+    ecoSubtitleAppliance: '為此電器提供AI節能建議',
+    ecoPlaceholderAppliance: '為此電器獲取個人化節能環保建議。',
+    ecoGenerate: '生成建議',
+    ecoRefresh: '重新生成',
+    ecoGenerating: '正在生成建議⋯',
+    backToAppliances: '返回電器列表',
+    details: '詳細資料',
+    relatedTasks: '相關任務',
+    edit: '編輯',
+    delete: '刪除',
+    askAIShort: '問AI',
+    uploaded: '已上傳',
+    notUploaded: '未上傳',
+    addManualLink: '新增手冊',
+  }
+};
+
+function t(key) {
+  return (T[currentLang] && T[currentLang][key]) || (T.en[key]) || key;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  // Update toggle UI
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-tc').classList.toggle('active', lang === 'tc');
+  updateLangSlider();
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var val = t(key);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = val;
+    } else if (el.tagName === 'OPTION') {
+      el.textContent = val;
+    } else if (el.hasAttribute('data-i18n-html')) {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+  // Re-render dynamic lists so they pick up the new language
+  renderAppliances();
+  renderHistory();
+  renderHomeUpcoming();
+  renderTasks();
+}
+
+function updateLangSlider() {
+  var toggle = document.getElementById('lang-toggle');
+  var slider = document.getElementById('lang-slider');
+  var enBtn = document.getElementById('lang-en');
+  var tcBtn = document.getElementById('lang-tc');
+  if (!toggle || !slider) return;
+  var activeBtn = currentLang === 'en' ? enBtn : tcBtn;
+  slider.style.width = activeBtn.offsetWidth + 'px';
+  slider.style.transform = 'translateX(' + (activeBtn.offsetLeft - 3) + 'px)';
+}
+
+// ─── State ───
+let appliances = [];
+let tasks = [];
+let calDate = new Date();
+let selectedDate = new Date();
+let editingApplianceId = null;
+let diagnoseFile = null;
+let chatBusy = false;
+let repairHistory = [];
+let activeTrackers = {}; // trackerId -> { steps: [{text, done}], rawContent, source, title }
+let trackerIdCounter = 0;
+
+const CATEGORY_ICONS = {
+  kitchen: { icon: 'fa-utensils', bg: 'var(--warning-light)', color: 'var(--warning)' },
+  laundry: { icon: 'fa-shirt', bg: 'var(--info-light)', color: 'var(--info)' },
+  hvac: { icon: 'fa-snowflake', bg: 'var(--info-light)', color: 'var(--info)' },
+  plumbing: { icon: 'fa-faucet-drip', bg: 'var(--accent-light)', color: 'var(--accent)' },
+  electrical: { icon: 'fa-bolt', bg: 'var(--warning-light)', color: 'var(--warning)' },
+  outdoor: { icon: 'fa-leaf', bg: 'var(--success-light)', color: 'var(--success)' },
+  other: { icon: 'fa-box', bg: 'var(--bg-input)', color: 'var(--text-muted)' }
+};
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+// ─── Navigation ───
+function navigateTo(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('screen-' + screen).classList.add('active');
+  const navBtn = document.querySelector('.nav-item[data-screen="' + screen + '"]');
+  if (navBtn) navBtn.classList.add('active');
+
+  // Hide detail views when navigating
+  const detail = document.getElementById('appliance-detail');
+  if (detail) {
+    detail.classList.remove('active');
+    detail.innerHTML = '';
+  }
+  const histDetail = document.getElementById('history-detail');
+  if (histDetail && histDetail.classList.contains('active')) {
+    histDetail.classList.remove('active');
+    histDetail.innerHTML = '';
+    var histList = document.getElementById('history-list');
+    if (histList) histList.style.display = '';
+    var histTitle = document.querySelector('#screen-history .section-title');
+    if (histTitle) histTitle.style.display = '';
+  }
+
+  if (screen === 'schedule') renderCalendar();
+  if (screen === 'appliances') renderAppliances();
+  if (screen === 'home') renderHomeUpcoming();
+  if (screen === 'history') renderHistory();
+
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+// ─── Confirm Dialog ───
+function showConfirm(message, onConfirm) {
+  const overlay = document.getElementById('confirm-dialog');
+  document.getElementById('confirm-msg').textContent = message;
+  overlay.classList.add('open');
+
+  const cancelBtn = document.getElementById('confirm-cancel');
+  const okBtn = document.getElementById('confirm-ok');
+
+  function cleanup() {
+    overlay.classList.remove('open');
+    cancelBtn.removeEventListener('click', handleCancel);
+    okBtn.removeEventListener('click', handleOk);
+  }
+  function handleCancel() { cleanup(); }
+  function handleOk() { cleanup(); onConfirm(); }
+
+  cancelBtn.addEventListener('click', handleCancel);
+  okBtn.addEventListener('click', handleOk);
+}
+
+// ─── Modal Helpers ───
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeModalOnBackdrop(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+function showAbout() { openModal('modal-about'); }
+
+// ─── DIAGNOSE TAB SWITCHER ───
+function switchDiagnoseTab(tab) {
+  document.querySelectorAll('.diagnose-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.diagnose-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('dtab-' + tab).classList.add('active');
+  document.getElementById('dpanel-' + tab).classList.add('active');
+}
+
+// ─── DIAGNOSE ───
+const diagnoseFile_input = document.getElementById('diagnose-file');
+const uploadZone = document.getElementById('diagnose-upload');
+
+diagnoseFile_input.addEventListener('change', (e) => {
+  if (e.target.files && e.target.files[0]) {
+    handleDiagnoseFile(e.target.files[0]);
+  }
+});
+
+uploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+uploadZone.addEventListener('dragleave', () => {
+  uploadZone.classList.remove('dragover');
+});
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    handleDiagnoseFile(e.dataTransfer.files[0]);
+  }
+});
+
+function handleDiagnoseFile(file) {
+  diagnoseFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('diagnose-img').src = e.target.result;
+    document.getElementById('diagnose-preview').style.display = 'block';
+    document.getElementById('diagnose-upload').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeDiagnoseImage() {
+  diagnoseFile = null;
+  document.getElementById('diagnose-preview').style.display = 'none';
+  document.getElementById('diagnose-upload').style.display = 'block';
+  diagnoseFile_input.value = '';
+}
+
+// Track raw content for diagnosis
+let lastDiagnoseRaw = '';
+
+// Register handler for diagnosis
+if (window.Poe) {
+  window.Poe.registerHandler('diagnose-handler', (result) => {
+    const msg = result.responses[0];
+    const contentEl = document.getElementById('diagnose-result-content');
+    const resultEl = document.getElementById('diagnose-result');
+    const loadingEl = document.getElementById('diagnose-loading');
+
+    if (msg.status === 'error') {
+      loadingEl.style.display = 'none';
+      resultEl.style.display = 'block';
+      contentEl.innerHTML = '<p style="color:var(--danger);">Error: ' + (msg.statusText || 'An error occurred during analysis.') + '</p>';
+    } else if (msg.status === 'incomplete') {
+      loadingEl.style.display = 'none';
+      resultEl.style.display = 'block';
+      contentEl.innerHTML = marked.parse(msg.content);
+      lastDiagnoseRaw = msg.content;
+    } else if (msg.status === 'complete') {
+      loadingEl.style.display = 'none';
+      resultEl.style.display = 'block';
+      lastDiagnoseRaw = msg.content;
+      // Render with step tracker
+      const rendered = marked.parse(msg.content);
+      const trackerId = createStepTracker(msg.content, 'diagnose', document.getElementById('diagnose-desc').value.trim() || 'Visual Diagnosis');
+      contentEl.innerHTML = rendered;
+      if (trackerId !== null) {
+        replaceFixSectionWithTracker(contentEl, buildStepTrackerHTML(trackerId));
+      }
+      document.getElementById('diagnose-btn').disabled = false;
+      document.getElementById('diagnose-btn').innerHTML = '<i class="fas fa-microscope"></i> Analyze Issue';
+    }
+  });
+
+  // Eco tips handler
+  window.Poe.registerHandler('eco-handler', (result, context) => {
+    const msg = result.responses[0];
+    const appId = (context && context.applianceId) || currentEcoApplianceId;
+    const content = document.getElementById('eco-content-' + appId);
+    const btn = document.getElementById('eco-btn-' + appId);
+    if (!content || !btn) return;
+
+    if (msg.status === 'error') {
+      content.innerHTML = '<p class="eco-placeholder" style="color:rgba(240,112,112,0.8);">Error: ' + (msg.statusText || 'Something went wrong.') + '</p>';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-bolt"></i> ' + t('ecoGenerate');
+    } else if (msg.status === 'complete') {
+      try {
+        // Extract JSON from the response (may be wrapped in markdown code fences)
+        let raw = msg.content.trim();
+        const jsonMatch = raw.match(/\[[\s\S]*\]/);
+        if (jsonMatch) raw = jsonMatch[0];
+        const tips = JSON.parse(raw);
+        if (Array.isArray(tips) && tips.length > 0) {
+          content.innerHTML = renderEcoTips(tips);
+          btn.innerHTML = '<i class="fas fa-sync-alt"></i> ' + t('ecoRefresh');
+          btn.disabled = false;
+        } else {
+          throw new Error('Invalid format');
+        }
+      } catch (e) {
+        // Fallback: show the raw text response nicely
+        content.innerHTML = '<div class="eco-tip-text" style="padding:4px 0;">' + marked.parse(msg.content) + '</div>';
+        btn.innerHTML = '<i class="fas fa-sync-alt"></i> ' + t('ecoRefresh');
+        btn.disabled = false;
+      }
+    }
+  });
+}
+
+async function runDiagnosis() {
+  const desc = document.getElementById('diagnose-desc').value.trim();
+  if (!diagnoseFile && !desc) {
+    showToast(t('pleaseUploadOrDescribe'));
+    return;
+  }
+
+  const btn = document.getElementById('diagnose-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner" style="width:18px;height:18px;border-width:2px;"></div> Analyzing...';
+  document.getElementById('diagnose-loading').style.display = 'block';
+  document.getElementById('diagnose-result').style.display = 'none';
+
+  const langInstruction = currentLang === 'tc' ? ' IMPORTANT: You MUST respond entirely in Traditional Chinese (繁體中文). All text, headings, and step descriptions must be in Traditional Chinese.' : '';
+  const systemPrompt = 'You are UncleFix, a friendly home repair helper. Use simple, non-technical language. Analyze the photo and/or description of a household problem and provide: 1) **What’s likely happening** (one short paragraph), 2) **How serious is it** (**Low/Medium/High**) with a safety note, 3) **What to try first** (1–3 quick checks), 4) **Tools you might need** (bullets), 5) **Step-by-step fix** (numbered steps where EACH step MUST follow: \"N. Step title (~Xmin)\"), 6) **When to call a professional**. If the info is unclear, ask 1 clarifying question.' + langInstruction;
+
+  const prompt = desc
+    ? '@GPT-5.2 ' + systemPrompt + '\n\nUser description: ' + desc
+    : '@GPT-5.2 ' + systemPrompt + '\n\nPlease analyze this image of a household issue.';
+
+  try {
+    const attachments = diagnoseFile ? [diagnoseFile] : [];
+    await window.Poe.sendUserMessage(prompt, {
+      handler: 'diagnose-handler',
+      stream: true,
+      openChat: false,
+      attachments: attachments,
+      parameters: {}
+    });
+  } catch (err) {
+    document.getElementById('diagnose-loading').style.display = 'none';
+    document.getElementById('diagnose-result').style.display = 'block';
+    document.getElementById('diagnose-result-content').innerHTML = '<p style="color:var(--danger);">Error: ' + err.message + '</p>';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-microscope"></i> Analyze Issue';
+  }
+}
+
+// ─── APPLIANCES ───
+function renderAppliances() {
+  const list = document.getElementById('appliance-list');
+  const empty = document.getElementById('appliance-empty');
+
+  if (appliances.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.innerHTML = appliances.map((a) => {
+    const cat = CATEGORY_ICONS[a.category] || CATEGORY_ICONS.other;
+    const warrantyBadge = getWarrantyBadge(a.warranty);
+    return '<div class="appliance-item" onclick="showApplianceDetail(\'' + a.id + '\')">' +
+      '<div class="appliance-icon" style="background:' + cat.bg + ';color:' + cat.color + ';"><i class="fas ' + cat.icon + '"></i></div>' +
+      '<div class="appliance-info">' +
+        '<h4>' + escapeHtml(a.name) + '</h4>' +
+        '<p>' + escapeHtml(a.brand || 'No brand') + (a.model ? ' · ' + escapeHtml(a.model) : '') + '</p>' +
+      '</div>' +
+      (warrantyBadge ? warrantyBadge : '') +
+      '<span class="appliance-arrow"><i class="fas fa-chevron-right"></i></span>' +
+    '</div>';
+  }).join('');
+}
+
+function getWarrantyBadge(warranty) {
+  if (!warranty) return '';
+  const today = new Date();
+  const exp = new Date(warranty);
+  const daysLeft = Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+  if (daysLeft < 0) return '<span class="badge badge-danger">Expired</span>';
+  if (daysLeft < 30) return '<span class="badge badge-warning">Expiring</span>';
+  return '<span class="badge badge-success">Active</span>';
+}
+
+// ─── Manual upload state ───
+let pendingManualFile = null;
+let pendingManualText = null;
+let pendingManualName = null;
+
+function setupManualUpload() {
+  const fileInput = document.getElementById('app-manual-file');
+  fileInput.addEventListener('change', function(e) {
+    if (e.target.files && e.target.files[0]) {
+      handleManualFile(e.target.files[0]);
+    }
+  });
+}
+
+function handleManualFile(file) {
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('File too large. Max 10MB allowed.');
+    return;
+  }
+  pendingManualFile = file;
+  pendingManualName = file.name;
+  const uploadZone = document.getElementById('app-manual-upload');
+  const infoBox = document.getElementById('app-manual-info');
+  uploadZone.style.display = 'none';
+
+  const sizeStr = file.size < 1024 ? file.size + ' B' :
+    file.size < 1048576 ? (file.size / 1024).toFixed(1) + ' KB' :
+    (file.size / 1048576).toFixed(1) + ' MB';
+  const ext = file.name.split('.').pop().toUpperCase();
+
+  infoBox.style.display = 'block';
+  infoBox.innerHTML = '<div class="manual-file-info">' +
+    '<div class="mfi-icon"><i class="fas ' + (ext === 'PDF' ? 'fa-file-pdf' : 'fa-file-alt') + '"></i></div>' +
+    '<div class="mfi-details">' +
+      '<div class="mfi-name">' + escapeHtml(file.name) + '</div>' +
+      '<div class="mfi-size">' + sizeStr + ' · ' + ext + '</div>' +
+    '</div>' +
+    '<span class="mfi-status extracting">Extracting...</span>' +
+    '<button class="mfi-remove" onclick="removeManualFile()"><i class="fas fa-times"></i></button>' +
+  '</div>';
+
+  // Extract text from file
+  extractManualText(file);
+}
+
+function extractManualText(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (ext === 'txt') {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      pendingManualText = e.target.result;
+      updateManualStatus('ready');
+    };
+    reader.onerror = function() {
+      pendingManualText = null;
+      updateManualStatus('error');
+    };
+    reader.readAsText(file);
+  } else if (ext === 'pdf') {
+    // Use PDF.js from CDN to extract text
+    extractPDFText(file);
+  } else {
+    // For DOC/DOCX, read as text fallback
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      pendingManualText = e.target.result;
+      updateManualStatus('ready');
+    };
+    reader.onerror = function() {
+      pendingManualText = null;
+      updateManualStatus('error');
+    };
+    reader.readAsText(file);
+  }
+}
+
+async function extractPDFText(file) {
+  try {
+    // Load PDF.js dynamically
+    if (!window.pdfjsLib) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      document.head.appendChild(script);
+      await new Promise(function(resolve, reject) {
+        script.onload = resolve;
+        script.onerror = reject;
+      });
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+    const maxPages = Math.min(pdf.numPages, 50); // limit to 50 pages
+    for (let i = 1; i <= maxPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map(function(item) { return item.str; }).join(' ');
+      fullText += pageText + '\n';
+    }
+    pendingManualText = fullText.trim();
+    // Truncate if too long (keep first ~15000 chars for context window)
+    if (pendingManualText.length > 15000) {
+      pendingManualText = pendingManualText.substring(0, 15000) + '\n[...manual truncated for length...]';
+    }
+    updateManualStatus('ready');
+  } catch (err) {
+    console.log('PDF extraction error: ' + String(err));
+    pendingManualText = null;
+    updateManualStatus('error');
+  }
+}
+
+function updateManualStatus(status) {
+  const statusEl = document.querySelector('#app-manual-info .mfi-status');
+  if (!statusEl) return;
+  if (status === 'ready') {
+    statusEl.className = 'mfi-status ready';
+    statusEl.textContent = 'Ready';
+  } else if (status === 'error') {
+    statusEl.className = 'mfi-status extracting';
+    statusEl.textContent = 'Error';
+    showToast('Could not extract text from file. Try a .txt or .pdf file.');
+  }
+}
+
+function removeManualFile() {
+  pendingManualFile = null;
+  pendingManualText = null;
+  pendingManualName = null;
+  document.getElementById('app-manual-file').value = '';
+  document.getElementById('app-manual-upload').style.display = '';
+  document.getElementById('app-manual-info').style.display = 'none';
+  document.getElementById('app-manual-info').innerHTML = '';
+}
+
+function openApplianceModal(id) {
+  editingApplianceId = id || null;
+  const title = document.getElementById('appliance-modal-title');
+  const saveText = document.getElementById('appliance-save-text');
+
+  // Reset manual state
+  pendingManualFile = null;
+  pendingManualText = null;
+  pendingManualName = null;
+  document.getElementById('app-manual-file').value = '';
+  document.getElementById('app-manual-upload').style.display = '';
+  document.getElementById('app-manual-info').style.display = 'none';
+  document.getElementById('app-manual-info').innerHTML = '';
+
+  if (id) {
+    const a = appliances.find(x => x.id === id);
+    if (!a) return;
+    title.textContent = 'Edit Appliance';
+    saveText.textContent = 'Update Appliance';
+    document.getElementById('app-name').value = a.name;
+    document.getElementById('app-category').value = a.category;
+    document.getElementById('app-brand').value = a.brand || '';
+    document.getElementById('app-model').value = a.model || '';
+    document.getElementById('app-purchase').value = a.purchase || '';
+    document.getElementById('app-warranty').value = a.warranty || '';
+    document.getElementById('app-notes').value = a.notes || '';
+    // Show existing manual if present
+    if (a.manualName) {
+      pendingManualText = a.manualText || null;
+      pendingManualName = a.manualName;
+      document.getElementById('app-manual-upload').style.display = 'none';
+      const infoBox = document.getElementById('app-manual-info');
+      infoBox.style.display = 'block';
+      const ext = a.manualName.split('.').pop().toUpperCase();
+      infoBox.innerHTML = '<div class="manual-file-info">' +
+        '<div class="mfi-icon"><i class="fas ' + (ext === 'PDF' ? 'fa-file-pdf' : 'fa-file-alt') + '"></i></div>' +
+        '<div class="mfi-details">' +
+          '<div class="mfi-name">' + escapeHtml(a.manualName) + '</div>' +
+          '<div class="mfi-size">Previously uploaded</div>' +
+        '</div>' +
+        '<span class="mfi-status ready">Ready</span>' +
+        '<button class="mfi-remove" onclick="removeManualFile()"><i class="fas fa-times"></i></button>' +
+      '</div>';
+    }
+  } else {
+    title.textContent = 'Add Appliance';
+    saveText.textContent = 'Save Appliance';
+    document.getElementById('app-name').value = '';
+    document.getElementById('app-category').value = 'kitchen';
+    document.getElementById('app-brand').value = '';
+    document.getElementById('app-model').value = '';
+    document.getElementById('app-purchase').value = '';
+    document.getElementById('app-warranty').value = '';
+    document.getElementById('app-notes').value = '';
+  }
+  openModal('modal-appliance');
+}
+
+function saveAppliance() {
+  const name = document.getElementById('app-name').value.trim();
+  if (!name) { showToast('Please enter an appliance name.'); return; }
+
+  // Preserve existing manual data if not removed
+  let existingManualText = null;
+  let existingManualName = null;
+  if (editingApplianceId) {
+    const existing = appliances.find(a => a.id === editingApplianceId);
+    if (existing) {
+      existingManualText = existing.manualText || null;
+      existingManualName = existing.manualName || null;
+    }
+  }
+
+  const data = {
+    id: editingApplianceId || 'app-' + Date.now(),
+    name: name,
+    category: document.getElementById('app-category').value,
+    brand: document.getElementById('app-brand').value.trim(),
+    model: document.getElementById('app-model').value.trim(),
+    purchase: document.getElementById('app-purchase').value,
+    warranty: document.getElementById('app-warranty').value,
+    notes: document.getElementById('app-notes').value.trim(),
+    manualName: pendingManualName || existingManualName || null,
+    manualText: pendingManualText || existingManualText || null
+  };
+
+  // If manual was explicitly removed, clear it
+  if (!pendingManualName && !document.getElementById('app-manual-info').innerHTML) {
+    data.manualName = null;
+    data.manualText = null;
+  }
+
+  if (editingApplianceId) {
+    const idx = appliances.findIndex(a => a.id === editingApplianceId);
+    if (idx !== -1) appliances[idx] = data;
+  } else {
+    appliances.push(data);
+  }
+
+  closeModal('modal-appliance');
+  renderAppliances();
+  updateTaskApplianceSelect();
+  showToast(editingApplianceId ? 'Appliance updated!' : 'Appliance added!');
+  editingApplianceId = null;
+}
+
+function showApplianceDetail(id) {
+  const a = appliances.find(x => x.id === id);
+  if (!a) return;
+  const cat = CATEGORY_ICONS[a.category] || CATEGORY_ICONS.other;
+  const detail = document.getElementById('appliance-detail');
+  const relatedTasks = tasks.filter(function(tk) { return tk.appliance === id; });
+
+  detail.innerHTML =
+    '<button class="detail-back" onclick="hideApplianceDetail()"><i class="fas fa-arrow-left"></i> ' + t('backToAppliances') + '</button>' +
+    '<div class="detail-header">' +
+      '<div class="detail-icon" style="background:' + cat.bg + ';color:' + cat.color + ';"><i class="fas ' + cat.icon + '"></i></div>' +
+      '<div class="detail-meta"><h2>' + escapeHtml(a.name) + '</h2><p>' + escapeHtml(a.category.charAt(0).toUpperCase() + a.category.slice(1)) + '</p></div>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<h4>' + t('details') + '</h4>' +
+      '<div class="card">' +
+        '<div class="detail-row"><span class="dr-label">' + t('brand') + '</span><span class="dr-value">' + escapeHtml(a.brand || '—') + '</span></div>' +
+        '<div class="detail-row"><span class="dr-label">' + t('modelNumber') + '</span><span class="dr-value">' + escapeHtml(a.model || '—') + '</span></div>' +
+        '<div class="detail-row"><span class="dr-label">' + t('purchaseDate') + '</span><span class="dr-value">' + (a.purchase ? formatDate(a.purchase) : '—') + '</span></div>' +
+        '<div class="detail-row"><span class="dr-label">' + t('warrantyExpiry') + '</span><span class="dr-value">' + (a.warranty ? formatDate(a.warranty) + ' ' + (getWarrantyBadge(a.warranty) || '') : '—') + '</span></div>' +
+        (a.notes ? '<div class="detail-row" style="flex-direction:column;gap:4px;"><span class="dr-label">' + t('notes') + '</span><span class="dr-value" style="font-weight:400;color:var(--text-secondary);">' + escapeHtml(a.notes) + '</span></div>' : '') +
+        '<div class="detail-row"><span class="dr-label">' + t('userManual') + '</span><span class="dr-value">' +
+          (a.manualName
+            ? '<span style="display:inline-flex;align-items:center;gap:6px;"><i class="fas ' + (a.manualName.endsWith('.pdf') ? 'fa-file-pdf' : 'fa-file-alt') + '" style="color:var(--accent);"></i> ' + escapeHtml(a.manualName) + ' <span class="badge badge-success" style="font-size:10px;">' + t('uploaded') + '</span></span>'
+            : '<span style="color:var(--text-muted);">' + t('notUploaded') + ' — <a href="javascript:void(0)" onclick="hideApplianceDetail();openApplianceModal(\'' + a.id + '\');" style="color:var(--accent);text-decoration:underline;">' + t('addManualLink') + '</a></span>'
+          ) +
+        '</span></div>' +
+      '</div>' +
+    '</div>' +
+    // Eco / Power Saving Tips inline
+    '<div class="eco-section" style="display:block;">' +
+      '<div class="eco-card">' +
+        '<div class="eco-header">' +
+          '<div class="eco-icon-wrap"><i class="fas fa-leaf"></i></div>' +
+          '<div>' +
+            '<h3>' + t('ecoTitle') + '</h3>' +
+            '<p>' + t('ecoSubtitleAppliance') + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<div id="eco-content-' + a.id + '" class="eco-content">' +
+          '<p class="eco-placeholder">' + t('ecoPlaceholderAppliance') + '</p>' +
+        '</div>' +
+        '<button id="eco-btn-' + a.id + '" class="btn btn-eco" onclick="generateEcoTips(\'' + a.id + '\')">' +
+          '<i class="fas fa-bolt"></i> ' + t('ecoGenerate') +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+    (relatedTasks.length > 0 ?
+      '<div class="detail-section"><h4>' + t('relatedTasks') + '</h4>' + relatedTasks.map(function(tk) {
+        return '<div class="task-item"><div class="task-info"><h4>' + escapeHtml(tk.name) + '</h4><p>' + formatDate(tk.date) + '</p></div>' +
+        priorityBadge(tk.priority) + '</div>';
+      }).join('') + '</div>' : ''
+    ) +
+    '<div class="detail-actions">' +
+      '<button class="btn btn-secondary" style="flex:1;" onclick="openApplianceModal(\'' + a.id + '\');hideApplianceDetail();"><i class="fas fa-edit"></i> ' + t('edit') + '</button>' +
+      '<button class="btn btn-danger" style="flex:1;" onclick="deleteAppliance(\'' + a.id + '\')"><i class="fas fa-trash"></i> ' + t('delete') + '</button>' +
+      '<button class="btn btn-primary" style="flex:1;" onclick="askAIAboutAppliance(\'' + a.id + '\')"><i class="fas fa-robot"></i> ' + t('askAIShort') + '</button>' +
+    '</div>';
+
+  detail.classList.add('active');
+  document.getElementById('appliance-list').style.display = 'none';
+  document.getElementById('appliance-empty').style.display = 'none';
+  document.querySelector('#screen-appliances .section-title').style.display = 'none';
+}
+
+function hideApplianceDetail() {
+  document.getElementById('appliance-detail').classList.remove('active');
+  document.getElementById('appliance-detail').innerHTML = '';
+  document.getElementById('appliance-list').style.display = '';
+  document.querySelector('#screen-appliances .section-title').style.display = '';
+  renderAppliances();
+}
+
+function deleteAppliance(id) {
+  showConfirm('Delete this appliance? This cannot be undone.', () => {
+    appliances = appliances.filter(a => a.id !== id);
+    hideApplianceDetail();
+    renderAppliances();
+    updateTaskApplianceSelect();
+    showToast('Appliance deleted.');
+  });
+}
+
+function askAIAboutAppliance(id) {
+  const a = appliances.find(x => x.id === id);
+  if (!a) return;
+
+  let query = 'I have a ' + a.brand + ' ' + a.name + (a.model ? ' (Model: ' + a.model + ')' : '') + '.';
+
+  // Include manual content as RAG context if available
+  if (a.manualText) {
+    query += '\n\n--- USER MANUAL CONTENT (use this as reference) ---\n' +
+      a.manualText +
+      '\n--- END OF MANUAL ---\n\n';
+    query += 'Based on the user manual above, what are the recommended maintenance tips, troubleshooting steps, and common issues for this appliance?';
+  } else {
+    query += ' What are the recommended maintenance tips and common issues for this appliance?';
+  }
+
+  navigateTo('diagnose');
+  switchDiagnoseTab('chat');
+  document.getElementById('chat-input').value = query;
+  autoGrow(document.getElementById('chat-input'));
+  sendChatMessage();
+}
+
+// ─── ECO / POWER SAVING ───
+let currentEcoApplianceId = null;
+
+function generateEcoTips(applianceId) {
+  const a = appliances.find(function(x) { return x.id === applianceId; });
+  if (!a) return;
+
+  currentEcoApplianceId = applianceId;
+
+  const btn = document.getElementById('eco-btn-' + applianceId);
+  const content = document.getElementById('eco-content-' + applianceId);
+  if (!btn || !content) return;
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner" style="width:16px;height:16px;border-width:2px;border-color:rgba(255,255,255,0.3);border-top-color:#fff;"></div> ' + t('ecoGenerating');
+
+  content.innerHTML = '<div class="eco-loading"><div class="spinner" style="width:20px;height:20px;border-width:2px;border-color:rgba(255,255,255,0.2);border-top-color:rgba(225,241,140,0.8);"></div> ' + t('ecoGenerating') + '</div>';
+
+  const appDesc = a.brand + ' ' + a.name + (a.model ? ' (Model: ' + a.model + ')' : '') + ' [' + a.category + ']' + (a.notes ? '. Notes: ' + a.notes : '');
+
+  const manualContext = a.manualText ? '\n\nThe user also has the following manual content for reference:\n' + a.manualText.substring(0, 5000) + '\n' : '';
+
+  const ecoLangInstruction = currentLang === 'tc' ? ' IMPORTANT: Respond entirely in Traditional Chinese (繁體中文).' : '';
+
+  const ecoPrompt = '@GPT-5.2 You are an energy efficiency and eco-friendly home consultant. The user has this appliance: ' + appDesc + '.' + manualContext + ' Provide exactly 5 specific, actionable power-saving and eco-friendly tips tailored to this specific appliance. Include tips about optimal usage, energy-saving settings, maintenance for efficiency, eco-friendly habits, and cost-saving measures. Format your response as a JSON array with 5 objects. Each object must have: "icon" (one of: "saving", "green", "smart", "warn"), "title" (short 3-6 word title), "tip" (1-2 sentence practical advice). Return ONLY the JSON array, nothing else.' + ecoLangInstruction;
+
+  if (window.Poe) {
+    window.Poe.sendUserMessage(ecoPrompt, {
+      handler: 'eco-handler',
+      stream: false,
+      openChat: false,
+      handlerContext: { applianceId: applianceId },
+      parameters: {}
+    }).catch(function(err) {
+      content.innerHTML = '<p class="eco-placeholder" style="color:rgba(240,112,112,0.8);">Error: ' + err.message + '</p>';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-bolt"></i> ' + t('ecoGenerate');
+    });
+  }
+}
+
+function renderEcoTips(tipsArr) {
+  var iconMap = {
+    saving: { icon: 'fa-piggy-bank', cls: 'saving' },
+    green: { icon: 'fa-seedling', cls: 'green' },
+    smart: { icon: 'fa-microchip', cls: 'smart' },
+    warn: { icon: 'fa-exclamation-triangle', cls: 'warn' }
+  };
+
+  var html = '<ul class="eco-tips-list">';
+  tipsArr.forEach(function(tip) {
+    var iconInfo = iconMap[tip.icon] || iconMap.green;
+    html += '<li class="eco-tip-item">' +
+      '<div class="eco-tip-icon ' + iconInfo.cls + '"><i class="fas ' + iconInfo.icon + '"></i></div>' +
+      '<div class="eco-tip-text"><strong>' + escapeHtml(tip.title) + '</strong> — ' + escapeHtml(tip.tip) + '</div>' +
+    '</li>';
+  });
+  html += '</ul>';
+  return html;
+}
+
+// ─── CALENDAR / TASKS ───
+function renderCalendar() {
+  const grid = document.getElementById('cal-grid');
+  const label = document.getElementById('cal-month-label');
+
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  label.textContent = MONTHS[month] + ' ' + year;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrev = new Date(year, month, 0).getDate();
+  const today = new Date();
+
+  let html = DAYS.map(d => '<div class="cal-day-label">' + d + '</div>').join('');
+
+  // Previous month days
+  for (let i = firstDay - 1; i >= 0; i--) {
+    html += '<div class="cal-day other-month">' + (daysInPrev - i) + '</div>';
+  }
+
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
+    const isSelected = selectedDate.getFullYear() === year && selectedDate.getMonth() === month && selectedDate.getDate() === d;
+    const hasTask = tasks.some(t => t.date === dateStr);
+    const classes = ['cal-day'];
+    if (isToday) classes.push('today');
+    if (isSelected) classes.push('selected');
+    if (hasTask) classes.push('has-task');
+    html += '<div class="' + classes.join(' ') + '" onclick="selectDate(' + year + ',' + month + ',' + d + ')">' + d + '</div>';
+  }
+
+  // Next month days
+  const totalCells = firstDay + daysInMonth;
+  const remaining = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remaining; i++) {
+    html += '<div class="cal-day other-month">' + i + '</div>';
+  }
+
+  grid.innerHTML = html;
+  renderTasks();
+}
+
+function selectDate(y, m, d) {
+  selectedDate = new Date(y, m, d);
+  renderCalendar();
+}
+
+function changeMonth(delta) {
+  calDate.setMonth(calDate.getMonth() + delta);
+  renderCalendar();
+}
+
+function renderTasks() {
+  const dateStr = selectedDate.getFullYear() + '-' + String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' + String(selectedDate.getDate()).padStart(2, '0');
+  const dayTasks = tasks.filter(t => t.date === dateStr);
+  const list = document.getElementById('task-list');
+  const empty = document.getElementById('task-empty');
+  const label = document.getElementById('tasks-date-label');
+
+  label.textContent = formatDate(dateStr);
+
+  if (dayTasks.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.innerHTML = dayTasks.map(t => {
+    const appName = t.appliance ? (appliances.find(a => a.id === t.appliance) || {}).name || '' : '';
+    return '<div class="task-item">' +
+      '<button class="task-check' + (t.done ? ' done' : '') + '" onclick="toggleTask(\'' + t.id + '\')">' +
+        (t.done ? '<i class="fas fa-check"></i>' : '') +
+      '</button>' +
+      '<div class="task-info' + (t.done ? ' done-text' : '') + '">' +
+        '<h4>' + escapeHtml(t.name) + '</h4>' +
+        '<p>' + (appName ? escapeHtml(appName) + ' · ' : '') + t.priority.charAt(0).toUpperCase() + t.priority.slice(1) + ' priority' + (t.notes ? ' · ' + escapeHtml(t.notes.substring(0, 30)) : '') + '</p>' +
+      '</div>' +
+      priorityBadge(t.priority) +
+      '<button class="task-delete" onclick="deleteTask(\'' + t.id + '\')"><i class="fas fa-trash-alt"></i></button>' +
+    '</div>';
+  }).join('');
+}
+
+function priorityBadge(p) {
+  const map = { high: 'badge-danger', medium: 'badge-warning', low: 'badge-success' };
+  return '<span class="badge ' + (map[p] || 'badge-info') + '">' + p + '</span>';
+}
+
+function openTaskModal() {
+  const dateStr = selectedDate.getFullYear() + '-' + String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' + String(selectedDate.getDate()).padStart(2, '0');
+  document.getElementById('task-name').value = '';
+  document.getElementById('task-date').value = dateStr;
+  document.getElementById('task-priority').value = 'medium';
+  document.getElementById('task-notes').value = '';
+  updateTaskApplianceSelect();
+  openModal('modal-task');
+}
+
+function updateTaskApplianceSelect() {
+  const sel = document.getElementById('task-appliance');
+  sel.innerHTML = '<option value="">None</option>' +
+    appliances.map(a => '<option value="' + a.id + '">' + escapeHtml(a.name) + '</option>').join('');
+}
+
+function saveTask() {
+  const name = document.getElementById('task-name').value.trim();
+  const date = document.getElementById('task-date').value;
+  if (!name || !date) { showToast('Please enter a task name and date.'); return; }
+
+  tasks.push({
+    id: 'task-' + Date.now(),
+    name: name,
+    date: date,
+    priority: document.getElementById('task-priority').value,
+    appliance: document.getElementById('task-appliance').value,
+    notes: document.getElementById('task-notes').value.trim(),
+    done: false
+  });
+
+  closeModal('modal-task');
+  renderCalendar();
+  showToast('Task added!');
+}
+
+function toggleTask(id) {
+  const t = tasks.find(x => x.id === id);
+  if (t) t.done = !t.done;
+  renderTasks();
+}
+
+function deleteTask(id) {
+  showConfirm('Delete this task?', () => {
+    tasks = tasks.filter(t => t.id !== id);
+    renderCalendar();
+    showToast('Task deleted.');
+  });
+}
+
+// ─── HOME UPCOMING ───
+function renderHomeUpcoming() {
+  const container = document.getElementById('home-upcoming');
+  const today = new Date();
+  const upcoming = tasks
+    .filter(t => !t.done && new Date(t.date) >= new Date(today.getFullYear(), today.getMonth(), today.getDate()))
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .slice(0, 3);
+
+  if (upcoming.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = '<div class="section-title">Upcoming Tasks</div>' +
+    '<div class="task-list">' + upcoming.map(t =>
+      '<div class="task-item" onclick="navigateTo(\'schedule\')">' +
+        '<div class="task-info"><h4>' + escapeHtml(t.name) + '</h4><p>' + formatDate(t.date) + '</p></div>' +
+        priorityBadge(t.priority) +
+      '</div>'
+    ).join('') + '</div>';
+}
+
+// ─── CHAT ───
+let lastChatQuery = '';
+
+if (window.Poe) {
+  window.Poe.registerHandler('chat-handler', (result) => {
+    const msg = result.responses[0];
+    const messages = document.getElementById('chat-messages');
+    let botMsg = messages.querySelector('.chat-msg.bot.streaming');
+
+    if (!botMsg) {
+      botMsg = document.createElement('div');
+      botMsg.className = 'chat-msg bot streaming';
+      botMsg.innerHTML =
+        '<div class="chat-avatar">' + handymanSVG() + '</div>' +
+        '<div class="chat-bubble"><div class="result-content"></div></div>';
+      messages.appendChild(botMsg);
+    }
+
+    const contentEl = botMsg.querySelector('.result-content');
+
+    if (msg.status === 'error') {
+      contentEl.innerHTML = '<p style="color:var(--danger);">Error: ' + (msg.statusText || 'Something went wrong.') + '</p>';
+      botMsg.classList.remove('streaming');
+      chatBusy = false;
+      updateChatSend();
+    } else if (msg.status === 'incomplete') {
+      contentEl.innerHTML = marked.parse(msg.content);
+      messages.scrollTop = messages.scrollHeight;
+    } else if (msg.status === 'complete') {
+      const rendered = marked.parse(msg.content);
+      const trackerId = createStepTracker(msg.content, 'chat', lastChatQuery || 'Chat Repair');
+      contentEl.innerHTML = rendered;
+      if (trackerId !== null) {
+        replaceFixSectionWithTracker(contentEl, buildStepTrackerHTML(trackerId));
+      }
+      botMsg.classList.remove('streaming');
+      chatBusy = false;
+      updateChatSend();
+      messages.scrollTop = messages.scrollHeight;
+    }
+  });
+}
+
+function addChatMessage(text, isUser) {
+  const messages = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + (isUser ? 'user' : 'bot');
+  div.innerHTML =
+    '<div class="chat-avatar">' + (isUser ? '<i class="fas fa-user"></i>' : handymanSVG()) + '</div>' +
+    '<div class="chat-bubble">' + (isUser ? escapeHtml(text) : '<div class="result-content">' + marked.parse(text) + '</div>') + '</div>';
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const messages = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot streaming';
+  div.innerHTML =
+    '<div class="chat-avatar">' + handymanSVG() + '</div>' +
+    '<div class="chat-bubble"><div class="result-content"><div class="typing-indicator"><span></span><span></span><span></span></div></div></div>';
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || chatBusy) return;
+
+  lastChatQuery = text;
+  chatBusy = true;
+  updateChatSend();
+  addChatMessage(text, true);
+  input.value = '';
+  input.style.height = 'auto';
+
+  addTypingIndicator();
+
+  const chatLangInstruction = currentLang === 'tc' ? ' IMPORTANT: You MUST respond entirely in Traditional Chinese (繁體中文). All text, headings, and step descriptions must be in Traditional Chinese.' : '';
+  const systemPrompt = 'You are UncleFix, a friendly home repair helper. Reply in simple, everyday language. Always include: **How serious is it** (**Low/Medium/High**) with a safety note, **Difficulty Level** (Easy/Medium/Serious/Critical), **Estimated Total Time**, tools, and step-by-step numbered instructions. IMPORTANT: Each repair step MUST follow this exact format: \"N. Step title (~Xmin)\". If something is risky (gas/electricity/major leaks), recommend calling a professional. If you are unsure, say so and ask one clarifying question.' + chatLangInstruction;
+
+  try {
+    await window.Poe.sendUserMessage(
+      '@GPT-5.2 ' + systemPrompt + '\n\nUser question: ' + text,
+      {
+        handler: 'chat-handler',
+        stream: true,
+        openChat: false,
+        parameters: {}
+      }
+    );
+  } catch (err) {
+    const messages = document.getElementById('chat-messages');
+    const streaming = messages.querySelector('.chat-msg.bot.streaming');
+    if (streaming) streaming.remove();
+    addChatMessage('Sorry, something went wrong: ' + err.message, false);
+    chatBusy = false;
+    updateChatSend();
+  }
+}
+
+function updateChatSend() {
+  document.getElementById('chat-send-btn').disabled = chatBusy;
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
+  }
+}
+
+function autoGrow(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function sendSuggested(btn) {
+  const text = btn.textContent.trim();
+  document.getElementById('chat-input').value = text;
+  sendChatMessage();
+}
+
+// ─── Helpers ───
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function showToast(msg) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = 'position:absolute;top:20px;left:50%;transform:translateX(-50%);background:var(--bg-card);color:var(--text-primary);padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);z-index:500;opacity:0;transition:opacity 0.3s;border:1px solid var(--border);pointer-events:none;max-width:90%;text-align:center;';
+    const host = document.querySelector('.device-screen') || document.body;
+    host.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+}
+
+// ─── Sample Data ───
+function loadSampleData() {
+  appliances = [
+    { id: 'app-1', name: 'French Door Refrigerator', category: 'kitchen', brand: 'Samsung', model: 'RF28R7351SR', purchase: '2024-03-15', warranty: '2027-03-15', notes: '4-door, stainless steel, ice maker built-in' },
+    { id: 'app-2', name: 'Front-Load Washer', category: 'laundry', brand: 'LG', model: 'WM4200HBA', purchase: '2023-11-01', warranty: '2025-11-01', notes: '' },
+    { id: 'app-3', name: 'Central AC Unit', category: 'hvac', brand: 'Carrier', model: '24ACC636A003', purchase: '2022-06-20', warranty: '2032-06-20', notes: '3-ton, 16 SEER' },
+    { id: 'app-4', name: 'Tankless Water Heater', category: 'plumbing', brand: 'Rinnai', model: 'RU199iN', purchase: '2024-01-10', warranty: '2036-01-10', notes: 'Natural gas, 199k BTU' },
+  ];
+
+  tasks = [
+    { id: 'task-1', name: 'Check smoke detectors', date: '2026-04-11', priority: 'high', appliance: '', notes: 'Replace batteries if needed', done: false },
+    { id: 'task-2', name: 'Replace HVAC air filter', date: '2026-04-13', priority: 'high', appliance: 'app-3', notes: 'Use MERV-13 filter', done: false },
+    { id: 'task-3', name: 'Clean refrigerator coils', date: '2026-04-16', priority: 'medium', appliance: 'app-1', notes: '', done: false },
+    { id: 'task-4', name: 'Flush water heater', date: '2026-04-20', priority: 'medium', appliance: 'app-4', notes: 'Annual maintenance', done: false },
+    { id: 'task-5', name: 'Clean washer drum', date: '2026-04-24', priority: 'low', appliance: 'app-2', notes: 'Run cleaning cycle', done: false },
+  ];
+}
+
+// ─── STEP TRACKER ───
+
+function extractDifficulty(rawMarkdown) {
+  // Try to find difficulty/severity from the AI response
+  const diffMatch = rawMarkdown.match(/(?:severity|difficulty|level)\s*(?:assessment|level)?[:\s]*\*{0,2}\s*(easy|medium|moderate|serious|hard|critical|low|high)/i);
+  if (diffMatch) {
+    const val = diffMatch[1].toLowerCase();
+    if (val === 'easy' || val === 'low') return 'Easy';
+    if (val === 'medium' || val === 'moderate') return 'Medium';
+    if (val === 'hard' || val === 'serious' || val === 'high') return 'Serious';
+    if (val === 'critical') return 'Critical';
+  }
+  return 'Medium'; // default
+}
+
+function extractTotalTime(rawMarkdown) {
+  // Try to find total estimated time from AI response
+  const timeMatch = rawMarkdown.match(/(?:estimated\s*(?:total\s*)?time|total\s*time|time\s*needed|duration)[:\s]*\*{0,2}\s*(?:approximately\s*|~\s*|about\s*)?([\d]+(?:\s*[-–]\s*\d+)?)\s*(min(?:ute)?s?|hour?s?|hr?s?)/i);
+  if (timeMatch) {
+    const num = timeMatch[1];
+    const unit = timeMatch[2].toLowerCase();
+    if (unit.startsWith('h')) return num + ' hr';
+    return num + ' min';
+  }
+  return null;
+}
+
+function replaceFixSectionWithTracker(containerEl, trackerHTML) {
+  // Find heading elements that contain "Recommended Fix" or similar step-section titles
+  var headings = containerEl.querySelectorAll('h1, h2, h3, h4, h5, h6, p, strong');
+  var fixHeading = null;
+  var pattern = /recommended\s*fix|step[\s-]*by[\s-]*step|repair\s*steps|repair\s*instructions/i;
+
+  for (var i = 0; i < headings.length; i++) {
+    var el = headings[i];
+    var textContent = el.textContent || '';
+    if (pattern.test(textContent)) {
+      // If the match is a <strong> inside a <p>, target the <p> parent
+      if (el.tagName === 'STRONG' && el.parentElement && el.parentElement.tagName === 'P') {
+        fixHeading = el.parentElement;
+      } else if (el.tagName === 'P') {
+        // Check if it's a paragraph that contains a strong with the match
+        var innerStrong = el.querySelector('strong');
+        if (innerStrong && pattern.test(innerStrong.textContent)) {
+          fixHeading = el;
+        } else if (pattern.test(textContent)) {
+          fixHeading = el;
+        }
+      } else {
+        fixHeading = el;
+      }
+      break;
+    }
+  }
+
+  if (!fixHeading) {
+    // Fallback: also check for numbered headings like "6) Recommended Fix"
+    var allEls = containerEl.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
+    for (var j = 0; j < allEls.length; j++) {
+      if (/\d+[.)]\s*\**\s*recommended\s*fix/i.test(allEls[j].textContent)) {
+        fixHeading = allEls[j];
+        break;
+      }
+    }
+  }
+
+  if (!fixHeading) {
+    // No section found — just append tracker at end
+    containerEl.insertAdjacentHTML('beforeend', trackerHTML);
+    return;
+  }
+
+  // Create a placeholder to insert the tracker
+  var placeholder = document.createElement('div');
+  fixHeading.parentNode.insertBefore(placeholder, fixHeading);
+
+  // Remove the heading and subsequent siblings that belong to the steps section
+  var toRemove = [fixHeading];
+  var sibling = fixHeading.nextElementSibling;
+  // Regex for known section titles that signal the END of the fix section
+  var sectionTitlePattern = /(?:when\s*to\s*call|professional|safety|warning|note|important|prevention|maintenance|cost|summary|conclusion|additional|tip)/i;
+
+  while (sibling) {
+    var tag = sibling.tagName;
+    var txt = (sibling.textContent || '').trim();
+
+    // Stop at HTML headings (h1-h6)
+    if (/^H[1-6]$/.test(tag)) break;
+
+    // Stop at a new bold section heading like "7) **When to Call a Professional**"
+    // Only stop if it matches a known section title (not just bold step text)
+    if (tag === 'P' && sibling.querySelector('strong') && /^\d+[.)]\s/.test(txt) && sectionTitlePattern.test(txt)) break;
+
+    // Remove ordered/unordered lists (these contain the numbered steps)
+    if (tag === 'OL' || tag === 'UL') {
+      toRemove.push(sibling);
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    // Remove paragraphs that look like numbered steps (with or without bold formatting)
+    if (tag === 'P' && /^\d+[.)]\s/.test(txt)) {
+      // If it has bold AND matches a known section title, it's a new section — stop
+      if (sibling.querySelector('strong') && sectionTitlePattern.test(txt)) break;
+      toRemove.push(sibling);
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    // Also remove plain text paragraphs that are sub-descriptions of steps
+    // (short paragraphs between numbered items, not starting with a number)
+    if (tag === 'P' && !sibling.querySelector('strong') && txt.length < 200 && !/^\d+[.)]\s/.test(txt) && !/^[*#>]/.test(txt)) {
+      // Check if the next sibling is also a numbered step — if so, this is a step description
+      var nextSib = sibling.nextElementSibling;
+      if (nextSib && nextSib.tagName === 'P' && /^\d+[.)]\s/.test((nextSib.textContent || '').trim())) {
+        toRemove.push(sibling);
+        sibling = sibling.nextElementSibling;
+        continue;
+      }
+      // If no more numbered steps follow, this might be the end of the section
+      break;
+    }
+
+    // Stop at any other content
+    break;
+  }
+
+  // Remove all collected elements
+  for (var r = 0; r < toRemove.length; r++) {
+    if (toRemove[r].parentNode) {
+      toRemove[r].parentNode.removeChild(toRemove[r]);
+    }
+  }
+
+  // Insert tracker at the placeholder position
+  placeholder.outerHTML = trackerHTML;
+}
+
+function extractSteps(rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  const steps = [];
+  const stepPattern = /^(?:\s*(?:\*{0,2})?\s*(?:step\s*)?(\d+)[.):\-]\s*\**\s*:?\s*)(.*)/i;
+  // Pattern to extract time from end of step like "(~10min)" or "(10 minutes)" or "(~5-10min)"
+  const timePattern = /\(?\s*~?\s*(?:approx(?:imately)?\.?\s*)?(\d+(?:\s*[-–]\s*\d+)?)\s*(min(?:ute)?s?|hour?s?|hr?s?|sec(?:ond)?s?)\s*\)?$/i;
+  let inStepsSection = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (/(?:recommended\s*fix|step.by.step|instructions|how\s*to|repair\s*steps|procedure)/i.test(line)) {
+      inStepsSection = true;
+      continue;
+    }
+    if (!line) continue;
+    const m = line.match(stepPattern);
+    if (m && inStepsSection) {
+      let stepText = m[2].replace(/^\*{1,2}\s*/, '').replace(/\*{1,2}\s*$/, '').trim();
+      if (stepText) {
+        let time = null;
+        const tm = stepText.match(timePattern);
+        if (tm) {
+          const unit = tm[2].toLowerCase();
+          if (unit.startsWith('h')) { time = tm[1] + ' hr'; }
+          else if (unit.startsWith('s')) { time = tm[1] + ' sec'; }
+          else { time = tm[1] + ' min'; }
+          stepText = stepText.replace(timePattern, '').replace(/\s*[-–—]\s*$/, '').trim();
+        }
+        steps.push({ text: stepText, done: false, time: time });
+      }
+    }
+    if (inStepsSection && /^#{1,4}\s/.test(line) && steps.length > 0 && !/step/i.test(line)) {
+      break;
+    }
+  }
+
+  // Fallback
+  if (steps.length < 2) {
+    const allSteps = [];
+    let consecutiveCount = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      const m = line.match(stepPattern);
+      if (m && m[2].trim()) {
+        consecutiveCount++;
+        let stepText = m[2].replace(/^\*{1,2}\s*/, '').replace(/\*{1,2}\s*$/, '').trim();
+        let time = null;
+        const tm = stepText.match(timePattern);
+        if (tm) {
+          const unit = tm[2].toLowerCase();
+          if (unit.startsWith('h')) { time = tm[1] + ' hr'; }
+          else if (unit.startsWith('s')) { time = tm[1] + ' sec'; }
+          else { time = tm[1] + ' min'; }
+          stepText = stepText.replace(timePattern, '').replace(/\s*[-–—]\s*$/, '').trim();
+        }
+        allSteps.push({ text: stepText, done: false, time: time });
+      } else if (line === '') {
+        // allow blank lines
+      } else {
+        if (consecutiveCount >= 3) break;
+        consecutiveCount = 0;
+        allSteps.length = 0;
+      }
+    }
+    if (allSteps.length >= 3) return allSteps;
+  }
+
+  return steps.length >= 2 ? steps : [];
+}
+
+function createStepTracker(rawContent, source, title) {
+  const steps = extractSteps(rawContent);
+  if (steps.length === 0) return null;
+
+  const difficulty = extractDifficulty(rawContent);
+  const totalTime = extractTotalTime(rawContent);
+
+  // If no total time found, sum individual step times
+  let computedTime = totalTime;
+  if (!computedTime) {
+    let totalMin = 0;
+    let hasAny = false;
+    steps.forEach(function(s) {
+      if (s.time) {
+        hasAny = true;
+        const nums = s.time.match(/(\d+)/g);
+        if (nums) {
+          const avg = nums.reduce(function(a, b) { return a + parseInt(b); }, 0) / nums.length;
+          if (s.time.includes('hr')) totalMin += avg * 60;
+          else totalMin += avg;
+        }
+      }
+    });
+    if (hasAny && totalMin > 0) {
+      computedTime = totalMin >= 60 ? Math.round(totalMin / 60 * 10) / 10 + ' hr' : Math.round(totalMin) + ' min';
+    }
+  }
+
+  const id = 'tracker-' + (++trackerIdCounter);
+  activeTrackers[id] = {
+    steps: steps,
+    rawContent: rawContent,
+    source: source,
+    title: title,
+    difficulty: difficulty,
+    totalTime: computedTime,
+    createdAt: new Date().toISOString()
+  };
+  return id;
+}
+
+function getDifficultyClass(diff) {
+  if (!diff) return 'difficulty-medium';
+  const d = diff.toLowerCase();
+  if (d === 'easy') return 'difficulty-easy';
+  if (d === 'medium') return 'difficulty-medium';
+  if (d === 'serious' || d === 'hard') return 'difficulty-hard';
+  if (d === 'critical') return 'difficulty-serious';
+  return 'difficulty-medium';
+}
+
+function getDifficultyIcon(diff) {
+  if (!diff) return 'fa-signal';
+  const d = diff.toLowerCase();
+  if (d === 'easy') return 'fa-check-circle';
+  if (d === 'medium') return 'fa-exclamation-circle';
+  if (d === 'serious' || d === 'hard') return 'fa-exclamation-triangle';
+  if (d === 'critical') return 'fa-radiation';
+  return 'fa-signal';
+}
+
+function buildStepTrackerHTML(trackerId) {
+  const tracker = activeTrackers[trackerId];
+  if (!tracker) return '';
+  const steps = tracker.steps;
+  const doneCount = steps.filter(function(s) { return s.done; }).length;
+  const pct = Math.round((doneCount / steps.length) * 100);
+  const allDone = doneCount === steps.length;
+  // Find the first unchecked step index for active highlight
+  let firstUndone = -1;
+  for (let fi = 0; fi < steps.length; fi++) {
+    if (!steps[fi].done) { firstUndone = fi; break; }
+  }
+
+  let html = '<div class="step-tracker" id="' + trackerId + '">';
+
+  // Header with gradient background
+  html += '<div class="step-tracker-header">';
+  html += '<h4><i class="fas fa-clipboard-list"></i> Repair Steps</h4>';
+
+  // Meta badges row
+  html += '<div class="step-tracker-meta">';
+  if (tracker.difficulty) {
+    html += '<span class="step-meta-badge ' + getDifficultyClass(tracker.difficulty) + '"><i class="fas ' + getDifficultyIcon(tracker.difficulty) + '"></i> ' + escapeHtml(tracker.difficulty) + '</span>';
+  }
+  if (tracker.totalTime) {
+    html += '<span class="step-meta-badge time-badge"><i class="fas fa-clock"></i> ' + escapeHtml(tracker.totalTime) + '</span>';
+  }
+  html += '<span class="step-meta-badge time-badge"><i class="fas fa-list-ol"></i> ' + steps.length + ' steps</span>';
+  html += '</div>';
+
+  // Progress
+  html += '<div class="step-progress-bar"><div class="step-progress-fill" style="width:' + pct + '%"></div></div>';
+  html += '<div class="step-progress-text">' + doneCount + ' of ' + steps.length + ' completed &bull; ' + pct + '%</div>';
+  html += '</div>';
+
+  // Timeline list
+  html += '<div class="step-list">';
+  steps.forEach(function(step, idx) {
+    const isActive = (idx === firstUndone);
+    let cls = 'step-item';
+    if (step.done) cls += ' checked';
+    if (isActive && !allDone) cls += ' active-step';
+
+    html += '<div class="' + cls + '" onclick="toggleStep(\'' + trackerId + '\',' + idx + ')">';
+
+    // Timeline column: circle + line
+    html += '<div class="step-timeline">';
+    if (step.done) {
+      html += '<div class="step-check-circle"><i class="fas fa-check"></i></div>';
+    } else {
+      html += '<div class="step-check-circle">' + (idx + 1) + '</div>';
+    }
+    html += '<div class="step-timeline-line"></div>';
+    html += '</div>';
+
+    // Card content
+    html += '<div class="step-card">';
+    html += '<div class="step-card-title">' + escapeHtml(step.text) + '</div>';
+
+    // Footer with time chip
+    if (step.time) {
+      html += '<div class="step-card-footer">';
+      html += '<span class="step-time-chip"><i class="fas fa-clock"></i> ~' + escapeHtml(step.time) + '</span>';
+      html += '</div>';
+    }
+    html += '</div>'; // step-card
+    html += '</div>'; // step-item
+  });
+  html += '</div>';
+
+  if (allDone) {
+    html += '<div class="step-complete-banner">';
+    html += '<i class="fas fa-trophy"></i>';
+    html += '<p>All steps completed!</p>';
+    html += '<div class="sub">Great job on this repair</div>';
+    html += '</div>';
+  }
+
+  html += '<div class="step-tracker-actions">';
+  if (!allDone) {
+    html += '<button class="btn btn-primary btn-sm" onclick="getHelpRemaining(\'' + trackerId + '\')"><i class="fas fa-robot"></i> Help with remaining</button>';
+  }
+  html += '<button class="btn btn-secondary btn-sm" onclick="saveToHistory(\'' + trackerId + '\')"><i class="fas fa-save"></i> Save to History</button>';
+  html += '</div>';
+  html += '</div>';
+
+  return html;
+}
+
+function toggleStep(trackerId, stepIdx) {
+  const tracker = activeTrackers[trackerId];
+  if (!tracker) return;
+  tracker.steps[stepIdx].done = !tracker.steps[stepIdx].done;
+  const el = document.getElementById(trackerId);
+  if (el) {
+    el.outerHTML = buildStepTrackerHTML(trackerId);
+  }
+}
+
+function getHelpRemaining(trackerId) {
+  const tracker = activeTrackers[trackerId];
+  if (!tracker) return;
+  const remaining = tracker.steps.filter(s => !s.done);
+  const completed = tracker.steps.filter(s => s.done);
+  if (remaining.length === 0) {
+    showToast('All steps are already completed!');
+    return;
+  }
+
+  const summary = 'I am working on: "' + tracker.title + '".\n\n' +
+    (completed.length > 0 ? 'I have already completed these steps:\n' + completed.map(function(s, i) { return '✅ ' + s.text; }).join('\n') + '\n\n' : '') +
+    'I still need help with these remaining steps:\n' + remaining.map(function(s, i) { return '❓ ' + (i + 1) + '. ' + s.text; }).join('\n') +
+    '\n\nPlease provide detailed guidance for the remaining steps. Include any tips, safety warnings, or common mistakes to avoid.';
+
+  navigateTo('diagnose');
+  switchDiagnoseTab('chat');
+  document.getElementById('chat-input').value = summary;
+  autoGrow(document.getElementById('chat-input'));
+  sendChatMessage();
+}
+
+function saveToHistory(trackerId) {
+  const tracker = activeTrackers[trackerId];
+  if (!tracker) return;
+
+  // Check if already saved
+  const existing = repairHistory.find(function(h) { return h.trackerId === trackerId; });
+  if (existing) {
+    // Update existing
+    existing.steps = JSON.parse(JSON.stringify(tracker.steps));
+    existing.updatedAt = new Date().toISOString();
+    showToast('History record updated!');
+    return;
+  }
+
+  repairHistory.unshift({
+    id: 'hist-' + Date.now(),
+    trackerId: trackerId,
+    title: tracker.title,
+    source: tracker.source,
+    steps: JSON.parse(JSON.stringify(tracker.steps)),
+    rawContent: tracker.rawContent,
+    difficulty: tracker.difficulty || null,
+    totalTime: tracker.totalTime || null,
+    createdAt: tracker.createdAt,
+    updatedAt: new Date().toISOString()
+  });
+
+  showToast('Saved to Repair History!');
+}
+
+// ─── HISTORY ───
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+  const detail = document.getElementById('history-detail');
+
+  // Hide detail if open
+  if (detail.classList.contains('active')) return;
+
+  if (repairHistory.length === 0) {
+    list.innerHTML = '';
+    list.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.style.display = 'block';
+  list.innerHTML = repairHistory.map(function(h) {
+    var doneCount = h.steps.filter(function(s) { return s.done; }).length;
+    var total = h.steps.length;
+    var pct = Math.round((doneCount / total) * 100);
+    var sourceIcon = h.source === 'diagnose' ? 'fa-camera' : 'fa-comments';
+    var badgeClass = pct === 100 ? 'badge-success' : (pct > 50 ? 'badge-warning' : 'badge-info');
+    var dateStr = new Date(h.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+    var metaChips = '';
+    if (h.difficulty) {
+      metaChips += '<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;background:' + (h.difficulty === 'Easy' ? 'var(--success-light)' : h.difficulty === 'Medium' ? 'var(--warning-light)' : 'var(--danger-light)') + ';color:' + (h.difficulty === 'Easy' ? 'var(--success)' : h.difficulty === 'Medium' ? 'var(--warning)' : 'var(--danger)') + ';"><i class="fas ' + (h.difficulty === 'Easy' ? 'fa-check-circle' : h.difficulty === 'Medium' ? 'fa-exclamation-circle' : 'fa-exclamation-triangle') + '" style="font-size:9px;"></i> ' + escapeHtml(h.difficulty) + '</span>';
+    }
+    if (h.totalTime) {
+      metaChips += '<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:var(--accent-light);color:var(--accent);"><i class="fas fa-clock" style="font-size:9px;"></i> ' + escapeHtml(h.totalTime) + '</span>';
+    }
+
+    return '<div class="history-item" onclick="showHistoryDetail(\'' + h.id + '\')">' +
+      '<div class="history-item-head">' +
+        '<h4><i class="fas ' + sourceIcon + '" style="color:var(--accent);margin-right:6px;font-size:13px;"></i>' + escapeHtml(h.title) + '</h4>' +
+        '<span class="badge ' + badgeClass + '">' + pct + '%</span>' +
+      '</div>' +
+      (metaChips ? '<div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">' + metaChips + '</div>' : '') +
+      '<p>' + escapeHtml(h.steps.slice(0, 2).map(function(s) { return s.text; }).join('. ')) + '...</p>' +
+      '<div class="history-progress">' +
+        '<div class="history-progress-bar"><div style="width:' + pct + '%"></div></div>' +
+        '<span>' + doneCount + '/' + total + ' steps</span>' +
+      '</div>' +
+      '<p style="font-size:11px;margin-top:6px;color:var(--text-muted);">' + dateStr + '</p>' +
+    '</div>';
+  }).join('');
+}
+
+function showHistoryDetail(histId) {
+  var h = repairHistory.find(function(x) { return x.id === histId; });
+  if (!h) return;
+
+  var detail = document.getElementById('history-detail');
+  var doneCount = h.steps.filter(function(s) { return s.done; }).length;
+  var total = h.steps.length;
+  var pct = Math.round((doneCount / total) * 100);
+  var sourceLabel = h.source === 'diagnose' ? 'Visual Diagnosis' : 'Chat Repair';
+  var dateStr = new Date(h.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  var detailDiffBadge = '';
+  if (h.difficulty) {
+    var dc = h.difficulty === 'Easy' ? 'var(--success)' : h.difficulty === 'Medium' ? 'var(--warning)' : 'var(--danger)';
+    var dbg = h.difficulty === 'Easy' ? 'var(--success-light)' : h.difficulty === 'Medium' ? 'var(--warning-light)' : 'var(--danger-light)';
+    detailDiffBadge = '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;background:' + dbg + ';color:' + dc + ';"><i class="fas ' + getDifficultyIcon(h.difficulty) + '"></i> ' + escapeHtml(h.difficulty) + '</span>';
+  }
+  var detailTimeBadge = '';
+  if (h.totalTime) {
+    detailTimeBadge = '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--accent-light);color:var(--accent);"><i class="fas fa-clock"></i> ' + escapeHtml(h.totalTime) + '</span>';
+  }
+
+  detail.innerHTML =
+    '<button class="detail-back" onclick="hideHistoryDetail()"><i class="fas fa-arrow-left"></i> Back to History</button>' +
+    '<div class="detail-header">' +
+      '<div class="detail-icon" style="background:var(--accent-light);color:var(--accent);"><i class="fas fa-clipboard-check"></i></div>' +
+      '<div class="detail-meta"><h2>' + escapeHtml(h.title) + '</h2><p>' + sourceLabel + ' · ' + dateStr + '</p></div>' +
+    '</div>' +
+    ((detailDiffBadge || detailTimeBadge) ? '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">' + detailDiffBadge + detailTimeBadge + '</div>' : '') +
+    '<div class="card" style="margin-bottom:16px;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+        '<span style="font-size:13px;font-weight:600;color:var(--text-secondary);">Progress</span>' +
+        '<span class="badge ' + (pct === 100 ? 'badge-success' : 'badge-warning') + '">' + pct + '% · ' + doneCount + '/' + total + '</span>' +
+      '</div>' +
+      '<div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,var(--accent),var(--accent-end),var(--success));border-radius:3px;transition:width 0.4s;"></div></div>' +
+    '</div>' +
+    '<div class="card">' +
+      '<h4 style="font-family:\'Source Sans 3\',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:10px;">Steps</h4>' +
+      '<div class="history-detail-steps">' +
+        h.steps.map(function(s, i) {
+          var timeChip = s.time ? '<span style="display:inline-flex;align-items:center;gap:3px;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:600;background:var(--accent-light);color:var(--accent);margin-left:6px;"><i class="fas fa-clock" style="font-size:8px;"></i> ~' + escapeHtml(s.time) + '</span>' : '';
+          return '<div class="history-step-row">' +
+            '<div class="history-step-icon ' + (s.done ? 'done' : 'pending') + '"><i class="fas ' + (s.done ? 'fa-check' : 'fa-minus') + '"></i></div>' +
+            '<div class="history-step-text ' + (s.done ? 'is-done' : '') + '"><strong>' + (i + 1) + '.</strong> ' + escapeHtml(s.text) + timeChip + '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+    '</div>' +
+    (h.trackerId && activeTrackers[h.trackerId] ?
+      '<div class="detail-actions" style="margin-top:16px;">' +
+        (pct < 100 ? '<button class="btn btn-primary" style="flex:1;" onclick="getHelpRemaining(\'' + h.trackerId + '\')"><i class="fas fa-robot"></i> Help with Remaining</button>' : '') +
+        '<button class="btn btn-danger" style="flex:1;" onclick="deleteHistoryItem(\'' + h.id + '\')"><i class="fas fa-trash"></i> Delete Record</button>' +
+      '</div>'
+    :
+      '<div class="detail-actions" style="margin-top:16px;">' +
+        '<button class="btn btn-danger" style="flex:1;" onclick="deleteHistoryItem(\'' + h.id + '\')"><i class="fas fa-trash"></i> Delete Record</button>' +
+      '</div>'
+    );
+
+  detail.classList.add('active');
+  document.getElementById('history-list').style.display = 'none';
+  document.getElementById('history-empty').style.display = 'none';
+  document.querySelector('#screen-history .section-title').style.display = 'none';
+}
+
+function hideHistoryDetail() {
+  document.getElementById('history-detail').classList.remove('active');
+  document.getElementById('history-detail').innerHTML = '';
+  document.getElementById('history-list').style.display = '';
+  document.querySelector('#screen-history .section-title').style.display = '';
+  renderHistory();
+}
+
+function deleteHistoryItem(histId) {
+  showConfirm('Delete this repair record?', function() {
+    repairHistory = repairHistory.filter(function(h) { return h.id !== histId; });
+    hideHistoryDetail();
+    showToast('Record deleted.');
+  });
+}
+
+// ─── Init ───
+loadSampleData();
+setupManualUpload();
+renderAppliances();
+renderCalendar();
+renderHomeUpcoming();
+renderHistory();
+updateTaskApplianceSelect();
+document.getElementById('welcome-avatar').innerHTML = '<img src="./icon.jpeg" alt="AI" />';
+document.getElementById('header-icon').innerHTML = '<img src="./icon.jpeg" alt="App" />';
+document.getElementById('about-icon').innerHTML = '<img src="./icon.jpeg" alt="About" />';
+
+// Initialize language slider position after DOM is ready
+requestAnimationFrame(function() {
+  updateLangSlider();
+  window.addEventListener('resize', updateLangSlider);
+});
+</script>
+
+
+
+</body></html>

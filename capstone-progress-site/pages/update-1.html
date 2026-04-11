@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Update 1 · Capstone Progress</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-title">Capstone Progress</div>
+          <div class="brand-subtitle">Progress Update 1</div>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#home">Home</a>
+          <a href="#main-progress">Main Progress</a>
+          <a href="#demo-flow">Demo Flow</a>
+          <a href="../index.html#schedule">Schedule</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <section class="section">
+        <div class="grid-2">
+          <div class="card hero">
+            <div class="hero-top">
+              <div>
+                <h1 class="h1">Project Progress Update 1</h1>
+                <p class="muted body">UI demo updated to align with proposal objectives (multimodal diagnostics, RAG grounding, safety-aware severity, maintenance management).</p>
+              </div>
+              <div class="status-chip"><span class="status-dot warn"></span>In Progress</div>
+            </div>
+            <div class="divider"></div>
+            <div class="kpi">
+              <div class="kpi-label">Key Date</div>
+              <div class="kpi-value">2026-04-14</div>
+              <div class="kpi-sub">Project Progress Updates 1</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Files</div>
+            <div class="stack">
+              <a class="quick-link" href="../../UI_Demo/UITesting_r2.html" target="_blank" rel="noreferrer"
+                ><span class="icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path d="M7 3h7l3 3v15H7z"></path>
+                    <path d="M14 3v4h4"></path>
+                    <path d="M9 12h6"></path>
+                    <path d="M9 16h6"></path></svg></span
+                ><span>Open UITesting_r2.html</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="main-progress" class="section">
+        <div class="section-head">
+          <h2 class="h2">Main Progress</h2>
+          <div class="muted">Captured screen of the current UI prototype</div>
+        </div>
+        <div class="card">
+          <img
+            class="media-img"
+            src="../assets/screenshots/update-1/update-1-main-progress.png"
+            alt="Main progress screenshot from UITesting_r2.html"
+          />
+          <div class="media-caption">Source: UITesting_r2.html</div>
+        </div>
+      </section>
+      <section id="demo-flow" class="section">
+        <div class="section-head">
+          <h2 class="h2">Demo Flow</h2>
+          <div class="muted">Screenshots demonstrating the navigation and core features</div>
+        </div>
+        <div class="card">
+          <a id="update1FlowLink" href="../assets/screenshots/update-1/update-1-flow-1-home.png" target="_blank" rel="noreferrer">
+            <img
+              class="media-img"
+              id="update1FlowImg"
+              src="../assets/screenshots/update-1/update-1-flow-1-home.png"
+              alt="Step 1 · Home"
+            />
+          </a>
+          <div class="media-caption">
+            <div class="demo-flow-caption">
+              <span class="muted" id="update1FlowLabel">Step 1 · Home</span>
+            </div>
+            <div class="demo-flow-controls">
+              <button class="task-view" type="button" id="update1FlowPrev">Prev</button>
+              <button class="task-view" type="button" id="update1FlowNext">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="muted">Capstone Progress</div>
+        <div class="muted">Update 1</div>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const img = document.getElementById("update1FlowImg");
+        const link = document.getElementById("update1FlowLink");
+        const label = document.getElementById("update1FlowLabel");
+        const prev = document.getElementById("update1FlowPrev");
+        const next = document.getElementById("update1FlowNext");
+        if (!img || !link || !label || !prev || !next) return;
+
+        const steps = [
+          { id: "flow-1", src: "../assets/screenshots/update-1/update-1-flow-1-home.png", label: "Step 1 · Home" },
+          { id: "flow-2", src: "../assets/screenshots/update-1/update-1-flow-2-diagnose-photo.png", label: "Step 2 · Fix (Photo)" },
+          { id: "flow-3", src: "../assets/screenshots/update-1/update-1-flow-3-diagnose-chat.png", label: "Step 3 · Fix (AI Chat)" },
+          { id: "flow-4", src: "../assets/screenshots/update-1/update-1-flow-4-appliances-add.png", label: "Step 4 · Appliances (Add)" },
+          { id: "flow-5", src: "../assets/screenshots/update-1/update-1-flow-5-maintenance-add.png", label: "Step 5 · Reminders (Add)" },
+          { id: "flow-6", src: "../assets/screenshots/update-1/update-1-flow-6-history.png", label: "Step 6 · Past Fixes" },
+        ];
+
+        const indexForId = (id) => steps.findIndex((s) => s.id === id);
+        let idx = 0;
+        if (typeof window.location.hash === "string" && window.location.hash.length > 1) {
+          const hash = window.location.hash.slice(1);
+          const found = indexForId(hash);
+          if (found >= 0) idx = found;
+        }
+
+        const render = () => {
+          const step = steps[idx] || steps[0];
+          img.setAttribute("src", step.src);
+          img.setAttribute("alt", step.label);
+          link.setAttribute("href", step.src);
+          label.textContent = step.label;
+          window.location.hash = step.id;
+        };
+
+        prev.addEventListener("click", () => {
+          idx = (idx - 1 + steps.length) % steps.length;
+          render();
+        });
+        next.addEventListener("click", () => {
+          idx = (idx + 1) % steps.length;
+          render();
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
