@@ -7,7 +7,7 @@ def main() -> None:
     tools_dir = Path(__file__).resolve().parent
     site_dir = tools_dir.parent
     project_dir = site_dir.parent
-    input_html = (project_dir / "UI_Demo" / "UITesting_r2.html").resolve()
+    input_html = (site_dir / "UI_Demo" / "UITesting_r2.html").resolve()
     out_dir = site_dir / "assets" / "screenshots" / "update-1"
 
     if not input_html.exists():
