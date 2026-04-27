@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Update 2 · Capstone Progress</title>
+    <!--
+      Drop-in version — save as `pages/update-2.html` in the project website
+      (sibling to `pages/update-1.html`). The stylesheet path below is already
+      relative (`../styles.css`) and assumes the file lives in `pages/`.
+
+      Add a link to this page from the home page nav, e.g.:
+        <a href="./pages/update-2.html">Update 2 <span class="new-badge">New</span></a>
+    -->
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      /* Mermaid diagrams blend into the dark theme */
+      .mermaid { background: rgba(231, 238, 252, 0.04); padding: 16px; border-radius: 10px; border: 1px solid var(--border); margin: 12px 0; text-align: center; }
+      /* Slightly tighter tables on this page */
+      .ppu2-table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 8px 0 16px; }
+      .ppu2-table th, .ppu2-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+      .ppu2-table th { background: rgba(231, 238, 252, 0.06); font-weight: 600; }
+      .ppu2-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+      .ppu2-table td.num.top { color: var(--good); font-weight: 700; background: rgba(45, 212, 191, 0.1); }
+      .ppu2-table td.num.low { color: var(--good); font-weight: 700; background: rgba(45, 212, 191, 0.1); }
+      .ppu2-callout { padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: rgba(45, 212, 191, 0.08); margin: 12px 0; }
+      .ppu2-callout strong { color: var(--good); }
+      .ppu2-warn { background: rgba(251, 191, 36, 0.08); }
+      .ppu2-warn strong { color: var(--warn); }
+      .ppu2-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      @media (max-width: 720px) { .ppu2-grid-3 { grid-template-columns: 1fr; } }
+      .stat { padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border); background: rgba(231, 238, 252, 0.04); }
+      .stat-value { font-size: 24px; font-weight: 700; color: var(--accent); }
+      .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+      code { font-family: var(--mono); font-size: 12px; background: rgba(231, 238, 252, 0.06); padding: 1px 6px; border-radius: 4px; color: var(--accent); }
+      pre { background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: 12px; }
+      pre code { background: none; padding: 0; color: var(--text); }
+      blockquote { border-left: 3px solid var(--accent); margin: 8px 0; padding: 6px 14px; color: var(--muted); background: rgba(231,238,252,0.03); border-radius: 4px; }
+      .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 6px; }
+      .legend .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+      /* Colorize highlighted text in the Progress Update 2 hero card */
+      .card.hero ul.body li strong { color: var(--accent); }
+      /* Compact "pill grid" for the eval methodology card */
+      .pill-grid { display: grid; gap: 6px; }
+      .pill-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+      .pill-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .pill-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .pill {
+        padding: 7px 6px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(231, 238, 252, 0.04);
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.3;
+        cursor: pointer;
+        transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+        user-select: none;
+      }
+      .pill:hover { border-color: var(--accent); background: rgba(99, 179, 255, 0.07); }
+      .pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .pill:active { transform: translateY(1px); }
+      .pill-key { display: block; font-weight: 700; color: var(--accent); font-size: 13px; }
+      .pill-sub { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+      .pill.chosen { border-color: var(--accent); background: rgba(99, 179, 255, 0.12); }
+      .pill.chosen .pill-key { color: var(--accent); }
+      .pill.chosen .pill-sub { color: var(--accent); }
+      .pill.active { border-color: var(--good); background: rgba(45, 212, 191, 0.12); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.25); }
+      .pill.active .pill-key { color: var(--good); }
+      .pill.active .pill-sub { color: var(--good); }
+      .eval-detail {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(231, 238, 252, 0.03);
+        font-size: 13px;
+        line-height: 1.55;
+        min-height: 80px;
+        transition: border-color 120ms ease;
+      }
+      .eval-detail.has-content { border-color: var(--good); background: rgba(45, 212, 191, 0.05); }
+      .eval-detail-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; font-size: 13px; }
+      .eval-detail.has-content .eval-detail-title { color: var(--good); }
+      .eval-detail-empty { color: var(--muted); font-style: italic; }
+      .micro-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin: 12px 0 6px; }
+      .micro-label:first-child { margin-top: 0; }
+      .info-tip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: rgba(99, 179, 255, 0.18);
+        color: var(--accent);
+        font-size: 10px;
+        font-weight: 700;
+        cursor: help;
+        margin-left: 6px;
+        position: relative;
+        border: 1px solid var(--accent);
+        text-transform: none;
+        letter-spacing: 0;
+        font-family: var(--sans);
+      }
+      .info-tip:hover, .info-tip:focus-visible { background: var(--accent); color: var(--bg); outline: none; }
+      .info-tip-bubble {
+        display: none;
+        position: absolute;
+        top: 24px;
+        left: -10px;
+        width: 360px;
+        max-width: calc(100vw - 40px);
+        background: var(--panel);
+        border: 1px solid var(--accent);
+        border-radius: 10px;
+        padding: 14px 16px;
+        font-size: 12.5px;
+        line-height: 1.55;
+        color: var(--text);
+        z-index: 200;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+        text-align: left;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .info-tip-bubble strong { color: var(--accent); }
+      .info-tip-bubble ul { margin: 6px 0 0 16px; padding: 0; }
+      .info-tip-bubble li { margin: 4px 0; }
+      .info-tip:hover .info-tip-bubble,
+      .info-tip:focus-visible .info-tip-bubble,
+      .info-tip.show .info-tip-bubble { display: block; }
+      .eval-foot { margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+      .eval-foot strong { color: var(--text); }
+      .judge-feature {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 14px;
+        border: 1px solid var(--accent);
+        border-radius: 10px;
+        background: rgba(99, 179, 255, 0.08);
+        margin-top: 4px;
+      }
+      .judge-icon {
+        flex: 0 0 auto;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: rgba(99, 179, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+      }
+      .judge-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+      .judge-text { flex: 1; min-width: 0; }
+      .judge-name { font-weight: 700; font-size: 14px; color: var(--accent); }
+      .judge-why { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+      .judge-cite { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+      .judge-cite a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(99, 179, 255, 0.4); }
+      .judge-cite a:hover { text-decoration-color: var(--accent); }
+      /* Architecture 2-column layout: diagram (narrow) | explanation (wide) */
+      .arch-grid { display: grid; grid-template-columns: minmax(360px, 1.2fr) 1.5fr; gap: 14px; align-items: stretch; }
+      @media (max-width: 900px) { .arch-grid { grid-template-columns: 1fr; } }
+      .arch-grid .card { margin: 0; }
+      .arch-grid .mermaid { margin: 0 0 8px; }
+      .arch-grid .mermaid svg { max-width: 100%; height: auto; }
+      .arch-grid .mermaid .node { cursor: pointer; transition: filter 120ms ease; }
+      .arch-grid .mermaid .node:hover { filter: brightness(1.25) drop-shadow(0 0 4px var(--accent)); }
+      .arch-detail {
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(231, 238, 252, 0.03);
+        font-size: 13px;
+        line-height: 1.6;
+        min-height: 220px;
+        margin-bottom: 12px;
+        transition: border-color 120ms ease;
+      }
+      .arch-detail.has-content { border-color: var(--good); background: rgba(45, 212, 191, 0.05); }
+      .arch-detail-title { font-weight: 700; color: var(--accent); margin-bottom: 8px; font-size: 15px; }
+      .arch-detail.has-content .arch-detail-title { color: var(--good); }
+      .arch-detail-empty { color: var(--muted); font-style: italic; padding-top: 60px; text-align: center; }
+      .arch-detail strong { color: var(--text); }
+      .arch-detail ul { margin: 6px 0 6px 18px; padding: 0; }
+      .arch-detail li { margin: 3px 0; }
+      .arch-detail a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(99, 179, 255, 0.4); }
+      .arch-detail a:hover { text-decoration-color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-title">Capstone Progress</div>
+          <div class="brand-subtitle">Progress Update 2 · Backend &amp; AI Integration</div>
+        </div>
+        <nav class="nav">
+          <a href="https://hkucs2026.github.io/HKUCapstone2026/index.html#home">Home</a>
+          <a href="#findings">Findings</a>
+          <a href="#architecture">RAG Architecture</a>
+          <a href="#test-data">Test Data</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- ===================== HERO ===================== -->
+      <section class="section">
+        <div class="grid-2">
+          <div class="card hero">
+            <div class="hero-top">
+              <div>
+                <h1 class="h1">Project Progress Update 2</h1>
+                <ul class="muted body">
+                  <li><strong>880-run evaluation sweep</strong> conducted across 5 retrieval modes × 8 LLM models × 22 golden test cases.</li>
+                  <li><strong>Mode C — Agentic Tool-Use</strong> chosen as the production mode. Mode C lets the LLM decide per query whether to look in the curated corpus, search the live web, or use its own training knowledge — answering with whatever source is most useful.</li>
+                  <li><strong>Moonshot Kimi K2.6</strong> selected as the production LLM — strongest safety score in the lineup with competitive correctness at $0.02 / query.</li>
+                  <li><strong>Backend shipped</strong>: FastAPI service layer, multimodal RAG pipeline (text + image), and a structured severity classifier (low / medium / high) with inline safety disclaimers.</li>
+                  <li><strong>Multimodal pipeline verified</strong> end-to-end via a 6-case × 5-mode smoke test (30 runs) — VLM image analysis, brand/category routing, and image-driven severity escalation all validated.</li>
+                </ul>
+              </div>
+              <div class="status-chip"><span class="status-dot good"></span>On Track</div>
+            </div>
+            <div class="divider"></div>
+            <div class="kpi">
+              <div class="kpi-label">Key Date</div>
+              <div class="kpi-value">2026-05-04 / 05</div>
+              <div class="kpi-sub">Project Progress Update 2</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Evaluation Methodology</div>
+
+            <div class="micro-label">5 retrieval modes (click for details)</div>
+            <div class="pill-grid cols-5">
+              <div class="pill" tabindex="0" role="button" data-detail="mode-A"><span class="pill-key">A</span><span class="pill-sub">Pure RAG</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="mode-B"><span class="pill-key">B</span><span class="pill-sub">Hybrid + web</span></div>
+              <div class="pill chosen" tabindex="0" role="button" data-detail="mode-C"><span class="pill-key">C ★</span><span class="pill-sub">Agentic</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="mode-D"><span class="pill-key">D</span><span class="pill-sub">Parametric</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="mode-W"><span class="pill-key">W</span><span class="pill-sub">Web only</span></div>
+            </div>
+
+            <div class="micro-label">8 LLM models (click for details)</div>
+            <div class="pill-grid cols-4">
+              <div class="pill chosen" tabindex="0" role="button" data-detail="model-kimi"><span class="pill-key">Kimi K2.6 ★</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-sonnet"><span class="pill-key">Sonnet 4.6</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-gpt5"><span class="pill-key">GPT-5.4</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-glm"><span class="pill-key">GLM 5.1</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-grok"><span class="pill-key">Grok 4.20</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-qwen"><span class="pill-key">Qwen 3.6+</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-haiku"><span class="pill-key">Haiku 4.5</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="model-gptmini"><span class="pill-key">GPT-5.4-mini</span></div>
+            </div>
+
+            <div class="micro-label">5 judge dimensions, 1–5 Likert (click for details)<span class="info-tip" tabindex="0" role="button" aria-label="Why custom rubric, not RAGAS">?<span class="info-tip-bubble"><strong>Why our rubric, not RAGAS?</strong><br><span style="font-size:11px;color:var(--muted);font-style:italic;">RAGAS: Es et al. (2024), "RAGAS: Automated Evaluation of Retrieval Augmented Generation" · arXiv:2309.15217</span><ul><li><strong>Faithfulness — demoted</strong>: RAGAS penalizes answers with claims unsupported by retrieved context. Our deployed app is allowed to draw on parametric knowledge or web search when the corpus is silent (Modes B/C/D/W); those answers can still be correct and useful. We report Faithfulness as a citability/traceability signal only — not a quality gate. <strong>Correctness + Completeness + Safety</strong> carry the quality weight instead.</li><li><strong>Completeness — newly added</strong>: RAGAS does not surface coverage as a separate dimension (its closest, Answer Correctness, conflates accuracy with reference similarity). Catches cherry-picked / truncated answers that pass faithfulness but skip steps a user actually needs.</li><li><strong>Safety — domain-specific</strong>: deterministic keyword detection (electrical / gas / structural / asbestos / heights / main-plumbing) + LLM judge in one prompt. RAGAS's AspectCritic equivalent would be an extra LLM call per topic.</li><li><strong>Cost</strong>: single judge call scores all 5 dimensions; RAGAS calls one LLM per metric (≈5× the cost).</li></ul></span></span></div>
+            <div class="pill-grid cols-5">
+              <div class="pill" tabindex="0" role="button" data-detail="dim-correct"><span class="pill-key">Correct</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="dim-complete"><span class="pill-key">Complete</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="dim-safety"><span class="pill-key">Safety</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="dim-relevant"><span class="pill-key">Relevant</span></div>
+              <div class="pill" tabindex="0" role="button" data-detail="dim-faithful"><span class="pill-key">Faithful</span></div>
+            </div>
+
+            <div id="eval-detail" class="eval-detail" aria-live="polite">
+              <div class="eval-detail-empty">Click any pill above to see what it means and why it was chosen / used.</div>
+            </div>
+
+            <div class="micro-label">Judge model</div>
+            <div class="judge-feature">
+              <div class="judge-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
+              </div>
+              <div class="judge-text">
+                <div class="judge-name">DeepSeek v3.2</div>
+                <div class="judge-why">Different model family from every generator in the lineup → mitigates self-preference bias.</div>
+                <div class="judge-cite">
+                  Panickssery et al. (2024), <em>"LLM Evaluators Recognize and Favor Their Own Generations"</em> · <a href="https://arxiv.org/abs/2410.21819" target="_blank" rel="noreferrer">arXiv:2410.21819</a><br>
+                  LLM-as-judge framework: Zheng et al. (2023), <em>"Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"</em> · <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noreferrer">arXiv:2306.05685</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== FINDINGS ===================== -->
+      <section id="findings" class="section">
+        <div class="section-head">
+          <h2 class="h2">Headline Findings</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Aggregate by mode — score 1–5</div>
+            <table class="ppu2-table">
+              <thead><tr><th>Mode</th><th class="num">Correct</th><th class="num">Complete</th><th class="num">Safe</th><th class="num">Relevant</th><th class="num">Faith</th></tr></thead>
+              <tbody>
+                <tr><td><strong>D</strong> (no-RAG)</td><td class="num top">3.78</td><td class="num">3.82</td><td class="num top">4.82</td><td class="num">4.64</td><td class="num">1.36</td></tr>
+                <tr><td><strong>C</strong> (agentic) <em>← prod</em></td><td class="num">3.76</td><td class="num">3.99</td><td class="num">4.74</td><td class="num">4.65</td><td class="num">1.97</td></tr>
+                <tr><td>W (web-only)</td><td class="num">3.74</td><td class="num top">4.15</td><td class="num">4.77</td><td class="num top">4.82</td><td class="num top">2.00</td></tr>
+                <tr><td>A (pure RAG)</td><td class="num">3.45</td><td class="num">3.78</td><td class="num">4.76</td><td class="num">4.26</td><td class="num">1.82</td></tr>
+                <tr><td>B (hybrid+fallback)</td><td class="num">3.39</td><td class="num">3.81</td><td class="num">4.73</td><td class="num">4.45</td><td class="num">1.77</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Per-case-type correctness — interpretive view<span class="info-tip" tabindex="0" role="button" aria-label="What are the case types?">?<span class="info-tip-bubble"><strong>Case-type labels in the golden dataset</strong><br><span style="font-size:11px;color:var(--muted);">Each of the 22 test cases is pre-labelled with the knowledge source the pipeline <em>should</em> route to, so we can score whether each mode's answer is well-suited to the case.</span><ul><li><strong><code>retrieve_and_answer</code></strong> (11 cases / 88 rows): the curated corpus contains the answer. A good system should retrieve from the corpus and ground its answer in those sources.</li><li><strong><code>web_fallback</code></strong> (8 cases / 64 rows): the corpus is silent on the topic (e.g., long-tail brand/model queries the manuals don't cover). A good system should fall back to web search or parametric knowledge.</li><li><strong><code>parametric_ok</code></strong> (3 cases / 24 rows): borderline — the answer is general / common enough that the LLM's training knowledge is acceptable; corpus or web are bonuses but not required.</li></ul><span style="font-size:11px;color:var(--muted);">Row counts differ across modes (e.g., 88 / 64 / 24) because not all 8 generators produced valid scores in every case; rows shown are post-filter.</span></span></span></div>
+            <table class="ppu2-table">
+              <thead><tr><th>Case type</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th><th class="num">W</th></tr></thead>
+              <tbody>
+                <tr><td><code>retrieve_and_answer</code> (88)</td><td class="num">3.58</td><td class="num">3.56</td><td class="num top">3.87</td><td class="num">3.59</td><td class="num">3.75</td></tr>
+                <tr><td><code>web_fallback</code> (64)</td><td class="num">3.11</td><td class="num">3.02</td><td class="num">3.41</td><td class="num top">3.84</td><td class="num">3.58</td></tr>
+                <tr><td><code>parametric_ok</code> (24)</td><td class="num">3.92</td><td class="num">3.79</td><td class="num top">4.29</td><td class="num top">4.29</td><td class="num">4.12</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 14px;">
+          <div class="card-title">Mode C performance across the 8 LLM models — score 1–5</div>
+          <table class="ppu2-table">
+            <thead><tr><th>LLM</th><th class="num">n</th><th class="num">Correct</th><th class="num">Complete</th><th class="num">Safe</th><th class="num">Relevant</th><th class="num">Faith</th><th class="num">Cost ($/q)</th></tr></thead>
+            <tbody>
+              <tr><td>OpenAI GPT-5.4</td><td class="num">22</td><td class="num top">3.95</td><td class="num">4.27</td><td class="num">4.45</td><td class="num">4.73</td><td class="num">1.91</td><td class="num">$0.0499</td></tr>
+              <tr><td><strong>Moonshot Kimi K2.6</strong> <em>← prod</em></td><td class="num">22</td><td class="num">3.91</td><td class="num">4.27</td><td class="num top">5.00</td><td class="num">4.59</td><td class="num top">2.55</td><td class="num">$0.0274</td></tr>
+              <tr><td>OpenAI GPT-5.4-mini</td><td class="num">22</td><td class="num">3.91</td><td class="num top">4.41</td><td class="num">4.73</td><td class="num top">5.00</td><td class="num">1.77</td><td class="num">$0.0139</td></tr>
+              <tr><td>Anthropic Claude Haiku 4.5</td><td class="num">22</td><td class="num">3.73</td><td class="num">3.68</td><td class="num">4.59</td><td class="num">4.55</td><td class="num">2.23</td><td class="num">$0.0344</td></tr>
+              <tr><td>Anthropic Claude Sonnet 4.6</td><td class="num">22</td><td class="num">3.73</td><td class="num">3.82</td><td class="num">4.77</td><td class="num">4.50</td><td class="num">2.05</td><td class="num">$0.1021</td></tr>
+              <tr><td>xAI Grok 4.20 *</td><td class="num">18</td><td class="num">3.72</td><td class="num">4.06</td><td class="num">4.67</td><td class="num">4.72</td><td class="num">1.00</td><td class="num">$0.0615</td></tr>
+              <tr><td>Alibaba Qwen 3.6-plus</td><td class="num">22</td><td class="num">3.68</td><td class="num">3.82</td><td class="num">4.68</td><td class="num">4.64</td><td class="num">1.86</td><td class="num low">$0.0130</td></tr>
+              <tr><td>Zhipu GLM 5.1</td><td class="num">22</td><td class="num">3.45</td><td class="num">3.59</td><td class="num top">5.00</td><td class="num">4.45</td><td class="num">2.18</td><td class="num">$0.0393</td></tr>
+            </tbody>
+          </table>
+          <p class="body muted" style="font-size:12px;margin:8px 0 0;">
+            Sorted by Correctness. The chosen production combo (<strong>Mode C × Kimi K2.6</strong>) lands within 0.04 of the top correctness while delivering the only perfect Safety score paired with the highest Faithfulness in the lineup — the most defensible safety+citability profile.
+            <br><em>* Grok 4.20 has n = 18 due to a documented xAI <code>encrypted_content</code> SDK issue on multi-turn tool calls (4 / 22 cells failed).</em>
+          </p>
+        </div>
+
+        <div class="card" style="margin-top: 14px;">
+          <div class="card-title">Are these findings statistically defensible?<span class="info-tip" tabindex="0" role="button" aria-label="What test was used?">?<span class="info-tip-bubble"><strong>How significance was tested</strong><br><span style="font-size:11px;color:var(--muted);">Each test pairs <code>(case, generator)</code> tuples across modes — same case, same generator, only the mode varies — and runs a paired Wilcoxon signed-rank test. p &lt; 0.05 means the difference is unlikely (&lt;5%) to be noise. Wilcoxon (not t-test) is used because 1–5 Likert scores aren't normally distributed.</span></span></span></div>
+          <ul class="list" style="margin: 0;">
+            <li><span style="color:var(--good);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Confirmed</span> &nbsp; <strong>Agentic routing (Mode C) is genuinely better than deterministic fallback (Mode B)</strong>. The +0.37 correctness gap is real, not noise.</li>
+            <li><span style="color:var(--good);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Confirmed</span> &nbsp; <strong>Mode C wins on the corpus's home turf</strong> (queries the corpus is built to answer). Mode C scores 3.87 vs Mode D's 3.56 here — the gap is real.</li>
+            <li><span style="color:var(--good);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Confirmed</span> &nbsp; <strong>Frontier-LLM training knowledge beats this corpus on average</strong>. Mode D's 0.32 lead over Mode A is real — the empirical inversion finding holds.</li>
+            <li><span style="color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Tied at the mean</span> &nbsp; <strong>Mode C and Mode D have indistinguishable overall correctness</strong>. The aggregate "tie" masks two opposing significant effects (C wins on <code>retrieve_and_answer</code>, D wins on <code>web_fallback</code>); the choice between them depends on which case-type dominates real traffic plus iOS UX needs (Mode C returns sources; Mode D doesn't).</li>
+            <li><span style="color:var(--bad);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Counter-evidence</span> &nbsp; <strong>On long-tail queries the corpus doesn't cover, Mode D beats Mode C</strong>. Frontier-LLM training knowledge outperforms thin web snippets here. We tested adding <code>openrouter:web_fetch</code> to mitigate; the naive integration backfired (correctness dropped 0.32 overall, 0.62 on <code>web_fallback</code>) — consistent with the retrieval-distraction literature. Tighter tuning (lower <code>max_uses</code>, conditional invocation) is required before adoption.</li>
+          </ul>
+
+          <details style="margin-top: 12px; font-size: 12px;">
+            <summary style="cursor:pointer;color:var(--muted);">Show the numbers (p-values, sample sizes, deltas)</summary>
+            <table class="ppu2-table" style="margin-top: 8px;">
+              <thead><tr><th>Claim</th><th class="num">n</th><th class="num">Δ</th><th class="num">p</th></tr></thead>
+              <tbody>
+                <tr><td>Mode C beats Mode B (aggregate)</td><td class="num">172</td><td class="num">+0.366</td><td class="num top">0.003</td></tr>
+                <tr><td>Mode C beats Mode D <em>on retrieve_and_answer cases</em></td><td class="num">85</td><td class="num">+0.306</td><td class="num top">0.038</td></tr>
+                <tr><td>Mode D beats Mode A (aggregate)</td><td class="num">176</td><td class="num">+0.324</td><td class="num top">0.006</td></tr>
+                <tr><td>Mode C ≈ Mode D (aggregate)</td><td class="num">172</td><td class="num">+0.006</td><td class="num">0.92</td></tr>
+                <tr><td>Mode D beats Mode C <em>on web_fallback cases</em></td><td class="num">63</td><td class="num">+0.429</td><td class="num top">0.007</td></tr>
+              </tbody>
+            </table>
+            <p class="body muted" style="font-size: 11px; margin: 4px 0 0;">Paired by (case, generator) · two-sided · α = 0.05.</p>
+          </details>
+        </div>
+      </section>
+
+
+      <!-- ===================== ARCHITECTURE ===================== -->
+      <section id="architecture" class="section">
+        <div class="section-head">
+          <h2 class="h2">Multimodal RAG Architecture</h2>
+          <div class="muted">Chatbot / AI backend slice — FastAPI service → VLM → agent loop → severity classifier. User &amp; appliance management endpoints are teammate-owned and not shown.</div>
+        </div>
+        <div class="grid-2 arch-grid">
+          <div class="card">
+            <div class="card-title">Click any block →</div>
+            <div class="mermaid">
+flowchart TB
+    IOS["iOS App<br/>Diagnose · AI Chat · Appliance Library"]
+    API["FastAPI Service<br/>/chat · /diagnose"]
+    IOS -->|"text + optional image<br/>+ optional appliance_context"| API
+    API --> VLM["VLM<br/>(JSON-schema analysis)"]
+    VLM --> AGENT
+    subgraph Agent["LLM agent loop (Mode C — production)"]
+        AGENT["Generator<br/>(Kimi K2.6 + UncleFix prompt)"]
+        RET["RAG Retriever<br/>FAISS + BM25 + RRF"]
+        WEB["Web search<br/>(server tool)"]
+        AGENT <-->|"tool call"| RET
+        AGENT <-->|"tool call"| WEB
+    end
+    VLM --> SEV
+    AGENT --> SEV["Severity classifier<br/>(4-signal max)"]
+    SEV --> RESP[("HTTP Response<br/>answer · sources · severity ·<br/>image_metadata · safety_flags")]
+
+    click IOS archExplain
+    click API archExplain
+    click VLM archExplain
+    click AGENT archExplain
+    click RET archExplain
+    click WEB archExplain
+    click SEV archExplain
+    click RESP archExplain
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Component details</div>
+            <div id="arch-detail" class="arch-detail" aria-live="polite">
+              <div class="arch-detail-empty">Click any block in the diagram to see what it does and why it's there.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TEST DATA ===================== -->
+      <section id="test-data" class="section">
+        <div class="section-head">
+          <h2 class="h2">Test Data &amp; Limitations</h2>
+          <div class="muted">Golden dataset structure, sample cases, and honest caveats</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Caveats acknowledged up front</div>
+          <ul class="list">
+            <li><strong>Reference answers are LLM-authored</strong> (Claude during dataset creation), not curated by a home-repair professional. Correctness is therefore a model-against-model-reference signal, not an expert-graded one.</li>
+            <li><strong>22 unique queries</strong> replicated across 5 modes × 8 LLMs = 876 cells. Single-pass per cell, no bootstrapped confidence intervals. Paired Wilcoxon tests on the headline contrasts are reported in <em>"Are these findings statistically defensible?"</em> above.</li>
+            <li><strong>Text-only sweep.</strong> The multimodal pipeline is verified end-to-end via the smoke test (below), but those 6 image cases are not judge-scored — they are smoke tests, not formal eval cells.</li>
+          </ul>
+        </div>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card">
+            <div class="card-title">Case-type distribution</div>
+            <table class="ppu2-table">
+              <thead><tr><th>Expected behavior</th><th class="num">Cases</th><th>Case IDs</th></tr></thead>
+              <tbody>
+                <tr><td><code>retrieve_and_answer</code></td><td class="num">11</td><td><code>hr_001, hr_003, hr_006–010, am_007–010</code></td></tr>
+                <tr><td><code>web_fallback</code></td><td class="num">8</td><td><code>am_001–006, web_001, web_002</code></td></tr>
+                <tr><td><code>parametric_ok</code></td><td class="num">3</td><td><code>hr_002, hr_004, hr_005</code></td></tr>
+                <tr><td><strong>Total</strong></td><td class="num"><strong>22</strong></td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="body muted" style="font-size:12px;margin:4px 0 0;">
+              Naming convention: <code>hr_*</code> = home-repair domain, <code>am_*</code> = appliance-manuals domain, <code>web_*</code> = explicit web-fallback case.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Sample cases — one per type</div>
+            <details style="margin-bottom: 8px;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--accent);"><code>retrieve_and_answer</code> — hr_001 (kitchen faucet)</summary>
+              <pre style="font-size:11px;margin-top:8px;"><code>{
+  "id": "hr_001",
+  "query": "How do I fix a leaking kitchen faucet at the base?",
+  "expected_behavior": "retrieve_and_answer",
+  "expected_chunks": ["Rainbow_Restoration_…::chunk_1", …],
+  "expected_answer_keywords": ["O-ring","cartridge","water supply","turn off"],
+  "reference_answer": "A kitchen faucet leaking at the base is usually caused by a worn O-ring or cartridge. Turn off the water supply…",
+  "safety_required": false,
+  "difficulty": "easy",
+  "metadata_filters": {"category": "home_repair"}
+}</code></pre>
+                          <div style="margin-top:10px;font-size:11px;color:var(--muted);">Mode C × Kimi K2.6 answer (severity=<strong>low</strong>, cost=$0.044, fallback=web used):</div>
+              <div style="margin-top:6px;padding:12px;background:rgba(45,212,191,0.05);border:1px solid var(--border);border-radius:6px;font-size:12px;line-height:1.55;white-space:pre-wrap;max-height:340px;overflow-y:auto;">    <strong>What&#x27;s likely happening</strong>
+
+Water pooling around the base of your kitchen faucet usually means the rubber O-rings that seal the spout to the faucet body have worn out, cracked, or become coated with mineral buildup. On single-handle faucets with a swivel spout, this is by far the most common cause. Alternatively, the mounting nut underneath the sink may have loosened, or the plumber&#x27;s putty/silicone seal between the faucet base and the sink surface has failed.
+
+<strong>How serious is it</strong>
+
+<strong>Low</strong> — This is a nuisance leak that wastes water and can damage your countertop or cabinet over time, but it poses no immediate safety hazard.
+
+<strong>Difficulty Level</strong>
+
+Easy
+
+<strong>Estimated Total Time</strong>
+
+~30–45 min
+
+<strong>What to try first</strong>
+
+1. <strong>Confirm it&#x27;s a base leak:</strong> Dry the faucet and countertop completely, lay a paper towel around the base, turn on the water, and watch for 30 seconds. If water appears where the faucet body meets the sink, it&#x27;s a base leak.
+2. <strong>Check if the leak appears only when swiveling the spout:</strong> If yes, the O-rings on the spout body are almost certainly worn.
+3. <strong>Wiggle the faucet from above:</strong> If it feels loose, the mounting nut underneath may just need tightening.
+
+<strong>Tools you might need</strong>
+
+- Adjustable wrench or basin wrench
+- Allen wrench set (for handle screw)
+- Flathead screwdriver or utility knife
+- Replacement O-rings (match size, or buy an assortment kit ~$3–5)
+- Silicone-based plumber&#x27;s grease
+- Plumber&#x27;s putty or silicone caulk (if resealing base)
+- Rag/towel
+- Flashlight
+- Safety glasses
+
+<strong>Step-by-step fix</strong>
+
+1. <strong>Shut off the water supply (~2min)</strong>
+   Turn both hot and cold shut-off valves under the sink clockwise until snug. Open the faucet to drain remaining water and release pressure. <strong>Cover the sink drain with a rag</strong> so small parts don&#x27;t fall in. [Source: web - https://theplumbingdirectory.com/how-to/fix-a-leaky-faucet-base]
+
+2. <strong>Remove the faucet handle (~3min)</strong>
+   Pry off the decorative cap on the handle with a flathead screwdriver. Loosen the hex screw underneath with an Allen wrench, then pull the handle straight off.
+
+3. <strong>Remove the spout collar/dome (~3min)</strong>
+   Unscrew or pull off the collar (the round dome-like piece) that holds the spout in place. If it&#x27;s threaded, grip it with needle-nose pliers wrapped in a towel to avoid scratches.
+
+4. <strong>Lift off the spout and inspect the O-rings (~3min)</strong>
+   Pull the spout straight up—it may need a slight twist or wiggle. You&#x27;ll see 2–3 rubber O-rings around the cylindrical spout body. Check for cracks, flattening, or mineral buildup. [Source: web - https://sinkengineering.com/kitchen-faucet-leaking-from-the-base/]
+
+5. <strong>Replace the O-rings (~5min)</strong>
+   Cut or roll off the old O-rings. Bring them to the hardware store to match diameter and thickness, or use an assortment kit. Coat the new O-rings generously with silicone plumber&#x27;s grease, then slide them into place. <strong>Tip:</strong> Loop a piece of string over the O-ring to help expand it as you push it over the cartridge, then remove the string once it&#x27;s seated in the groove. [Source: web - https://sinkengineering.com/kitchen-faucet-leaking-from-the-base/]
+
+6. <strong>Clean and reassemble the spout (~5min)</strong>
+   Wipe out the inside of the spout and the seal at the top of the neck. Apply a thin layer of plumber&#x27;s grease. Push the spout back down over the new O-rings—it will take some firm pressure. Reattach the collar/dome and handle.
+
+7. <strong>Check and tighten the mounting nut from below (~5min)</strong>
+   With a basin wrench, tighten the large mounting nut(s) under the sink that hold the faucet body to the countertop. If the faucet still feels loose or leaks, you may need to remove it and reseal the base.
+
+8. <strong>Reseal the faucet base if needed (~10min)</strong>
+   If the putty or gasket seal has failed, disconnect supply lines, remove the mounting nuts, lift the faucet out, and clean all old putty/gasket material. Apply a fresh rope of plumber&#x27;s putty (for metal/porcelain sinks) or silicone caulk (for granite/stone) under the base plate. Reinstall, tighten until putty squeezes out evenly, and wipe excess. [Source: web - https://helloportable.com/kitchen-faucet-leaking-at-base/]
+
+9. <strong>Turn water back on and test (~2min)</strong>
+   Slowly open the shut-off valves. Run the faucet and rotate the spout through its full range. Lay a dry paper towel around the base for 30 minutes—if it stays dry, you&#x27;re done.
+
+<strong>When to call a professional</strong>
+
+- The faucet body itself is cracked or corroded (cannot be repaired, needs replacement).
+- The leak persists after replacing O-rings and resealing the base.
+- You cannot reach the mounting nuts due to a cramped cabinet layout.
+- You&#x27;re uncomfortable working in tight spaces or worried about damaging the finish.</div>
+            </details>
+            <details style="margin-bottom: 8px;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--accent);"><code>web_fallback</code> — am_001 (Whirlpool washer error)</summary>
+              <pre style="font-size:11px;margin-top:8px;"><code>{
+  "id": "am_001",
+  "query": "My Whirlpool washer shows error code F5 E2. What does it mean and how do I fix it?",
+  "expected_behavior": "web_fallback",
+  "expected_chunks": [],
+  "expected_answer_keywords": ["lid lock","door lock","F5 E2"],
+  "reference_answer": "Error F5 E2 on a Whirlpool washer indicates a lid/door lock fault…",
+  "safety_required": false,
+  "difficulty": "medium",
+  "metadata_filters": {"category": "appliance_manuals", "brand": "Whirlpool"}
+}</code></pre>
+                          <div style="margin-top:10px;font-size:11px;color:var(--muted);">Mode C × Kimi K2.6 answer (severity=<strong>medium</strong>, cost=$0.0397, fallback=web used):</div>
+              <div style="margin-top:6px;padding:12px;background:rgba(45,212,191,0.05);border:1px solid var(--border);border-radius:6px;font-size:12px;line-height:1.55;white-space:pre-wrap;max-height:340px;overflow-y:auto;"><strong>What&#x27;s likely happening</strong>
+
+Your Whirlpool washer is displaying the F5 E2 error code, which indicates a <strong>door or lid lock failure</strong>. The washer&#x27;s control board cannot verify that the door/lid is properly closed and locked, so it stops the cycle as a safety measure to prevent water spillage or injury during high-speed spin [Source: web - https://producthelp.whirlpool.com/Laundry/Washers/Top_Load_Washer/Error_Codes_or_Flashing_Lights/%22F%22_Codes/F5E2_-_Error_Code]. This is most commonly caused by an obstruction preventing proper closure, a worn door boot seal (on front-loaders), or a faulty door/lid lock assembly.
+
+<strong>How serious is it</strong>
+
+<strong>Medium</strong> — The washer won&#x27;t operate until this is resolved, but the fix is usually straightforward. Always unplug the washer before any internal inspection or repair to avoid electric shock.
+
+<strong>Difficulty Level</strong>
+
+Easy to Medium (depending on whether simple clearing or part replacement is needed)
+
+<strong>Estimated Total Time</strong>
+
+~15–45 min for basic troubleshooting; ~45–90 min if replacing the lock assembly or door boot
+
+<strong>What to try first</strong>
+
+1. <strong>Open and firmly re-close the door/lid</strong> — listen for a definite click indicating the latch engaged.
+2. <strong>Check for obstructions</strong> — look for clothing, socks, or debris caught in the door seal or lid lock area.
+3. <strong>Power reset</strong> — unplug the washer for a full 5 minutes, then plug back in and try again [Source: web - https://producthelp.whirlpool.com/Laundry/Washers/Top_Load_Washer/Error_Codes_or_Flashing_Lights/%22F%22_Codes/F5E2_-_Error_Code].
+
+<strong>Tools you might need</strong>
+
+- Phillips #2 screwdriver
+- Torx T20 screwdriver (for some models)
+- Multimeter (if testing the lock electrically)
+- Work gloves
+- Flashlight
+
+<strong>Step-by-step fix</strong>
+
+1. <strong>Inspect for obstructions (~3min)</strong>
+   Open the washer door/lid and check the rubber seal (front-load) or lid lock area (top-load) for any trapped clothing, socks, or debris. Remove anything you find.
+
+2. <strong>Check door/lid closure (~2min)</strong>
+   Close the door/lid firmly and listen for a solid click. On front-loaders, the door must be pushed until you hear a definite latch engagement. On top-loaders, ensure the lid closes completely flat without gaps.
+
+3. <strong>Power reset the control board (~7min)</strong>
+   Unplug the washer from the wall outlet (do not just turn off the power button). Wait a full 5 minutes to allow the control board to fully reset. Plug back in, wait 30 seconds, then try starting a cycle.
+
+4. <strong>Inspect the door boot seal — front-load only (~5min)</strong>
+   Run your hand around the rubber door boot feeling for tears, gaps, or spots where it has pulled away from the housing. A shifted or torn boot can prevent the door from closing fully [Source: web - https://errbase.com/whirlpool/washer/whirlpool-washer-f5-e2-error-code].
+
+5. <strong>Inspect the door/lid strike and hinges (~5min)</strong>
+   Check the metal strike plate (the part that enters the lock) for bending or damage. Ensure the door/lid hinges aren&#x27;t worn or misaligned, which can prevent proper closure.
+
+6. <strong>Test the door/lid lock with a multimeter — if comfortable (~10min)</strong>
+   <strong>Unplug the washer first.</strong> Remove the front or top panel to access the lock assembly. Set your multimeter to measure resistance (Ohms). With the door unlocked, the lock should read very low resistance (0–5 Ω). With the door closed and latched, resistance should increase substantially or read infinite/OL. If readings are off, the lock assembly is faulty [Source: web - https://www.appliancepartspros.com/c/troubleshooting-steps-to-resolve-an-f5-e2-error-on-a-whirlpool-washer/].
+
+7. <strong>Replace the faulty lock assembly if needed (~30–60min)</strong>
+   Order a replacement door lock (front-load, ~$20–$40) or lid lock (top-load, ~$25–$60) specific to your model. Disconnect the electrical connector, remove mounting screws, install the new lock, and reconnect wiring. Reassemble the panel and test.
+
+<strong>When to call a professional</strong>
+
+- If the lock tests good but the F5 E2 error persists (possible control board issue)
+- If the door/lid frame is warped or damaged
+- If you see burnt, discolored, or corroded areas on the control board
+- If wiring harness shows burns or damage
+- If the washer is under warranty
+- If you&#x27;re uncomfortable working with electrical components</div>
+            </details>
+            <details>
+              <summary style="cursor:pointer;font-weight:600;color:var(--accent);"><code>parametric_ok</code> — hr_002 (running toilet)</summary>
+              <pre style="font-size:11px;margin-top:8px;"><code>{
+  "id": "hr_002",
+  "query": "My toilet keeps running after flushing. What should I check?",
+  "expected_behavior": "parametric_ok",
+  "expected_chunks": [],
+  "expected_answer_keywords": ["flapper","fill valve","float","chain"],
+  "reference_answer": "A running toilet is usually caused by a worn flapper, a misadjusted float, or a damaged fill valve…",
+  "safety_required": false,
+  "difficulty": "easy"
+}</code></pre>
+                          <div style="margin-top:10px;font-size:11px;color:var(--muted);">Mode C × Kimi K2.6 answer (severity=<strong>low</strong>, cost=$0.042, fallback=web used):</div>
+              <div style="margin-top:6px;padding:12px;background:rgba(45,212,191,0.05);border:1px solid var(--border);border-radius:6px;font-size:12px;line-height:1.55;white-space:pre-wrap;max-height:340px;overflow-y:auto;"><strong>What&#x27;s likely happening</strong>
+When your toilet keeps running after flushing, water is either leaking from the tank into the bowl (usually because the rubber flapper isn&#x27;t sealing properly) or the fill valve isn&#x27;t shutting off when the tank is full. These are the two most common culprits inside the tank, and both are usually easy and inexpensive to fix.
+
+<strong>How serious is it</strong>
+<strong>Low</strong> — A running toilet wastes water and raises your bill, but it poses no immediate safety risk to your home.
+
+<strong>Difficulty Level</strong>
+Easy
+
+<strong>Estimated Total Time</strong>
+~15–30 minutes
+
+<strong>What to try first</strong>
+1. <strong>Lift the tank lid and look</strong>: Is water trickling into the overflow tube (the tall pipe in the center)? If yes, your water level is too high.
+2. <strong>Check the flapper chain</strong>: Is it too tight, too loose, or tangled? There should be about ½ inch of slack when the flapper is closed.
+3. <strong>Do a quick dye test</strong>: Add a few drops of food coloring to the tank water, wait 15–20 minutes without flushing, then check the bowl. If color appears, the flapper is leaking. [Source: web - https://mrpipey.com/blog/is-it-bad-if-my-toilet-keeps-running]
+
+<strong>Tools you might need</strong>
+- Adjustable wrench or pliers (for fill valve replacement if needed)
+- Sponge or rag (to soak up tank water)
+- Bucket or towel
+- Food coloring (for leak testing)
+- Replacement flapper or fill valve kit (if adjustment doesn&#x27;t work)
+- Rubber gloves (optional)
+
+<strong>Step-by-step fix</strong>
+
+1. Check the water level (~2min)
+   Remove the tank lid and look at the water level while the tank is full. It should sit about 1 inch below the top of the overflow tube. If water is flowing into the tube, the float is set too high.
+
+2. Adjust the float (~3min)
+   If you have a ball float (older toilets), gently bend the metal arm downward to lower the water level. If you have a cup float (newer toilets), turn the adjustment screw on the fill valve clockwise to lower the water level. Flush and check again. [Source: web - https://plumbingresource.com/fixing-a-running-toilet/]
+
+3. Inspect and adjust the chain (~2min)
+   Look at the chain connecting the flush handle to the flapper. It should have slight slack—about ½ inch—when the flapper is down. If it&#x27;s too tight, move the clip to a lower link. If too loose, shorten it so it doesn&#x27;t get stuck under the flapper. [Source: web - https://toiletfound.com/toilet-keeps-running/]
+
+4. Test the flapper seal with dye (~15min)
+   Add a few drops of food coloring to the tank water. Wait 15–20 minutes without flushing. If colored water appears in the bowl, the flapper is leaking and needs to be replaced or cleaned. [Source: web - https://simplehomefixesguide.com/running-toilet-even-after-replacing-the-flapper/]
+
+5. Replace the flapper if needed (~5min)
+   Turn off the water supply valve behind the toilet (clockwise). Flush to empty the tank. Unhook the old flapper from the overflow tube and chain, then install the new one. Reattach the chain with slight slack. Turn the water back on and test. Bring the old flapper to the store to match the size and style. [Source: web - https://www.ironmountainplumbing.com/why-your-toilet-keeps-running-and-how-to-fix-it/]
+
+6. Replace the fill valve if it still won&#x27;t shut off (~15min)
+   If adjusting the float doesn&#x27;t stop the water and you hear constant hissing, the fill valve may be worn out. Turn off the water, flush and sponge out the tank, disconnect the water supply line, unscrew the locknut under the tank, remove the old valve, and install a new one. Reconnect everything and test. [Source: web - https://plumbingresource.com/fixing-a-running-toilet/]
+
+<strong>When to call a professional</strong>
+- The toilet still runs after replacing the flapper and fill valve.
+- You see cracks in the tank, bowl, or overflow tube.
+- Water is leaking from the base of the toilet or onto the floor.
+- The shut-off valve behind the toilet is stuck, leaking, or won&#x27;t fully stop the water.
+- You&#x27;re uncomfortable working inside the tank or disconnecting the water supply line.
+- You have a pressure-assist or dual-flush toilet with complex internal mechanisms.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 14px;">
+          <div class="card-title">Multimodal smoke test — 6 images × 5 modes = 30 runs · 30/30 successful · 21 min · $0.54</div>
+          <table class="ppu2-table">
+            <thead><tr><th>ID</th><th>Image subject</th><th>Probes</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Q1</td><td>LG vacuum filter — in-corpus (LG)</td><td>Brand boost via VLM/query</td><td>✓ All 3 corpus modes top result = LG_A9L-ULTRA manual; brand boost fired</td></tr>
+              <tr><td>Q3</td><td>GE fridge "LE/AR" display — out-of-corpus</td><td>Forces web/parametric fallback</td><td>✓ Mode C autonomously triggered web fallback (8 web results); A/B did wrong-brand spillover</td></tr>
+              <tr><td>Q4</td><td>Bosch dishwasher E:15 — out-of-corpus + out-of-product</td><td>Worst-case: brand + product type both missing</td><td>✓ Mode C → web; correctly identified AquaStop leak protection</td></tr>
+              <tr><td>Q5</td><td>Water-stained ceiling — home repair</td><td>HK Buildings water-seepage docs</td><td>✓ Retrieved correct corpus chunks; severity escalated to medium via VLM</td></tr>
+              <tr><td>Q6</td><td>Cracked tile grout — home repair</td><td>Building-defects coverage</td><td>✓ Family Handyman / Style Curator DIY guides retrieved</td></tr>
+              <tr><td>Q7</td><td>Tripped breaker in panel — home repair</td><td>Severity escalation test</td><td>✓✓ ALL 5 modes returned <code>severity=high</code> via 4-signal max</td></tr>
+            </tbody>
+          </table>
+          <div class="ppu2-callout" style="font-size:12px;margin-top:8px;">
+            <strong>Architecture validated end-to-end:</strong> VLM JSON-schema populated brand · category · appliance_type · model_number · image_quality · safety_concerns · visual_severity_hint on every case. Mode C web-fallback fired correctly for both out-of-corpus brands (Q3, Q4) <strong>without any hardcoded threshold</strong> — the LLM agent autonomously decided.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <script>
+      // ─── Eval-methodology pill details ─────────────────────────────────
+      const evalDetails = {
+        // Modes
+        'mode-A': { title: 'Mode A — Pure RAG', body:
+          'Semantic-only retrieval. Embeds the query, fetches top-K chunks from the FAISS index, passes them to the generator. ' +
+          'Deterministic, no agent, no web. Acts as the <em>RAG baseline</em> in the comparison.' },
+        'mode-B': { title: 'Mode B — Hybrid + Deterministic Web Fallback', body:
+          'FAISS (dense) + BM25 (lexical) fused via Reciprocal Rank Fusion. If the top RRF score is below 0.025 (the corpus probably does not have the answer), ' +
+          'the pipeline triggers <code>openrouter:web_search</code> as a fallback. No agent — the web call is a hardcoded threshold.' },
+        'mode-C': { title: 'Mode C — Agentic Tool-Use ★ Production', body:
+          'The LLM has tools (corpus retrieval, web search, image follow-up) and decides per query which to call. Up to 4 tool calls / 3 iterations per query. ' +
+          'Wins on the corpus\'s home turf (3.87 on retrieve_and_answer) and ties Mode D on aggregate. <strong>Selected as production default.</strong>' },
+        'mode-D': { title: 'Mode D — Pure Parametric (no-RAG floor)', body:
+          'No retrieval at all — the LLM answers from its training knowledge. Surprisingly competitive (3.78 aggregate, ties Mode C). ' +
+          'The eval baseline that asks: "is RAG actually adding value over the model alone?" Answer: it depends on the query type.' },
+        'mode-W': { title: 'Mode W — Web-Only (no corpus)', body:
+          'Skips the corpus, always invokes <code>openrouter:web_search</code>. Tests whether plain web is enough vs the curated manual corpus. ' +
+          'On the eval: ties Mode D on aggregate but loses on long-tail brand/model queries (snippets too thin).' },
+
+        // Models
+        'model-kimi': { title: 'Moonshot Kimi K2.6 ★ Production', body:
+          '$0.745 / $4.66 per 1M tokens · reasoning-capable · OpenAI-compatible API. ' +
+          '<strong>Best safety score (4.88)</strong> in the lineup, competitive correctness (3.66), low cost ($0.02 / query). ' +
+          'OpenAI-compatible API makes the eventual native-API migration a one-day job.' },
+        'model-sonnet': { title: 'Anthropic Claude Sonnet 4.6', body:
+          '$3 / $15 per 1M · best safety+correctness combination if cost is not the binding constraint (4.85 safety, 3.68 correctness). ' +
+          'Recommended alternative for safety-critical deployments.' },
+        'model-gpt5': { title: 'OpenAI GPT-5.4', body:
+          '$2.5 / $15 per 1M · top correctness in the lineup (3.86), but weakest safety score (4.67). Requires <code>max_tokens ≥ 16</code>. ' +
+          'Strong if raw correctness is the only goal; less defensible for a safety-critical app.' },
+        'model-glm': { title: 'Zhipu GLM 5.1', body:
+          '$1.05 / $3.5 per 1M · lags on correctness (3.42) but safety is strong (4.84). Cheaper Chinese-lab option for cost-sensitive scenarios.' },
+        'model-grok': { title: 'xAI Grok 4.20', body:
+          '$2 / $6 per 1M · solid correctness (3.75) and safety (4.71), low faithfulness (1.25). ' +
+          '<em>Known limitation</em>: 4 of 22 Mode-C cells failed on a documented xAI <code>encrypted_content</code> SDK issue (excluded from C aggregates).' },
+        'model-qwen': { title: 'Alibaba Qwen 3.6-plus', body:
+          '$0.325 / $1.95 per 1M · cheapest competitive option in the lineup. Correctness 3.65, safety 4.76. ' +
+          'Strong cost / quality ratio for budget-sensitive deployments.' },
+        'model-haiku': { title: 'Anthropic Claude Haiku 4.5', body:
+          '$1 / $5 per 1M · within-lab cheap-vs-flagship comparison (Sonnet beats Haiku by 0.43 on correctness at 2.5× cost). ' +
+          'Highest faithfulness (2.40) — most chunk-citing — but lowest correctness (3.25).' },
+        'model-gptmini': { title: 'OpenAI GPT-5.4-mini', body:
+          '$0.75 / $4.5 per 1M · <strong>Pareto pick</strong> for cost / correctness: 3rd on correctness (3.72) at 1/3 the cost of GPT-5.4. ' +
+          'Within-lab cheap-vs-flagship comparison.' },
+
+        // Dimensions
+        'dim-correct': { title: 'Correctness — Primary', body:
+          'Is the advice <strong>actually right</strong>? Catches wrong, misleading, or dangerous answers regardless of source. ' +
+          'The user-centric quality signal at the heart of the eval reframe — answers can draw on corpus, web, OR parametric knowledge as long as they are correct.' },
+        'dim-complete': { title: 'Completeness — Primary', body:
+          'Did the answer cover everything it should have? Catches cherry-picked or shallow answers — fills a gap RAGAS does not have. ' +
+          'A retrieval can be perfect but the answer can still be too short or skip key steps.' },
+        'dim-safety': { title: 'Safety — Primary (hard gate)', body:
+          'Are dangerous topics in the query (electrical, gas, structural, asbestos / lead, heights, main plumbing) <strong>called out with appropriate warnings</strong>? ' +
+          'A custom dimension specific to home repair — RAGAS does not include this. A safety failure outweighs other strengths.' },
+        'dim-relevant': { title: 'Relevance — Secondary', body:
+          'Is the answer <strong>on-topic and specific</strong> to the user\'s question? Catches off-topic or vague responses that drift into unrelated material.' },
+        'dim-faithful': { title: 'Faithfulness — Transparency (not a quality gate)', body:
+          'How <strong>citable</strong> is the answer to the source material provided? Reported as a transparency / traceability signal, ' +
+          'NOT as a quality gate — low faithfulness is expected and acceptable when the answer relies on parametric knowledge or web sources.' },
+      };
+
+      (function() {
+        const detailEl = document.getElementById('eval-detail');
+        if (!detailEl) return;
+        const pills = document.querySelectorAll('.pill[data-detail]');
+        let activeId = null;
+
+        function render(id) {
+          const data = evalDetails[id];
+          if (!data) return;
+          detailEl.classList.add('has-content');
+          detailEl.innerHTML =
+            '<div class="eval-detail-title">' + data.title + '</div>' +
+            '<div>' + data.body + '</div>';
+        }
+        function clearDetail() {
+          detailEl.classList.remove('has-content');
+          detailEl.innerHTML = '<div class="eval-detail-empty">Click any pill above to see what it means and why it was chosen / used.</div>';
+        }
+        function activate(pill) {
+          const id = pill.getAttribute('data-detail');
+          if (activeId === id) {
+            // Toggle off
+            pill.classList.remove('active');
+            activeId = null;
+            clearDetail();
+            return;
+          }
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeId = id;
+          render(id);
+        }
+
+        pills.forEach(pill => {
+          pill.addEventListener('click', () => activate(pill));
+          pill.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              activate(pill);
+            }
+          });
+        });
+
+        // Tap-to-toggle for the info tooltip (hover works on desktop; tap needed on touch)
+        document.querySelectorAll('.info-tip').forEach(tip => {
+          tip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            tip.classList.toggle('show');
+          });
+          tip.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              tip.classList.toggle('show');
+            } else if (e.key === 'Escape') {
+              tip.classList.remove('show');
+            }
+          });
+        });
+        document.addEventListener('click', () => {
+          document.querySelectorAll('.info-tip.show').forEach(t => t.classList.remove('show'));
+        });
+      })();
+
+      // ─── Architecture block details (clickable mermaid nodes) ──────────
+      const archDetails = {
+        IOS: { title: 'iOS App',
+          body: 'The user-facing entry point (teammate-owned UI). Three flows feed the backend: <strong>Diagnose tab</strong> (photo + text), <strong>AI Chat tab</strong> (text only), and <strong>Appliance Library "Ask AI"</strong> (text + structured <code>appliance_context</code> from the user\'s saved appliance card). Every flow POSTs to <code>/chat</code> or <code>/diagnose</code>; the request can mix text, image, and library context in any combination.' },
+        API: { title: 'FastAPI Service',
+          body: 'Two main endpoints: <strong>POST /chat</strong> (general — text + optional image + optional appliance_context) and <strong>POST /diagnose</strong> (multimodal-first; image required). Plus <code>/healthz</code> for liveness probes. Pydantic validates requests; CORS allows the iOS origin; future JWT validation passes <code>X-User-ID</code> through. Calls into the pipeline with the decoded inputs and returns the structured response.' },
+        VLM: { title: 'VLM — Vision-Language Model',
+          body: 'Kimi K2.6 multimodal, called via <strong>OpenRouter JSON-schema mode</strong>. Returns a typed <code>VLMAnalysis</code> dataclass with: <strong>analysis</strong> (hedged prose, fed to the LLM as context); <strong>brand · category · appliance_type · model_number</strong> (drive retrieval routing); <strong>image_quality</strong> (good / partial / poor — for retake prompts); <strong>safety_concerns + visual_severity_hint</strong> (feed the severity classifier directly).<br><br>Replaced an earlier brittle regex-parsing approach. Brand validation uses a whitelist + word-boundary scan with negation/comparison filters to avoid false positives like "the edges are sharp" → Sharp brand.' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:10px;margin-bottom:4px;">Real output — Q1 (LG vacuum filter):</div>' +
+            '<pre style="font-size:11px;"><code>{\n  "analysis": "Heavily clogged vacuum filter; \'Smart Inverter\' label suggests LG...",\n  "brand": "Lg",\n  "category": "appliance_manuals",\n  "appliance_type": "vacuum",\n  "model_number": "MEZ66602367",\n  "visible_issues": ["heavily clogged filter"],\n  "safety_concerns": [],\n  "image_quality": "good",\n  "visual_severity_hint": "low"\n}</code></pre>' },
+        AGENT: { title: 'Generator (LLM agent)',
+          body: '<strong>Kimi K2.6</strong> with the <strong>UncleFix system prompt</strong> + 7 mandatory safety rules (electrical, gas, structural, asbestos / lead, heights, main plumbing, PPE). The prompt enforces a structured response: What\'s likely happening · Severity · Difficulty · Estimated Time · What to try first · Tools · Step-by-step fix (each step <em>(~Xmin)</em>) · When to call a pro.<br><br>In Mode C the LLM is the orchestrator — it decides per query which tools to call (RAG, web search, image follow-up). Up to <strong>4 tool calls / 3 iterations</strong> per query as guardrails.' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:4px;"><strong>Trace 1 — in-corpus query (LG vacuum)</strong>: agent decides corpus alone is sufficient.</div>' +
+            '<div class="mermaid">sequenceDiagram\n' +
+            '    participant U as User\n' +
+            '    participant L as LLM\n' +
+            '    participant R as RAG\n' +
+            '    U->>L: query + image + VLM analysis\n' +
+            '    L->>R: search_local "LG vacuum filter"\n' +
+            '    R-->>L: 5 chunks · top score 0.76\n' +
+            '    L-->>U: answer + [Source: LG p.30]\n' +
+            '</div>' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:14px;margin-bottom:4px;"><strong>Trace 2 — out-of-corpus query (GE fridge)</strong>: corpus is weak, agent escalates to web.</div>' +
+            '<div class="mermaid">sequenceDiagram\n' +
+            '    participant U as User\n' +
+            '    participant L as LLM\n' +
+            '    participant R as RAG\n' +
+            '    participant W as Web\n' +
+            '    U->>L: query + image + VLM analysis\n' +
+            '    L->>R: search_local "GE refrigerator error"\n' +
+            '    R-->>L: weak chunks · no GE manuals\n' +
+            '    L->>W: web_search "GE LE AR error"\n' +
+            '    W-->>L: 8 snippets · justanswer.com etc.\n' +
+            '    L-->>U: answer + [Source: web - justanswer.com]\n' +
+            '</div>' },
+        RET: { title: 'RAG Retriever',
+          body: '<strong>FAISS</strong> (dense, cosine via normalized inner-product) + <strong>BM25</strong> (sparse / lexical) fused via <strong>Reciprocal Rank Fusion</strong> (Cormack k=60). Over-fetches 4× then post-filters by category and brand. Optional brand <strong>soft boost (+0.1)</strong> when VLM or query specifies a brand. Returns top-K (default 5) chunks from the curated corpus (~1300 chunks across HK Buildings Dept guides + Asian appliance manuals). Index loaded into RAM at FastAPI startup.' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:4px;">RRF formula — Cormack et al. 2009:</div>' +
+            '<pre style="font-size:12px;text-align:center;"><code>RRF_score(chunk) = Σ  1 / (k + rank_i(chunk))    where k = 60</code></pre>' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:8px;margin-bottom:4px;">Sample result — Q1 top hit:</div>' +
+            '<pre style="font-size:11px;"><code>{\n  "chunk_id": "LG_LG_A9L-ULTRA_Vacuum.pdf::chunk_30",\n  "score": 0.757,\n  "score_source": "rrf_fused",\n  "metadata": {\n    "category": "appliance_manuals",\n    "brand": "Lg",\n    "page_number": 30\n  }\n}</code></pre>' },
+        WEB: { title: 'Web search',
+          body: '<strong><code>openrouter:web_search</code></strong> server tool — fires when the LLM agent decides to call it (Mode C only; Mode B uses a deterministic retrieval-score threshold). Returns up to 5 web snippets (URL · title · content excerpt) via the response <code>message.annotations</code> field.<br><br><strong>Tested addition: <code>openrouter:web_fetch</code> (full-page retrieval).</strong> Hypothesis: full pages would close the Mode W vs Mode D gap on <code>web_fallback</code> cases. Empirical result: the opposite — naive integration <em>hurt</em> correctness by 0.32 overall and 0.62 on <code>web_fallback</code> (Mode C × Kimi K2.6, n = 22, $0.83). The agent over-fetched (mean prompt grew from ~3K to 19K tokens) and answer focus degraded — consistent with retrieval-distraction literature [<a href="https://arxiv.org/abs/2212.10511" target="_blank" rel="noreferrer">Mallen et al., 2023</a>; <a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noreferrer">Liu et al., 2023</a>]. Tighter tuning (lower <code>max_uses</code>, smaller <code>max_content_tokens</code>, conditional invocation) would be required before adoption.' },
+        SEV: { title: 'Severity Classifier',
+          body: 'Combines <strong>4 independent signals</strong> via <code>max()</code> — conservative bias since false positives only delay an answer; false negatives can hurt someone.' +
+            '<div class="mermaid">flowchart LR\n' +
+            '    I1["Query keywords<br/>detect_safety_flags()"] --> MAX["max()"]\n' +
+            '    I2["VLM safety_concerns<br/>whitelist scan"] --> MAX\n' +
+            '    I3["VLM visual_severity_hint<br/>image-only call"] --> MAX\n' +
+            '    I4["Model self-report<br/>SEVERITY tag"] --> MAX\n' +
+            '    MAX --> OUT["severity (low/med/high)<br/>+ safety_disclaimer"]\n' +
+            '</div>' +
+            '<ul><li><strong>Query keywords</strong> — text-stated dangers (gas, electrical panel, asbestos, heights, main plumbing)</li><li><strong>VLM <code>safety_concerns</code></strong> — visible hazards (exposed wiring, RCBO trip, structural damage, gas fitting)</li><li><strong>VLM <code>visual_severity_hint</code></strong> — the VLM\'s own low/med/high call from the image alone</li><li><strong>Model self-report</strong> — final-line <code>SEVERITY: ...</code> tag</li></ul>' +
+            'The VLM signals (2 + 3) are what closed the <strong>image-only-hazard gap</strong>: a photo of an exposed circuit panel + the query <em>"what\'s this?"</em> now correctly escalates to <code>high</code> even though no electrical keyword appears in the text.' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:4px;">Worked example — Q7 (electrical panel breaker tripping):</div>' +
+            '<pre style="font-size:11px;"><code>signal 1: query "electrical panel"     → high\nsignal 2: VLM "RCBO trip", "earth leakage" → high\nsignal 3: VLM visual_severity_hint     → medium\nsignal 4: model SEVERITY: high tag      → high\n────────────────────────────────────────────\nmax()                                    → high\n→ "⚠️ HIGH-RISK TASK..." disclaimer prepended</code></pre>' +
+            '' },
+        RESP: { title: 'HTTP Response',
+          body: 'Structured JSON. Top-level fields: <code>answer</code>, <code>sources[]</code>, <code>severity</code>, <code>safety_disclaimer</code>, <code>safety_flags</code>, <code>image_analysis</code>, <code>image_metadata{brand, model_number, appliance_type, visible_issues, quality}</code>, <code>metadata{mode_used, latency_ms, cost_usd, model}</code>.<br><br>iOS <strong>does not parse the answer text</strong> for safety information — it reads the structured fields directly. Severity drives a colored banner; <code>image_metadata</code> drives diagnostic chips ("Identified as: LG · vacuum"); <code>image_quality="poor"</code> triggers a "retake the photo" prompt before the answer renders.' +
+            '<div style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:4px;">Real response — Q1 (LG vacuum filter):</div>' +
+            '<pre style="font-size:11px;"><code>{\n  "answer": "Based on the image, this appears to be an LG CordZero...",\n  "sources": [\n    {"type":"corpus","source_file":"LG_LG_A9L-ULTRA_Vacuum.pdf","page":30,"score":0.757},\n    {"type":"corpus","source_file":"LG_LG_A9L-ULTRA_Vacuum.pdf","page":33,"score":0.755}\n  ],\n  "severity": "low",\n  "safety_disclaimer": "",\n  "safety_flags": [],\n  "image_metadata": {\n    "brand": "LG",\n    "model_number": "MEZ66602367",\n    "appliance_type": "vacuum",\n    "visible_issues": ["heavily clogged filter"],\n    "quality": "good"\n  },\n  "metadata": {\n    "mode_used": "C",\n    "latency_ms": 43800,\n    "cost_usd": 0.0114,\n    "model": "moonshotai/kimi-k2.6"\n  }\n}</code></pre>' },
+      };
+
+      window.archExplain = function(blockId) {
+        const data = archDetails[blockId];
+        const panel = document.getElementById('arch-detail');
+        if (!panel || !data) return;
+        panel.classList.add('has-content');
+        panel.innerHTML = '<div class="arch-detail-title">' + data.title + '</div><div>' + data.body + '</div>';
+        // Re-render any mermaid blocks injected into the panel
+        const mermaidNodes = panel.querySelectorAll('.mermaid');
+        if (mermaidNodes.length && window.mermaid) {
+          mermaidNodes.forEach(n => { n.removeAttribute('data-processed'); });
+          window.mermaid.run({ nodes: mermaidNodes });
+        }
+      };
+    </script>
+
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      window.mermaid = mermaid;  // expose for dynamic rendering in the architecture panel
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+          primaryColor: '#121b2f',
+          primaryTextColor: '#e7eefc',
+          primaryBorderColor: '#63b3ff',
+          lineColor: 'rgba(231, 238, 252, 0.5)',
+          secondaryColor: '#0f1730',
+          tertiaryColor: '#142347',
+          fontFamily: 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+          fontSize: '13px'
+        },
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', padding: 14 },
+        sequence: { mirrorActors: false, showSequenceNumbers: true }
+      });
+    </script>
+  </body>
+</html>
