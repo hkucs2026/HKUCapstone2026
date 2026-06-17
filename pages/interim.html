@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interim Report · Capstone Progress</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      .interim-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .interim-note {
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(99, 179, 255, 0.08);
+      }
+      .interim-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+        margin: 8px 0 0;
+      }
+      .interim-table th,
+      .interim-table td {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .interim-table th {
+        background: rgba(231, 238, 252, 0.06);
+        font-weight: 600;
+      }
+      .album-desc {
+        margin-top: 8px;
+      }
+      .ui-album-layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 340px) 1fr;
+        gap: 18px;
+        align-items: start;
+      }
+      .ui-album {
+        width: 100%;
+      }
+      .ui-album .media-img {
+        width: 100%;
+        max-height: 680px;
+        object-fit: contain;
+        display: block;
+      }
+      .ui-album-copy {
+        display: grid;
+        gap: 12px;
+        min-height: 100%;
+      }
+      .ui-album-panel {
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(231, 238, 252, 0.04);
+      }
+      .arch-chart {
+        display: grid;
+        grid-template-columns: minmax(220px, 280px) 1fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+      .arch-stack {
+        display: grid;
+        gap: 10px;
+        position: relative;
+      }
+      .arch-layer {
+        position: relative;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(99, 179, 255, 0.35);
+        background: linear-gradient(180deg, rgba(99, 179, 255, 0.14), rgba(99, 179, 255, 0.06));
+        text-align: center;
+      }
+      .arch-layer.dark {
+        border-color: rgba(16, 32, 77, 0.95);
+        background: linear-gradient(180deg, rgba(16, 32, 77, 0.95), rgba(10, 24, 61, 0.95));
+      }
+      .arch-layer:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: calc(100% + 2px);
+        width: 2px;
+        height: 10px;
+        background: rgba(99, 179, 255, 0.7);
+        transform: translateX(-50%);
+      }
+      .arch-layer-num {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .arch-layer.dark .arch-layer-num {
+        color: #9ecbff;
+      }
+      .arch-layer-title {
+        margin-top: 6px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .arch-layer.dark .arch-layer-title {
+        color: #eef5ff;
+      }
+      .arch-layer-sub {
+        margin-top: 4px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .arch-layer.dark .arch-layer-sub {
+        color: rgba(231, 238, 252, 0.78);
+      }
+      .arch-summary {
+        display: grid;
+        gap: 10px;
+      }
+      .arch-summary-item {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(231, 238, 252, 0.04);
+      }
+      .arch-summary-title {
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+      @media (max-width: 720px) {
+        .interim-grid {
+          grid-template-columns: 1fr;
+        }
+        .ui-album-layout {
+          grid-template-columns: 1fr;
+        }
+        .arch-chart {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-title">Capstone Progress</div>
+          <div class="brand-subtitle">Interim Report Summary</div>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#home">Home</a>
+          <a href="#layer-architecture">Layer Architecture</a>
+          <a href="#pipeline-structure">Pipeline Structure</a>
+          <a href="#ui-pages">UI Pages</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <section class="section">
+        <div class="grid-2">
+          <div class="card hero">
+            <div class="hero-top">
+              <div>
+                <h1 class="h1">Project Interim Report</h1>
+                <ul class="muted body">
+                  <li>The interim report defines the implemented stack as a four-layer system: iOS presentation, FastAPI API layer, AI and retrieval layer, and data storage layer.</li>
+                  <li>The backend orchestration already covers per-request authentication, business-logic coordination, maintenance scheduling logic, and system logging with latency and cost accounting.</li>
+                  <li>The AI layer combines Moonshot Kimi K2.6 for VLM analysis, a FAISS-based RAG pipeline, deterministic safety guardrails, and structured LLM output generation.</li>
+                  <li>The current prototype connects five iOS screens with diagnostic, appliance management, history, and reminder workflows in one tab-based structure.</li>
+                </ul>
+              </div>
+              <div class="status-chip"><span class="status-dot good"></span>On Track</div>
+            </div>
+            <div class="divider"></div>
+            <div class="kpi">
+              <div class="kpi-label">Key Date</div>
+              <div class="kpi-value">2026-06-01</div>
+              <div class="kpi-sub">Interim Report and Presentation</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Files</div>
+            <div class="stack">
+              <a class="quick-link" href="../Files/msp25038_InterimReport_20260601.pdf" target="_blank" rel="noreferrer"
+                ><span class="icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path d="M7 3h7l3 3v15H7z"></path>
+                    <path d="M14 3v4h4"></path>
+                    <path d="M9 12h6"></path>
+                    <path d="M9 16h6"></path></svg></span
+                ><span>Open Report PDF</span></a
+              >
+              <a class="quick-link" href="../Files/UncleFix - InterimPPT_20260602.pdf" target="_blank" rel="noreferrer"
+                ><span class="icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24">
+                    <path d="M7 3h7l3 3v15H7z"></path>
+                    <path d="M14 3v4h4"></path>
+                    <path d="M9 12h6"></path>
+                    <path d="M9 16h6"></path></svg></span
+                ><span>Open Presentation PDF</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="layer-architecture" class="section">
+        <div class="section-head">
+          <h2 class="h2">Layer Architecture</h2>
+          <div class="muted">Four-layer structure used to separate interface, orchestration, intelligence, and persistence</div>
+        </div>
+        <div class="card interim-note" style="margin-top: 14px;">
+          <strong>Architecture decision:</strong> the layered design keeps UI concerns, backend orchestration, AI processing, and storage separate so each part can evolve without tightly coupling the whole system.
+        </div>
+        <div class="card" style="margin-top: 14px;">
+          <div class="card-title">Four-Layer Architecture Overview</div>
+          <div class="arch-chart">
+            <div class="arch-stack">
+              <div class="arch-layer">
+                <div class="arch-layer-num">Layer 1</div>
+                <div class="arch-layer-title">iOS Presentation Layer</div>
+                <div class="arch-layer-sub">SwiftUI, iOS 17+</div>
+              </div>
+              <div class="arch-layer dark">
+                <div class="arch-layer-num">Layer 2</div>
+                <div class="arch-layer-title">API Layer</div>
+                <div class="arch-layer-sub">FastAPI, Python</div>
+              </div>
+              <div class="arch-layer">
+                <div class="arch-layer-num">Layer 3</div>
+                <div class="arch-layer-title">AI &amp; Retrieval Layer</div>
+                <div class="arch-layer-sub">VLM + RAG + LLM</div>
+              </div>
+              <div class="arch-layer dark">
+                <div class="arch-layer-num">Layer 4</div>
+                <div class="arch-layer-title">Data Storage Layer</div>
+                <div class="arch-layer-sub">PostgreSQL + FAISS</div>
+              </div>
+            </div>
+            <div class="arch-summary">
+              <div class="arch-summary-item">
+                <div class="arch-summary-title">Presentation</div>
+                <div class="body muted">SwiftUI manages the user-facing flows for Home, Fix, Appliances, History, and Reminders.</div>
+              </div>
+              <div class="arch-summary-item">
+                <div class="arch-summary-title">Backend Orchestration</div>
+                <div class="body muted">FastAPI coordinates authentication, request handling, reminder logic, health probes, and service integration.</div>
+              </div>
+              <div class="arch-summary-item">
+                <div class="arch-summary-title">AI Processing</div>
+                <div class="body muted">The AI layer combines Moonshot Kimi K2.6, FAISS-backed retrieval, safety classification, and structured answer generation.</div>
+              </div>
+              <div class="arch-summary-item">
+                <div class="arch-summary-title">Persistence</div>
+                <div class="body muted">PostgreSQL stores user and appliance records, while FAISS supports vector search over the curated corpus.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pipeline-structure" class="section">
+        <div class="section-head">
+          <h2 class="h2">Pipeline Structure</h2>
+          <div class="muted">Main request flow implemented for multimodal diagnosis and grounded response generation</div>
+        </div>
+        <div class="interim-grid">
+          <div class="card">
+            <div class="card-title">Diagnostic Request Flow</div>
+            <ul class="list">
+              <li>User submits text and optionally an image from the iOS Fix flow.</li>
+              <li>FastAPI receives the request, validates it, and passes it into the orchestration layer.</li>
+              <li>The VLM layer extracts appliance type, brand, model number, error codes, and damage indicators from the image.</li>
+              <li>The retrieval stage queries the manual corpus and related knowledge base content for grounded context.</li>
+              <li>The answering LLM produces a structured result containing fault cause, risk rating, and action plan.</li>
+              <li>The deterministic safety guardrail decides the response severity before the final result is returned to the frontend.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">AI Routing Structure</div>
+            <table class="interim-table">
+              <thead>
+                <tr>
+                  <th>Mode</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>A</td>
+                  <td>Pure RAG</td>
+                  <td>Corpus retrieval only, no web fallback</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>Hybrid + Web Fallback</td>
+                  <td>Dense + BM25 with deterministic threshold-based web search</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>Agentic (Production)</td>
+                  <td>LLM decides per query whether to use corpus, web, or parametric knowledge</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>Parametric-Only</td>
+                  <td>LLM training knowledge only, no retrieval</td>
+                </tr>
+                <tr>
+                  <td>W</td>
+                  <td>Web-Only</td>
+                  <td>Live web search only, no corpus retrieval</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card">
+            <div class="card-title">Backend, VLM, Retrieval, and Routing Structure</div>
+            <table class="interim-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Implementation</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>API Layer</td>
+                  <td>FastAPI, Python</td>
+                  <td>Handles request orchestration, validation, authentication flow, and service coordination</td>
+                </tr>
+                <tr>
+                  <td>VLM Layer</td>
+                  <td>Moonshot Kimi K2.6 via OpenRouter</td>
+                  <td>Detects appliance type, brand, model number, error codes, and visible damage indicators</td>
+                </tr>
+                <tr>
+                  <td>RAG Stack</td>
+                  <td>FAISS + dense retrieval + BM25 + hybrid ranking</td>
+                  <td>Retrieves grounded context from the curated manual and maintenance corpus</td>
+                </tr>
+                <tr>
+                  <td>Safety Guardrail</td>
+                  <td>Deterministic classifier</td>
+                  <td>Assigns risk level and controls whether the response can remain DIY-oriented or must escalate</td>
+                </tr>
+                <tr>
+                  <td>LLM Generation</td>
+                  <td>Structured output pipeline</td>
+                  <td>Returns fault cause, risk rating, and action plan in a frontend-friendly format</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-title">iOS Frontend Structure</div>
+            <table class="interim-table">
+              <thead>
+                <tr>
+                  <th>Screen</th>
+                  <th>Functionality</th>
+                  <th>Key Features</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Home</td>
+                  <td>Central navigation hub with one-tap access to all core screens</td>
+                  <td>Persistent safety disclaimer before diagnostic interaction</td>
+                </tr>
+                <tr>
+                  <td>Fix</td>
+                  <td>AI-powered diagnostic interface for fault identification and repair guidance</td>
+                  <td>Photo upload, issue description, structured result with severity, guidance, and disclaimer</td>
+                </tr>
+                <tr>
+                  <td>Appliances</td>
+                  <td>Appliance asset management for device registration and tracking</td>
+                  <td>Warranty tracking, manual upload, color-coded warranty indicator</td>
+                </tr>
+                <tr>
+                  <td>History</td>
+                  <td>Chronological record of past maintenance activities</td>
+                  <td>AI-generated repair recommendations with full diagnostic history</td>
+                </tr>
+                <tr>
+                  <td>Reminders</td>
+                  <td>Manage scheduled maintenance with push notifications</td>
+                  <td>3-step task creation: appliance, task type, recurrence, and notification time</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card-title" style="margin-top: 14px;">Native iOS Frameworks Used</div>
+            <table class="interim-table">
+              <thead>
+                <tr>
+                  <th>AVFoundation</th>
+                  <th>Vision</th>
+                  <th>URLSession</th>
+                  <th>Keychain</th>
+                  <th>UserNotifications</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Camera access and image capture</td>
+                  <td>On-device image preprocessing</td>
+                  <td>HTTPS data transmission</td>
+                  <td>Secure JWT token storage</td>
+                  <td>Push notification scheduling</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="ui-pages" class="card" style="margin-top: 14px;">
+          <div class="card-title">UI Pages</div>
+          <div class="ui-album-layout">
+            <div class="ui-album">
+              <a id="interimUiAlbumLink" href="../assets/screenshots/interim-msp/msp-page-8-img-1.png" target="_blank" rel="noreferrer">
+                <img
+                  class="media-img"
+                  id="interimUiAlbumImg"
+                  src="../assets/screenshots/interim-msp/msp-page-8-img-1.png"
+                  alt="Home Dashboard"
+                />
+              </a>
+            </div>
+            <div class="ui-album-copy">
+              <div class="ui-album-panel">
+                <div class="demo-flow-caption">
+                  <span class="muted" id="interimUiAlbumLabel">Home Dashboard</span>
+                </div>
+                <div class="album-desc muted body" id="interimUiAlbumDesc">
+                  Entry screen that groups repair, appliance registry, past fixes, and reminders under one tab bar with visible safety tips and bilingual controls.
+                </div>
+              </div>
+              <div class="media-caption">
+                <div class="demo-flow-controls">
+                  <button class="task-view" type="button" id="interimUiAlbumPrev">Prev</button>
+                  <button class="task-view" type="button" id="interimUiAlbumNext">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-title" style="margin-top: 14px;">AI Diagnostic Response on Fix Screen</div>
+          <table class="interim-table">
+            <thead>
+              <tr>
+                <th>Response Element</th>
+                <th>What It Shows</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Problem Overview</td>
+                <td>Short summary of the visible issue detected from the uploaded photo and user description</td>
+              </tr>
+              <tr>
+                <td>Cause of Damage</td>
+                <td>Likely explanation of why the issue happened, with grounded observations from the image</td>
+              </tr>
+              <tr>
+                <td>Repair Time</td>
+                <td>Estimated time needed for the repair task so users can judge difficulty and effort</td>
+              </tr>
+              <tr>
+                <td>Risk Level</td>
+                <td>Severity output such as low, moderate, or high, used by the safety guardrail before guidance is shown</td>
+              </tr>
+              <tr>
+                <td>Issue Category</td>
+                <td>Classification label such as walls and surfaces to keep the response structured and easier to route</td>
+              </tr>
+              <tr>
+                <td>Follow-Up Action</td>
+                <td>Safe next-step guidance, which can remain DIY-oriented or escalate to professional referral when risk is high</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top: 14px;">
+          <div class="card-title">Safety Guardrail Design</div>
+          <table class="interim-table">
+            <thead>
+              <tr>
+                <th>Risk Level</th>
+                <th>Examples</th>
+                <th>System Response</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Low</td>
+                <td>Clogged filters, cosmetic replacements, basic resets</td>
+                <td>Step-by-step DIY guidance with standard safety notes</td>
+              </tr>
+              <tr>
+                <td>Moderate</td>
+                <td>Minor plumbing resets, external component assembly</td>
+                <td>Conditional DIY guidance with enhanced safety reminders and PPE recommendations</td>
+              </tr>
+              <tr>
+                <td>High</td>
+                <td>Internal electrical wiring, gas-line issues, sealed refrigerant</td>
+                <td>High-risk banner, immediate professional referral protocol, and no DIY guidance</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="card-title" style="margin-top: 14px;">Localized Knowledge Base Sources</div>
+          <table class="interim-table">
+            <thead>
+              <tr>
+                <th>Source Category</th>
+                <th>Specific Sources</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>HK Government</td>
+                <td>Buildings Department guidance on drainage, water seepage, and window safety, plus Joint FEHD and Buildings Department DIY water seepage testing materials</td>
+              </tr>
+              <tr>
+                <td>Consumer Council (HK)</td>
+                <td>Appliance maintenance, usage tips, safety guidance, energy-saving advice, and appliance reliability data</td>
+              </tr>
+              <tr>
+                <td>Overseas References</td>
+                <td>Australian Government YourHome maintenance guidance for general household repair scenarios</td>
+              </tr>
+              <tr>
+                <td>Manufacturer Docs</td>
+                <td>Official manuals for washing machines, refrigerators, air conditioners, TVs, vacuum cleaners, and user-uploaded manuals</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="media-caption">Safety guardrail and localized knowledge base summary reconstructed directly in HTML from the interim report content</div>
+        </div>
+      </section>
+
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="muted">Capstone Progress</div>
+        <div class="muted">Interim Report</div>
+      </div>
+    </footer>
+    <script>
+      (() => {
+        const img = document.getElementById("interimUiAlbumImg");
+        const link = document.getElementById("interimUiAlbumLink");
+        const label = document.getElementById("interimUiAlbumLabel");
+        const desc = document.getElementById("interimUiAlbumDesc");
+        const prev = document.getElementById("interimUiAlbumPrev");
+        const next = document.getElementById("interimUiAlbumNext");
+        if (!img || !link || !label || !desc || !prev || !next) return;
+
+        const pages = [
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-8-img-1.png",
+            label: "Home Dashboard",
+            desc: "Entry screen that groups repair, appliance registry, past fixes, and reminders under one tab bar with visible safety tips and bilingual controls.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-8-img-2.png",
+            label: "Fix Input",
+            desc: "Photo Analysis entry flow lets the user upload an image, describe the issue, and trigger AI analysis from a dedicated repair-first screen.",
+          },
+          {
+            src: "../assets/screenshots/update-1/update-1-flow-3-diagnose-chat.png",
+            label: "Fix AI Chat",
+            desc: "The Fix screen also supports a chat-style AI entry mode, where users can ask plain-language repair questions before or after image analysis.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-10-img-1.png",
+            label: "AI Result Screen",
+            desc: "Structured AI output returns a problem overview, likely cause of damage, estimated repair time, severity level, and issue category for safer follow-up action.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-12-img-10.png",
+            label: "Repair Steps and Materials",
+            desc: "The detailed Fix response expands into repair steps, tools and materials needed, repair tips, safety notes, and a save-to-history action for tracking completed work.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-8-img-3.png",
+            label: "My Appliances",
+            desc: "Appliance registry lists saved devices with status badges so users can track coverage, open details, and add new appliances from one screen.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-11-img-1.png",
+            label: "Add Appliance Form",
+            desc: "The appliance creation flow captures appliance name, category, brand or manufacturer, model number, purchase date, and warranty expiry.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-11-img-2.png",
+            label: "Appliance Notes and Photo",
+            desc: "Users can attach notes and add a photo so the appliance record keeps extra context for future maintenance and diagnosis.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-11-img-3.png",
+            label: "Manual and Task Setup",
+            desc: "The same add flow supports manual upload and optional task scheduling, linking appliance records directly with later reminder workflows.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-12-img-1.png",
+            label: "Appliance Detail",
+            desc: "Detail view stores manufacturer, model number, purchase date, warranty expiry, notes, and the linked user manual for each appliance.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-9-img-2.png",
+            label: "Reminders Calendar",
+            desc: "Maintenance reminders are displayed in a monthly calendar with quick access to upcoming tasks and one-tap creation of new reminder items.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-12-img-2.png",
+            label: "Add Maintenance Task",
+            desc: "Task creation form captures the maintenance title, date, category, linked appliance, recurrence, notification option, and notes in one workflow.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-12-img-4.png",
+            label: "AI Maintenance Tips",
+            desc: "The appliance assistant generates personalized energy-saving and maintenance tips that are tailored to the selected model.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-12-img-6.png",
+            label: "Related Task Actions",
+            desc: "Scheduled maintenance items expose quick actions such as edit, delete, and ask, making the reminder workflow directly actionable.",
+          },
+          {
+            src: "../assets/screenshots/interim-msp/msp-page-9-img-1.png",
+            label: "Past Fixes",
+            desc: "History view keeps previous repair cases with severity, estimated duration, and progress so users can revisit earlier AI-assisted fixes.",
+          },
+        ];
+
+        let idx = 0;
+
+        const render = () => {
+          const page = pages[idx] || pages[0];
+          img.setAttribute("src", page.src);
+          img.setAttribute("alt", page.label);
+          link.setAttribute("href", page.src);
+          label.textContent = page.label;
+          desc.textContent = page.desc;
+        };
+
+        prev.addEventListener("click", () => {
+          idx = (idx - 1 + pages.length) % pages.length;
+          render();
+        });
+        next.addEventListener("click", () => {
+          idx = (idx + 1) % pages.length;
+          render();
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
