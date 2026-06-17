@@ -141,11 +141,39 @@
         .interim-grid {
           grid-template-columns: 1fr;
         }
+        .interim-table {
+          display: block;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        .interim-table th,
+        .interim-table td {
+          min-width: 150px;
+          white-space: normal;
+        }
+        .interim-table th:first-child,
+        .interim-table td:first-child {
+          min-width: 160px;
+        }
         .ui-album-layout {
           grid-template-columns: 1fr;
         }
         .arch-chart {
           grid-template-columns: 1fr;
+        }
+        .ui-album .media-img {
+          max-height: 520px;
+        }
+      }
+      @media (max-width: 520px) {
+        .arch-layer {
+          padding: 12px;
+        }
+        .ui-album-panel {
+          padding: 12px;
+        }
+        .ui-album .media-img {
+          max-height: 420px;
         }
       }
     </style>
@@ -177,6 +205,8 @@
                   <li>The backend orchestration already covers per-request authentication, business-logic coordination, maintenance scheduling logic, and system logging with latency and cost accounting.</li>
                   <li>The AI layer combines Moonshot Kimi K2.6 for VLM analysis, a FAISS-based RAG pipeline, deterministic safety guardrails, and structured LLM output generation.</li>
                   <li>The current prototype connects five iOS screens with diagnostic, appliance management, history, and reminder workflows in one tab-based structure.</li>
+                  <li>Optimized the RAG pipeline and refined the server-side prompt structure to improve retrieval quality, response consistency, orchestration efficiency, and speed.</li>
+                  <li>Under Mode C, the response time was reduced from 90 seconds to 30 seconds, achieving a 66.7% latency reduction and making the system approximately 3 times faster.</li>
                 </ul>
               </div>
               <div class="status-chip"><span class="status-dot good"></span>On Track</div>
@@ -244,7 +274,7 @@
               <div class="arch-layer dark">
                 <div class="arch-layer-num">Layer 4</div>
                 <div class="arch-layer-title">Data Storage Layer</div>
-                <div class="arch-layer-sub">PostgreSQL + FAISS</div>
+                <div class="arch-layer-sub">Application Storage + FAISS</div>
               </div>
             </div>
             <div class="arch-summary">
@@ -262,7 +292,7 @@
               </div>
               <div class="arch-summary-item">
                 <div class="arch-summary-title">Persistence</div>
-                <div class="body muted">PostgreSQL stores user and appliance records, while FAISS supports vector search over the curated corpus.</div>
+                <div class="body muted">Application storage keeps user and appliance records, while FAISS supports vector search over the curated corpus.</div>
               </div>
             </div>
           </div>

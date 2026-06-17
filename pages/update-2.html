@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../styles.css" />
     <style>
       /* Mermaid diagrams blend into the dark theme */
-      .mermaid { background: rgba(231, 238, 252, 0.04); padding: 16px; border-radius: 10px; border: 1px solid var(--border); margin: 12px 0; text-align: center; }
+      .mermaid { background: rgba(231, 238, 252, 0.04); padding: 16px; border-radius: 10px; border: 1px solid var(--border); margin: 12px 0; text-align: center; overflow-x: auto; }
       /* Slightly tighter tables on this page */
       .ppu2-table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 8px 0 16px; }
       .ppu2-table th, .ppu2-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
@@ -190,6 +190,47 @@
       .arch-detail li { margin: 3px 0; }
       .arch-detail a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(99, 179, 255, 0.4); }
       .arch-detail a:hover { text-decoration-color: var(--accent); }
+      @media (max-width: 720px) {
+        .ppu2-table {
+          display: block;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        .ppu2-table th,
+        .ppu2-table td {
+          min-width: 120px;
+          white-space: normal;
+        }
+        .ppu2-table th:first-child,
+        .ppu2-table td:first-child {
+          min-width: 180px;
+        }
+        .pill-grid.cols-5,
+        .pill-grid.cols-4 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .pill-grid.cols-2 {
+          grid-template-columns: 1fr;
+        }
+        .judge-feature {
+          align-items: flex-start;
+        }
+        .info-tip-bubble {
+          left: auto;
+          right: 0;
+          width: min(320px, calc(100vw - 32px));
+        }
+      }
+      @media (max-width: 520px) {
+        .pill-grid.cols-5,
+        .pill-grid.cols-4,
+        .pill-grid.cols-2 {
+          grid-template-columns: 1fr;
+        }
+        .judge-feature {
+          flex-direction: column;
+        }
+      }
     </style>
   </head>
   <body>
